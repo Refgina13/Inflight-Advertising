@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Overhead Bins - Inflight Advertising</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+<body class="sb-nav-fixed">
+    <!-- Navbar Top -->
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand ps-3" href="index.html">Inflight Advertising</a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+            </div>
+        </form>
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#!">Settings</a></li>
+                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li><a class="dropdown-item" href="#!">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="layoutSidenav">
+        <!-- Sidebar Navigation -->
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Core</div>
+                        <a class="nav-link" href="index.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Summary Dashboard
+                        </a>
+                        
+                        <div class="sb-sidenav-menu-heading">Interface</div>
+                        <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMedia" aria-expanded="true" aria-controls="collapseMedia">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Media Placement
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse show" id="collapseMedia" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link active" href="overhead-bins.html">Overhead Bins</a>
+                                <a class="nav-link" href="#">Headcover Rest</a>
+                                <a class="nav-link" href="#">Cabin Annoucment</a>
+                                <a class="nav-link" href="#">Meal Tray</a>
+                                <a class="nav-link" href="#">F&B Catalogue</a>
+                                <a class="nav-link" href="#">Aircraft Livery</a>
+                                <a class="nav-link" href="#">Sampling Product</a>
+                                <a class="nav-link" href="#">Cabin Bag Tag</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                    Start Bootstrap
+                </div>
+            </nav>
+        </div>
+
+        <!-- Content Body -->
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <div class="d-flex justify-content-between align-items-center mt-4 mb-4">
+                        <h1>Overhead Bins</h1>
+                        <!-- Tombol Pemicu Modal Pop-up -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalOverheadBin">
+                            <i class="fas fa-plus me-1"></i> Tambah Data Overhead Bins
+                        </button>
+                    </div>
+
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Overhead Bins</li>
+                    </ol>
+
+                    <!-- Data Table -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            Daftar Penempatan Overhead Bins
+                        </div>
+                        <div class="card-body">
+                            <table id="datatablesSimple">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Channel</th>
+                                        <th>Company</th>
+                                        <th>Brand</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td><span class="badge bg-info text-dark">Agency</span></td>
+                                        <td>PT Advertisa Digital</td>
+                                        <td>Brand Alpha</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td><span class="badge bg-success">Direct</span></td>
+                                        <td>PT Garuda Food</td>
+                                        <td>Kacang Garuda</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; Inflight Advertising 2026</div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Modal Pop-up Overhead Bins -->
+    <div class="modal fade" id="modalOverheadBin" tabindex="-1" aria-labelledby="modalOverheadBinLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalOverheadBinLabel">Tambah Data Overhead Bins</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formOverheadBin">
+                        <!-- Nomor -->
+                        <div class="mb-3">
+                            <label for="noOverhead" class="form-label">Nomor</label>
+                            <input type="number" class="form-control" id="noOverhead" placeholder="Masukkan nomor" required>
+                        </div>
+
+                        <!-- Channel (Agency / Direct) -->
+                        <div class="mb-3">
+                            <label for="channelOverhead" class="form-label">Channel</label>
+                            <select class="form-select" id="channelOverhead" required>
+                                <option value="" selected disabled>-- Pilih Channel --</option>
+                                <option value="Agency">Agency</option>
+                                <option value="Direct">Direct</option>
+                            </select>
+                        </div>
+
+                        <!-- Company -->
+                        <div class="mb-3">
+                            <label for="companyOverhead" class="form-label">Company</label>
+                            <input type="text" class="form-control" id="companyOverhead" placeholder="Nama perusahaan / PT" required>
+                        </div>
+
+                        <!-- Brand -->
+                        <div class="mb-3">
+                            <label for="brandOverhead" class="form-label">Brand</label>
+                            <input type="text" class="form-control" id="brandOverhead" placeholder="Nama brand / produk" required>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary">Simpan Data</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', event => {
+            // Toggle sidebar
+            const sidebarToggle = document.body.querySelector('#sidebarToggle');
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', event => {
+                    event.preventDefault();
+                    document.body.classList.toggle('sb-sidenav-toggled');
+                });
+            }
+
+            // Init Datatable
+            const datatablesSimple = document.getElementById('datatablesSimple');
+            if (datatablesSimple) {
+                new simpleDatatables.DataTable(datatablesSimple);
+            }
+        });
+    </script>
+</body>
+</html>
