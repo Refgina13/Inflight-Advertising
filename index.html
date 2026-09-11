@@ -668,6 +668,94 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Section Overhead Bins -->
+                    <div class="card mb-4 mt-5" id="section-overhead-bins">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fas fa-box me-1"></i>
+                                <strong>Overhead Bins Placement</strong>
+                            </div>
+                            <!-- Tombol Pemicu Modal Pop-up -->
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalOverheadBin">
+                                <i class="fas fa-plus me-1"></i> Tambah Data Overhead Bins
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Channel</th>
+                                        <th>Company</th>
+                                        <th>Brand</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td><span class="badge bg-info text-dark">Agency</span></td>
+                                        <td>PT Advertisa Digital</td>
+                                        <td>Brand Alpha</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td><span class="badge bg-success">Direct</span></td>
+                                        <td>PT Garuda Food</td>
+                                        <td>Kacang Garuda</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+<!-- Modal Pop-up Overhead Bins -->
+<div class="modal fade" id="modalOverheadBin" tabindex="-1" aria-labelledby="modalOverheadBinLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalOverheadBinLabel">Tambah Data Overhead Bins</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formOverheadBin">
+                    <div class="mb-3">
+                        <label for="noOverhead" class="form-label">Nomor</label>
+                        <input type="number" class="form-control" id="noOverhead" placeholder="Masukkan nomor" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="channelOverhead" class="form-label">Channel</label>
+                        <select class="form-select" id="channelOverhead" required>
+                            <option value="" selected disabled>-- Pilih Channel --</option>
+                            <option value="Agency">Agency</option>
+                            <option value="Direct">Direct</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="companyOverhead" class="form-label">Company</label>
+                        <input type="text" class="form-control" id="companyOverhead" placeholder="Nama perusahaan / PT" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="brandOverhead" class="form-label">Brand</label>
+                        <input type="text" class="form-control" id="brandOverhead" placeholder="Nama brand / produk" required>
+                    </div>
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan Data</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
