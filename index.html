@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inflight Advertising Dashboard</title>
+    <title>Inflight Advertising Dashboard - Citilink Theme</title>
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -16,18 +16,76 @@
 
     <style>
         :root {
+            --citilink-green: #008752;
+            --citilink-dark-green: #005a36;
+            --citilink-lime: #7fc242;
+            --citilink-light-green: #eef8f2;
+            --citilink-border-green: #b2e2ca;
+            
             --sb-width: 250px;
-            --sb-bg: #1e2229;
-            --sb-hover: #2c313a;
-            --sb-active: #0d6efd;
+            --sb-bg: #11281e;
+            --sb-hover: #1b3d2f;
             --topbar-height: 56px;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f4f6f9;
-            color: #333;
+            background-color: #f3f7f4;
+            color: #2b332e;
             overflow-x: hidden;
+        }
+
+        /* Custom Citilink Button & Badge Overrides */
+        .btn-citilink {
+            background-color: var(--citilink-green);
+            color: #ffffff;
+            border: none;
+            font-weight: 500;
+        }
+
+        .btn-citilink:hover, .btn-citilink:focus {
+            background-color: var(--citilink-dark-green);
+            color: #ffffff;
+        }
+
+        .btn-citilink-lime {
+            background-color: var(--citilink-lime);
+            color: #ffffff;
+            border: none;
+            font-weight: 600;
+        }
+
+        .btn-citilink-lime:hover {
+            background-color: #6db033;
+            color: #ffffff;
+        }
+
+        .bg-citilink {
+            background-color: var(--citilink-green) !important;
+        }
+
+        .bg-citilink-dark {
+            background-color: var(--citilink-dark-green) !important;
+        }
+
+        .bg-citilink-lime {
+            background-color: var(--citilink-lime) !important;
+        }
+
+        .text-citilink {
+            color: var(--citilink-green) !important;
+        }
+
+        .text-citilink-dark {
+            color: var(--citilink-dark-green) !important;
+        }
+
+        .text-citilink-lime {
+            color: #5ea125 !important;
+        }
+
+        .border-citilink {
+            border-color: var(--citilink-green) !important;
         }
 
         /* Sidebar Styling */
@@ -43,33 +101,34 @@
         }
 
         #sidebar-wrapper .sidebar-heading {
-            padding: 1rem 1.25rem;
-            font-size: 1.1rem;
+            padding: 1.1rem 1.25rem;
+            font-size: 1.15rem;
             font-weight: 700;
             color: #ffffff;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: var(--citilink-dark-green);
+            border-bottom: 3px solid var(--citilink-lime);
         }
 
         .sidebar-heading i {
-            color: #0d6efd;
+            color: var(--citilink-lime);
         }
 
         .sidebar-section-title {
-            padding: 0.75rem 1.25rem 0.25rem;
-            font-size: 0.7rem;
+            padding: 0.85rem 1.25rem 0.25rem;
+            font-size: 0.68rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #6c757d;
+            letter-spacing: 0.08em;
+            color: #8fa89b;
         }
 
         .list-group-item-sidebar {
             padding: 0.75rem 1.25rem;
-            color: #a2a9b1;
+            color: #c0d3c9;
             text-decoration: none;
             display: flex;
             align-items: center;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             transition: all 0.2s ease;
             border: none;
             background: transparent;
@@ -85,8 +144,9 @@
 
         .list-group-item-sidebar.active {
             color: #ffffff;
-            background-color: var(--sb-active);
+            background-color: var(--citilink-green);
             font-weight: 600;
+            border-left: 4px solid var(--citilink-lime);
         }
 
         .list-group-item-sidebar i {
@@ -114,24 +174,25 @@
         .navbar-top {
             height: var(--topbar-height);
             background-color: #ffffff;
-            border-bottom: 1px solid #e3e6f0;
+            border-bottom: 2px solid var(--citilink-light-green);
         }
 
         /* Metric Cards */
         .card-metric {
             border-left: 4px solid;
-            border-radius: 0.35rem;
-            transition: transform 0.2s ease;
+            border-radius: 0.4rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .card-metric:hover {
             transform: translateY(-2px);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08) !important;
         }
 
-        .card-metric-primary { border-left-color: #0d6efd; }
-        .card-metric-success { border-left-color: #198754; }
-        .card-metric-info { border-left-color: #0dcaf0; }
-        .card-metric-warning { border-left-color: #ffc107; }
+        .card-metric-primary { border-left-color: var(--citilink-green); }
+        .card-metric-lime { border-left-color: var(--citilink-lime); }
+        .card-metric-dark { border-left-color: var(--citilink-dark-green); }
+        .card-metric-warning { border-left-color: #f39c12; }
 
         .metric-title {
             font-size: 0.75rem;
@@ -143,7 +204,7 @@
         .metric-value {
             font-size: 1.25rem;
             font-weight: 700;
-            color: #2c3e50;
+            color: #1a3326;
         }
 
         /* Table Expandable Rows Styling */
@@ -151,24 +212,24 @@
             cursor: pointer;
             background: none;
             border: none;
-            color: #0d6efd;
+            color: var(--citilink-green);
             font-weight: 600;
             padding: 0;
             margin-right: 6px;
         }
 
         .subtable-container {
-            background-color: #f8f9fa;
-            border-left: 3px solid #0d6efd;
-            padding: 10px 15px;
-            margin: 5px 0;
+            background-color: var(--citilink-light-green);
+            border-left: 3px solid var(--citilink-green);
+            padding: 12px 16px;
+            margin: 4px 0;
             border-radius: 4px;
         }
 
         /* Modal Period Item Row Styling */
         .modal-period-row {
-            background-color: #f8f9fa;
-            border: 1px solid #e3e6f0;
+            background-color: #f8fbf9;
+            border: 1px solid var(--citilink-border-green);
             border-radius: 6px;
             padding: 12px;
             margin-bottom: 10px;
@@ -180,6 +241,16 @@
             bottom: 20px;
             right: 20px;
             z-index: 1090;
+        }
+
+        /* Citilink Logo Badge */
+        .citilink-brand-tag {
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            font-style: italic;
+        }
+        .citilink-brand-tag span {
+            color: var(--citilink-lime);
         }
 
         @media (max-width: 768px) {
@@ -200,39 +271,42 @@
     <div class="d-flex" id="wrapper">
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
-            <div class="sidebar-heading d-flex align-items-center">
-                <i class="fa-solid fa-plane-departure me-2 fs-5"></i>
-                <span>Inflight Advertising</span>
+            <div class="sidebar-heading d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                    <i class="fa-solid fa-plane-departure me-2 fs-5"></i>
+                    <span class="citilink-brand-tag">Citilink<span>.</span></span>
+                </div>
+                <span class="badge bg-citilink-lime text-white fs-8">Ads</span>
             </div>
             <div class="list-group list-group-flush py-2">
-                <div class="sidebar-section-title">Core</div>
+                <div class="sidebar-section-title">Core Module</div>
                 <button class="list-group-item-sidebar active" id="nav-report" onclick="switchTab('report')">
                     <i class="fa-solid fa-chart-line"></i> Report Dashboard
                 </button>
 
-                <div class="sidebar-section-title">Interface</div>
+                <div class="sidebar-section-title">Management</div>
                 <button class="list-group-item-sidebar" id="nav-mediamarket" onclick="switchTab('mediamarket')">
                     <i class="fa-solid fa-bullhorn"></i> Media Market
                 </button>
                 <button class="list-group-item-sidebar" onclick="showToast('Modul New Project siap digunakan!', 'info')">
-                    <i class="fa-solid fa-folder-plus"></i> New Project
+                    <i class="fa-solid fa-folder-plus"></i> New Campaign
                 </button>
                 <button class="list-group-item-sidebar" onclick="showToast('Akses Administrasi dibatasi', 'warning')">
                     <i class="fa-solid fa-file-invoice"></i> Administrasi
                 </button>
                 <button class="list-group-item-sidebar" onclick="showToast('Menu Revenue aktif di Dashboard Report', 'info')">
-                    <i class="fa-solid fa-wallet"></i> Revenue
+                    <i class="fa-solid fa-wallet"></i> Revenue Streams
                 </button>
                 <button class="list-group-item-sidebar" onclick="showToast('Halaman Payment sedang diperbarui', 'info')">
-                    <i class="fa-solid fa-credit-card"></i> Payment
+                    <i class="fa-solid fa-credit-card"></i> Billing & Payment
                 </button>
 
-                <div class="sidebar-section-title">Addons</div>
+                <div class="sidebar-section-title">Analytics</div>
                 <button class="list-group-item-sidebar" onclick="switchTab('report')">
-                    <i class="fa-solid fa-chart-pie"></i> Charts
+                    <i class="fa-solid fa-chart-pie"></i> Visual Charts
                 </button>
                 <button class="list-group-item-sidebar" onclick="switchTab('report')">
-                    <i class="fa-solid fa-table"></i> Tables
+                    <i class="fa-solid fa-table"></i> Summary Data
                 </button>
             </div>
         </div>
@@ -242,23 +316,26 @@
             <!-- Top Navigation Bar -->
             <nav class="navbar navbar-expand-lg navbar-top px-3 justify-content-between">
                 <div class="d-flex align-items-center">
-                    <button class="btn btn-sm btn-light border" id="sidebarToggle" onclick="toggleSidebar()">
-                        <i class="fa-solid fa-bars"></i>
+                    <button class="btn btn-sm btn-light border me-3" id="sidebarToggle" onclick="toggleSidebar()">
+                        <i class="fa-solid fa-bars text-citilink"></i>
                     </button>
-                    <span class="ms-3 fw-bold text-secondary" id="page-title">Report Dashboard</span>
+                    <div class="d-flex align-items-center">
+                        <span class="fw-bold text-citilink-dark me-2" id="page-title">Inflight Advertising Dashboard</span>
+                        <span class="badge bg-citilink-light-green text-citilink border border-citilink small d-none d-md-inline-block">Data Live</span>
+                    </div>
                 </div>
                 <div class="d-flex align-items-center gap-3">
-                    <button class="btn btn-primary btn-sm" onclick="openUpdateModal()">
+                    <button class="btn btn-citilink btn-sm px-3 shadow-sm" onclick="openUpdateModal()">
                         <i class="fa-solid fa-pen-to-square me-1"></i> Update Report Data
                     </button>
                     <div class="dropdown">
                         <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle text-dark" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://placehold.co/32x32/0d6efd/ffffff?text=ADM" alt="Admin" class="rounded-circle me-2">
-                            <span class="d-none d-md-inline fw-semibold small">Administrator</span>
+                            <img src="https://placehold.co/32x32/008752/ffffff?text=QG" alt="Admin Citilink" class="rounded-circle me-2 border border-2 border-citilink-lime">
+                            <span class="d-none d-md-inline fw-semibold small">Citilink Admin</span>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user me-2"></i>Profile</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i>Settings</a></li>
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user me-2 text-citilink"></i>Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2 text-citilink"></i>Settings</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item text-danger" href="#"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a></li>
                         </ul>
@@ -268,7 +345,6 @@
 
             <div class="container-fluid p-4">
                 
-                <!-- VIEW 1: REPORT DASHBOARD -->
                 <div id="view-report">
                     <!-- Metric Cards Row -->
                     <div class="row g-3 mb-4">
@@ -277,11 +353,11 @@
                                 <div class="card-body">
                                     <div class="row align-items-center g-0">
                                         <div class="col me-2">
-                                            <div class="metric-title text-primary mb-1">Grand Total Revenue</div>
+                                            <div class="metric-title text-citilink mb-1">Grand Total Revenue</div>
                                             <div class="metric-value" id="card-grand-total">IDR 0</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fa-solid fa-coins fa-2x text-primary opacity-50"></i>
+                                            <i class="fa-solid fa-coins fa-2x text-citilink opacity-50"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -289,16 +365,16 @@
                         </div>
 
                         <div class="col-xl-3 col-md-6">
-                            <div class="card card-metric card-metric-info shadow-sm h-100 py-2 bg-white">
+                            <div class="card card-metric card-metric-dark shadow-sm h-100 py-2 bg-white">
                                 <div class="card-body">
                                     <div class="row align-items-center g-0">
                                         <div class="col me-2">
-                                            <div class="metric-title text-info mb-1">Total Agency Value</div>
+                                            <div class="metric-title text-citilink-dark mb-1">Total Agency Value</div>
                                             <div class="metric-value" id="card-agency-total">IDR 0</div>
-                                            <div class="text-xs text-muted mt-1"><span id="card-agency-pct" class="badge bg-info text-dark">0%</span> Share Contribution</div>
+                                            <div class="text-xs text-muted mt-1"><span id="card-agency-pct" class="badge bg-citilink-dark text-white">0%</span> Share Contribution</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fa-solid fa-building fa-2x text-info opacity-50"></i>
+                                            <i class="fa-solid fa-building fa-2x text-citilink-dark opacity-50"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -306,16 +382,16 @@
                         </div>
 
                         <div class="col-xl-3 col-md-6">
-                            <div class="card card-metric card-metric-success shadow-sm h-100 py-2 bg-white">
+                            <div class="card card-metric card-metric-lime shadow-sm h-100 py-2 bg-white">
                                 <div class="card-body">
                                     <div class="row align-items-center g-0">
                                         <div class="col me-2">
-                                            <div class="metric-title text-success mb-1">Total Direct Value</div>
+                                            <div class="metric-title text-citilink-lime mb-1">Total Direct Value</div>
                                             <div class="metric-value" id="card-direct-total">IDR 0</div>
-                                            <div class="text-xs text-muted mt-1"><span id="card-direct-pct" class="badge bg-success">0%</span> Share Contribution</div>
+                                            <div class="text-xs text-muted mt-1"><span id="card-direct-pct" class="badge bg-citilink-lime text-white">0%</span> Share Contribution</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fa-solid fa-handshake fa-2x text-success opacity-50"></i>
+                                            <i class="fa-solid fa-handshake fa-2x text-citilink-lime opacity-50"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -330,8 +406,8 @@
                                             <div class="metric-title text-warning mb-1">Total Channel / Brand</div>
                                             <div class="metric-value" id="card-channel-count">14 Channel</div>
                                             <div class="text-xs text-muted mt-1">
-                                                <span class="text-info fw-bold" id="card-agency-count">4 Agency (29%)</span> / 
-                                                <span class="text-success fw-bold" id="card-direct-count">10 Direct (71%)</span>
+                                                <span class="text-citilink fw-bold" id="card-agency-count">4 Agency (29%)</span> / 
+                                                <span class="text-citilink-lime fw-bold" id="card-direct-count">10 Direct (71%)</span>
                                             </div>
                                         </div>
                                         <div class="col-auto">
@@ -343,13 +419,13 @@
                         </div>
                     </div>
 
-                    <!-- Charts Row 1 -->
+                    <!-- Charts Row -->
                     <div class="row g-3 mb-4">
                         <div class="col-lg-8">
                             <div class="card shadow-sm border-0 h-100">
                                 <div class="card-header bg-white py-3 d-flex align-items-center justify-content-between border-0">
-                                    <h6 class="m-0 fw-bold text-primary"><i class="fa-solid fa-chart-column me-2"></i>Revenue Comparison: Agency vs Direct (Per Year)</h6>
-                                    <span class="badge bg-light text-dark border">In Rupiah (IDR)</span>
+                                    <h6 class="m-0 fw-bold text-citilink-dark"><i class="fa-solid fa-chart-column me-2 text-citilink"></i>Revenue Comparison: Agency vs Direct (Per Year)</h6>
+                                    <span class="badge bg-citilink-light-green text-citilink border border-citilink">In Rupiah (IDR)</span>
                                 </div>
                                 <div class="card-body">
                                     <div style="height: 320px; position: relative;">
@@ -362,14 +438,14 @@
                         <div class="col-lg-4">
                             <div class="card shadow-sm border-0 h-100">
                                 <div class="card-header bg-white py-3 border-0">
-                                    <h6 class="m-0 fw-bold text-primary"><i class="fa-solid fa-chart-pie me-2"></i>Channel Share Distribution</h6>
+                                    <h6 class="m-0 fw-bold text-citilink-dark"><i class="fa-solid fa-chart-pie me-2 text-citilink"></i>Channel Share Distribution</h6>
                                 </div>
                                 <div class="card-body d-flex flex-column justify-content-center align-items-center">
                                     <div style="height: 250px; width: 100%; position: relative;">
                                         <canvas id="pieChartChannel"></canvas>
                                     </div>
                                     <div class="text-center mt-3 small text-muted">
-                                        Rasio Channel Agency & Direct (Active Campaigns)
+                                        Rasio Active Campaigns Citilink
                                     </div>
                                 </div>
                             </div>
@@ -381,8 +457,8 @@
                         <div class="col-lg-8">
                             <div class="card shadow-sm border-0">
                                 <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-0">
-                                    <h6 class="m-0 fw-bold text-primary"><i class="fa-solid fa-table me-2"></i>Data Summary Revenue & Contribution</h6>
-                                    <small class="text-muted"><i class="fa-solid fa-circle-info me-1"></i>Klik tanda <i class="fa-solid fa-chevron-right text-primary fs-7"></i> untuk rincian kuartal</small>
+                                    <h6 class="m-0 fw-bold text-citilink-dark"><i class="fa-solid fa-table me-2 text-citilink"></i>Data Summary Revenue & Contribution</h6>
+                                    <small class="text-muted"><i class="fa-solid fa-circle-info me-1"></i>Klik tanda <i class="fa-solid fa-chevron-right text-citilink fs-7"></i> rincian kuartal</small>
                                 </div>
                                 <div class="card-body p-0">
                                     <div class="table-responsive">
@@ -400,7 +476,7 @@
                                             <tbody id="table-body">
                                                 <!-- Dynamic Rows with Drill-down details -->
                                             </tbody>
-                                            <tfoot class="table-dark fw-bold" id="table-foot">
+                                            <tfoot class="bg-citilink-dark text-white fw-bold" id="table-foot">
                                                 <!-- Dynamic Totals -->
                                             </tfoot>
                                         </table>
@@ -412,7 +488,7 @@
                         <div class="col-lg-4">
                             <div class="card shadow-sm border-0">
                                 <div class="card-header bg-white py-3 border-0">
-                                    <h6 class="m-0 fw-bold text-primary"><i class="fa-solid fa-percent me-2"></i>Annual Contribution Ratio</h6>
+                                    <h6 class="m-0 fw-bold text-citilink-dark"><i class="fa-solid fa-percent me-2 text-citilink"></i>Annual Contribution Ratio</h6>
                                 </div>
                                 <div class="card-body" id="contribution-progress-container">
                                     <!-- Dynamic Progress Bars -->
@@ -427,15 +503,15 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-8 col-md-10">
                             <div class="card shadow-sm border-0">
-                                <div class="card-header bg-primary text-white py-3">
-                                    <h5 class="m-0 fw-bold"><i class="fa-solid fa-pen-to-square me-2"></i>Form Input Media Market</h5>
+                                <div class="card-header bg-citilink text-white py-3">
+                                    <h5 class="m-0 fw-bold"><i class="fa-solid fa-pen-to-square me-2"></i>Form Input Media Market Citilink</h5>
                                 </div>
                                 <div class="card-body p-4">
                                     <form id="mediaMarketForm" onsubmit="handleFormSubmit(event)">
                                         <div class="mb-3">
                                             <label for="mediaPlacement" class="form-label fw-semibold">Media Placement <span class="text-danger">*</span></label>
                                             <select class="form-select" id="mediaPlacement" required>
-                                                <option value="" selected disabled>-- Pilih Media Placement --</option>
+                                                <option value="" selected disabled>-- Pilih Placement Citilink --</option>
                                                 <option value="Overhead Bin Sticker">Overhead Bin Sticker</option>
                                                 <option value="Seat Back Headrest Cover">Seat Back Headrest Cover</option>
                                                 <option value="Inflight Wi-Fi Portal Banner">Inflight Wi-Fi Portal Banner</option>
@@ -485,7 +561,7 @@
                                             <button type="reset" class="btn btn-light border px-4">
                                                 <i class="fa-solid fa-rotate-left me-1"></i> Reset
                                             </button>
-                                            <button type="submit" class="btn btn-primary px-4">
+                                            <button type="submit" class="btn btn-citilink px-4">
                                                 <i class="fa-solid fa-paper-plane me-1"></i> Simpan Data
                                             </button>
                                         </div>
@@ -504,16 +580,16 @@
     <div class="modal fade" id="updateDataModal" tabindex="-1" aria-labelledby="updateDataModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title fw-bold" id="updateDataModalLabel"><i class="fa-solid fa-pen-to-square me-2"></i>Update Report Data</h5>
+                <div class="modal-header bg-citilink text-white">
+                    <h5 class="modal-title fw-bold" id="updateDataModalLabel"><i class="fa-solid fa-pen-to-square me-2"></i>Update Report Data Revenue</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4">
                     
                     <!-- Section: Tambah Periode Baru (e.g. 2027, 2028, etc) -->
-                    <div class="card border-primary border-dashed mb-4 bg-light">
+                    <div class="card border-citilink mb-4 bg-citilink-light-green">
                         <div class="card-body">
-                            <h6 class="fw-bold text-primary mb-3"><i class="fa-solid fa-plus-circle me-1"></i> Tambah Periode / Tahun Baru</h6>
+                            <h6 class="fw-bold text-citilink mb-3"><i class="fa-solid fa-plus-circle me-1"></i> Tambah Periode / Tahun Baru (2027+)</h6>
                             <div class="row g-2 align-items-end">
                                 <div class="col-md-4">
                                     <label class="form-label small fw-semibold text-secondary">Periode / Tahun</label>
@@ -528,7 +604,7 @@
                                     <input type="number" id="newPeriodDirect" class="form-control form-control-sm" placeholder="0" min="0">
                                 </div>
                                 <div class="col-md-2">
-                                    <button type="button" class="btn btn-success btn-sm w-100" onclick="addNewPeriodRow()">
+                                    <button type="button" class="btn btn-citilink-lime btn-sm w-100" onclick="addNewPeriodRow()">
                                         <i class="fa-solid fa-plus me-1"></i> Tambah
                                     </button>
                                 </div>
@@ -554,7 +630,7 @@
 
                         <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn btn-primary px-4"><i class="fa-solid fa-check me-1"></i> Simpan & Perbarui</button>
+                            <button type="submit" class="btn btn-citilink px-4"><i class="fa-solid fa-check me-1"></i> Simpan & Perbarui</button>
                         </div>
                     </form>
                 </div>
@@ -564,7 +640,7 @@
 
     <!-- Toast Notification Element -->
     <div class="toast-container">
-        <div id="liveToast" class="toast align-items-center text-white bg-success border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true">
+        <div id="liveToast" class="toast align-items-center text-white bg-citilink border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
                 <div class="toast-body" id="toast-message">
                     Data berhasil disimpan!
@@ -684,19 +760,18 @@
                         <span>${item.year}</span>
                     </td>
                     <td class="text-end">${formatIDR(item.agency)}</td>
-                    <td class="text-center"><span class="badge bg-info text-dark">${agencyPct}%</span></td>
+                    <td class="text-center"><span class="badge bg-citilink-dark text-white">${agencyPct}%</span></td>
                     <td class="text-end">${formatIDR(item.direct)}</td>
-                    <td class="text-center"><span class="badge bg-success">${directPct}%</span></td>
-                    <td class="text-end fw-bold">${formatIDR(totalYear)}</td>
+                    <td class="text-center"><span class="badge bg-citilink-lime text-white">${directPct}%</span></td>
+                    <td class="text-end fw-bold text-citilink-dark">${formatIDR(totalYear)}</td>
                 `;
                 tbody.appendChild(tr);
 
-                // Expandable Detail Row (Quarter Breakdown or Split View)
+                // Expandable Detail Row (Quarter Breakdown)
                 const detailTr = document.createElement('tr');
                 detailTr.id = `detail-row-${index}`;
                 detailTr.className = 'd-none bg-light';
                 
-                // Build Subtable for quarters
                 let subtableHTML = '';
                 if (item.quarters && item.quarters.length > 0) {
                     subtableHTML = `
@@ -715,14 +790,13 @@
                                         <td class="fw-semibold text-dark">${q.q}</td>
                                         <td class="text-end text-muted">${formatIDR(q.agency)}</td>
                                         <td class="text-end text-muted">${formatIDR(q.direct)}</td>
-                                        <td class="text-end text-dark fw-semibold">${formatIDR(q.agency + q.direct)}</td>
+                                        <td class="text-end text-citilink fw-semibold">${formatIDR(q.agency + q.direct)}</td>
                                     </tr>
                                 `).join('')}
                             </tbody>
                         </table>
                     `;
                 } else {
-                    // Estimated default quarterly breakdown if custom new year added without quarters
                     const qEstAgency = item.agency / 4;
                     const qEstDirect = item.direct / 4;
                     subtableHTML = `
@@ -748,7 +822,7 @@
                 detailTr.innerHTML = `
                     <td colspan="6" class="p-2">
                         <div class="subtable-container">
-                            <div class="fw-bold text-primary mb-2 small"><i class="fa-solid fa-list-check me-1"></i> Rincian Breakdown ${item.year}:</div>
+                            <div class="fw-bold text-citilink mb-2 small"><i class="fa-solid fa-list-check me-1"></i> Rincian Breakdown Citilink ${item.year}:</div>
                             ${subtableHTML}
                         </div>
                     </td>
@@ -760,12 +834,12 @@
                 progBlock.className = 'mb-3';
                 progBlock.innerHTML = `
                     <div class="d-flex justify-content-between small fw-bold mb-1">
-                        <span>${item.year}</span>
+                        <span class="text-citilink-dark">${item.year}</span>
                         <span>Agency ${agencyPct}% | Direct ${directPct}%</span>
                     </div>
-                    <div class="progress" style="height: 12px;">
-                        <div class="progress-bar bg-info" role="progressbar" style="width: ${agencyPct}%" title="Agency ${agencyPct}%"></div>
-                        <div class="progress-bar bg-success" role="progressbar" style="width: ${directPct}%" title="Direct ${directPct}%"></div>
+                    <div class="progress" style="height: 12px; background-color: #e9ecef;">
+                        <div class="progress-bar bg-citilink-dark" role="progressbar" style="width: ${agencyPct}%" title="Agency ${agencyPct}%"></div>
+                        <div class="progress-bar bg-citilink-lime" role="progressbar" style="width: ${directPct}%" title="Direct ${directPct}%"></div>
                     </div>
                 `;
                 progressContainer.appendChild(progBlock);
@@ -808,7 +882,7 @@
             updateCharts();
         }
 
-        // Chart.js Updater Function
+        // Chart.js Updater Function with Citilink Brand Palette (#008752 and #7fc242)
         function updateCharts() {
             const labels = reportData.map(d => d.year);
             const agencyValues = reportData.map(d => d.agency);
@@ -830,13 +904,13 @@
                             {
                                 label: 'Agency (IDR)',
                                 data: agencyValues,
-                                backgroundColor: '#0dcaf0',
+                                backgroundColor: '#005a36', // Citilink Dark Green
                                 borderRadius: 4
                             },
                             {
                                 label: 'Direct (IDR)',
                                 data: directValues,
-                                backgroundColor: '#198754',
+                                backgroundColor: '#7fc242', // Citilink Lime Green
                                 borderRadius: 4
                             }
                         ]
@@ -880,7 +954,7 @@
                         labels: ['Agency', 'Direct'],
                         datasets: [{
                             data: [channelStats.agency, channelStats.direct],
-                            backgroundColor: ['#0dcaf0', '#198754'],
+                            backgroundColor: ['#005a36', '#7fc242'],
                             borderWidth: 2,
                             borderColor: '#ffffff'
                         }]
@@ -905,15 +979,11 @@
             }
         }
 
-        // ================= MODAL & EDITING LOGIC =================
-
         // Open Update Modal & Load Current Data into Draft
         function openUpdateModal() {
-            // Clone actual data into draft for modal state
             modalDraftData = JSON.parse(JSON.stringify(reportData));
             renderModalPeriodsList();
 
-            // Clear 'Add New' inputs
             document.getElementById('newPeriodYear').value = '';
             document.getElementById('newPeriodAgency').value = '';
             document.getElementById('newPeriodDirect').value = '';
@@ -934,14 +1004,14 @@
                     <div class="row g-2 align-items-center">
                         <div class="col-md-3 col-12">
                             <label class="form-label small d-md-none text-muted">Periode / Tahun</label>
-                            <input type="text" class="form-control form-control-sm fw-bold text-secondary" 
+                            <input type="text" class="form-control form-control-sm fw-bold text-citilink-dark" 
                                 value="${item.year}" 
                                 onchange="updateDraftField(${index}, 'year', this.value)">
                         </div>
                         <div class="col-md-4 col-6">
                             <label class="form-label small d-md-none text-muted">Agency (IDR)</label>
                             <div class="input-group input-group-sm">
-                                <span class="input-group-text bg-light text-info fw-bold">A</span>
+                                <span class="input-group-text bg-light text-citilink-dark fw-bold">A</span>
                                 <input type="number" class="form-control" 
                                     value="${item.agency}" 
                                     min="0"
@@ -951,7 +1021,7 @@
                         <div class="col-md-4 col-6">
                             <label class="form-label small d-md-none text-muted">Direct (IDR)</label>
                             <div class="input-group input-group-sm">
-                                <span class="input-group-text bg-light text-success fw-bold">D</span>
+                                <span class="input-group-text bg-light text-citilink-lime fw-bold">D</span>
                                 <input type="number" class="form-control" 
                                     value="${item.direct}" 
                                     min="0"
@@ -990,13 +1060,11 @@
                 return;
             }
 
-            // Check duplicate
             if (modalDraftData.some(d => d.year.toLowerCase() === yearVal.toLowerCase())) {
                 showToast(`Periode '${yearVal}' sudah ada dalam daftar.`, 'warning');
                 return;
             }
 
-            // Push to draft
             modalDraftData.push({
                 year: yearVal,
                 agency: agencyVal,
@@ -1004,13 +1072,12 @@
                 quarters: []
             });
 
-            // Reset inputs
             document.getElementById('newPeriodYear').value = '';
             document.getElementById('newPeriodAgency').value = '';
             document.getElementById('newPeriodDirect').value = '';
 
             renderModalPeriodsList();
-            showToast(`Periode ${yearVal} berhasil ditambahkan ke daftar!`, 'info');
+            showToast(`Periode ${yearVal} berhasil ditambahkan!`, 'info');
         }
 
         // Delete period row in modal draft
@@ -1030,13 +1097,9 @@
                 return;
             }
 
-            // Apply draft data back to main reportData
             reportData = JSON.parse(JSON.stringify(modalDraftData));
-
-            // Re-render dashboard graphics, tables, and metric cards
             renderDashboard();
 
-            // Close Modal
             const modalEl = document.getElementById('updateDataModal');
             const modalInstance = bootstrap.Modal.getInstance(modalEl);
             if (modalInstance) modalInstance.hide();
@@ -1062,7 +1125,7 @@
                 mediaView.classList.add('d-none');
                 navReport.classList.add('active');
                 navMedia.classList.remove('active');
-                pageTitle.innerText = 'Report Dashboard';
+                pageTitle.innerText = 'Inflight Advertising Dashboard';
             } else if (tab === 'mediamarket') {
                 reportView.classList.add('d-none');
                 mediaView.classList.remove('d-none');
@@ -1085,17 +1148,17 @@
             }
 
             renderDashboard();
-            showToast(`Data Media Market '${brand}' berhasil ditambahkan!`, 'success');
+            showToast(`Data Media Market Citilink '${brand}' berhasil disimpan!`, 'success');
             document.getElementById('mediaMarketForm').reset();
             switchTab('report');
         }
 
         // Toast Helper
-        function showToast(message, type = 'success') {
+        function showToast(message, type = 'citilink') {
             const toastEl = document.getElementById('liveToast');
             const toastBody = document.getElementById('toast-message');
             
-            toastEl.className = `toast align-items-center text-white border-0 shadow bg-${type}`;
+            toastEl.className = `toast align-items-center text-white border-0 shadow bg-${type === 'warning' ? 'warning' : 'citilink'}`;
             toastBody.innerText = message;
 
             const toast = new bootstrap.Toast(toastEl);
