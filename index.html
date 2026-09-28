@@ -4,1253 +4,992 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inflight Advertising Dashboard - Citilink</title>
-  
-  <!-- Tailwind CSS & FontAwesome -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts & FontAwesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            citilink: {
-              DEFAULT: '#008752', // Official Citilink Green
-              dark: '#005a36',
-              light: '#e6f4ed',
-              accent: '#82c341', // Lime accent
-              sidebar: '#003822'
-            }
-          }
-        }
-      }
-    }
-  </script>
-  
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-    body { font-family: 'Inter', sans-serif; }
-    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
-    .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
-    .custom-scrollbar::-webkit-scrollbar-thumb { background: #a8d5c2; border-radius: 4px; }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #008752; }
+    :root {
+      --citilink-green: #006837;
+      --citilink-light-green: #008751;
+      --citilink-bright-green: #25d366;
+      --citilink-yellow: #f8ad1d;
+      --bg-dark-sidebar: #01381f;
+      --bg-light: #f4f6f8;
+      --text-dark: #2c3e50;
+      --text-muted: #6c757d;
+      --border-color: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* --- SIDEBAR --- */
+    .sidebar {
+      width: 250px;
+      background-color: var(--bg-dark-sidebar);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .sidebar-header {
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-brand {
+      font-size: 20px;
+      font-weight: 800;
+      font-style: italic;
+      color: #fff;
+      letter-spacing: -0.5px;
+    }
+
+    .badge-advertising {
+      background-color: var(--citilink-yellow);
+      color: #000;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .sidebar-menu {
+      padding: 15px 0;
+      overflow-y: auto;
+      flex-grow: 1;
+    }
+
+    .menu-category {
+      font-size: 10px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.4);
+      padding: 12px 20px 6px;
+      letter-spacing: 0.8px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 20px;
+      color: rgba(255, 255, 255, 0.75);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item:hover, .nav-item.active {
+      color: #fff;
+      background-color: var(--citilink-light-green);
+    }
+
+    .nav-item i {
+      width: 16px;
+      font-size: 14px;
+    }
+
+    .sidebar-footer {
+      padding: 15px 20px;
+      background-color: rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      background-color: var(--citilink-yellow);
+      color: #000;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .user-info {
+      line-height: 1.2;
+    }
+
+    .user-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .user-email {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* --- MAIN CONTAINER --- */
+    .main-container {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* --- TOP HEADER --- */
+    .top-header {
+      background-color: #fff;
+      height: 60px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 25px;
+    }
+
+    .header-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .badge-live {
+      background-color: #e6f4ea;
+      color: #137333;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 12px;
+      border: 1px solid #ceead6;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .btn-action-primary {
+      background-color: var(--citilink-light-green);
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* --- CONTENT AREA --- */
+    .content-area {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 20px 25px;
+    }
+
+    .view-section {
+      display: none;
+    }
+
+    .view-section.active {
+      display: block;
+    }
+
+    /* --- DASHBOARD VIEW STYLES --- */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .metric-card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 16px;
+      border: 1px solid var(--border-color);
+      border-left: 4px solid var(--citilink-light-green);
+    }
+
+    .metric-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .metric-value {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+    }
+
+    .metric-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .chart-card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 18px;
+      border: 1px solid var(--border-color);
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .chart-title {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .chart-subtitle {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .data-table-container {
+      background: #fff;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      padding: 18px;
+    }
+
+    .table-custom {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .table-custom th {
+      text-align: left;
+      padding: 10px 12px;
+      background-color: #f8fafc;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 11px;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .table-custom td {
+      padding: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    /* --- ADMINISTRASI VIEW STYLES --- */
+    .admin-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      background: #fff;
+      padding: 15px 20px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #f1f5f9;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 6px 12px;
+      width: 320px;
+    }
+
+    .search-box input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 12px;
+      width: 100%;
+      margin-left: 8px;
+    }
+
+    .admin-table-wrapper {
+      background: #fff;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      overflow-x: auto;
+      max-width: 100%;
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .admin-table th {
+      background: #f8fafc;
+      color: #334155;
+      font-weight: 700;
+      padding: 12px;
+      text-align: left;
+      border-bottom: 2px solid var(--border-color);
+      border-right: 1px solid #f1f5f9;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    .admin-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border-color);
+      border-right: 1px solid #f1f5f9;
+      vertical-align: top;
+    }
+
+    .sticky-col {
+      position: sticky;
+      left: 0;
+      background: #fff;
+      z-index: 1;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.03);
+    }
+
+    th.sticky-col {
+      z-index: 3;
+      background: #f8fafc;
+    }
+
+    .company-cell {
+      font-weight: 700;
+      color: var(--citilink-green);
+    }
+
+    .brand-cell {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .doc-number {
+      font-family: monospace;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 3px;
+    }
+
+    .doc-date {
+      font-size: 10px;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Badges Status 3 Tahap */
+    .status-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .badge-draft { background-color: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+    .badge-versioning { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+    .badge-approval { background-color: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+
+    /* Modal Form */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #fff;
+      border-radius: 8px;
+      width: 700px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 24px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .form-group-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .form-control {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .form-control label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #334155;
+    }
+
+    .form-control input, .form-control select {
+      padding: 8px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-size: 12px;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid var(--border-color);
+    }
   </style>
 </head>
-<body class="bg-gray-100 font-sans text-gray-800 flex h-screen overflow-hidden">
+<body>
 
-  <aside class="w-64 bg-citilink-sidebar text-white flex flex-col justify-between shadow-xl z-20 shrink-0">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
     <div>
-      <!-- Header / Logo Area -->
-      <div class="p-5 flex items-center justify-between border-b border-green-800/50">
-        <div class="flex items-center gap-3">
-          <!-- Official Citilink Vector Logo & Badge -->
-          <div class="flex items-center gap-2">
-            <svg class="h-7 w-auto fill-current text-white" viewBox="0 0 160 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12.5 4.5C6 4.5 1 9.5 1 16c0 6.5 5 11.5 11.5 11.5 4.5 0 8.5-2.5 10.5-6.5h-5.5c-1.2 2.2-3.2 3.5-5 3.5-3.5 0-6.2-3-6.2-7s2.7-7 6.2-7c1.8 0 3.8 1.3 5 3.5h5.5C21 7 17 4.5 12.5 4.5zM27 1.5h5v25h-5v-25zm11 0h5v25h-5v-25zm11 0h5v25h-5v-25z" fill="#82c341"/>
-              <text x="0" y="28" font-family="'Inter', sans-serif" font-style="italic" font-weight="900" font-size="30" fill="#FFFFFF">Citilink</text>
-            </svg>
-            <span class="bg-citilink-accent text-citilink-sidebar font-extrabold text-[11px] px-2 py-0.5 rounded-md shadow-sm uppercase tracking-wider">
-              Advertising
-            </span>
-          </div>
+      <div class="sidebar-header">
+        <i class="fa-solid fa-plane-up" style="color: #25d366;"></i>
+        <span class="sidebar-brand">Citilink</span>
+        <span class="badge-advertising">ADVERTISING</span>
+      </div>
+
+      <div class="sidebar-menu">
+        <div class="menu-category">CORE MODULE</div>
+        <div class="nav-item active" onclick="switchTab('dashboard', this)">
+          <i class="fa-solid fa-chart-pie"></i> Report Dashboard
+        </div>
+
+        <div class="menu-category">MANAGEMENT</div>
+        <div class="nav-item" onclick="switchTab('media-placement', this)">
+          <i class="fa-solid fa-plane"></i> Media Placement
+        </div>
+        <div class="nav-item" onclick="switchTab('new-campaign', this)">
+          <i class="fa-rectangle-ad"></i> New Campaign
+        </div>
+        <div class="nav-item" id="menu-administrasi" onclick="switchTab('administrasi', this)">
+          <i class="fa-solid fa-folder-open"></i> Administrasi
+        </div>
+        <div class="nav-item" onclick="switchTab('revenue-streams', this)">
+          <i class="fa-solid fa-sack-dollar"></i> Revenue Streams
+        </div>
+        <div class="nav-item" onclick="switchTab('billing-payment', this)">
+          <i class="fa-solid fa-file-invoice-dollar"></i> Billing & Payment
+        </div>
+
+        <div class="menu-category">ANALYTICS</div>
+        <div class="nav-item" onclick="switchTab('visual-charts', this)">
+          <i class="fa-solid fa-chart-column"></i> Visual Charts
+        </div>
+        <div class="nav-item" onclick="switchTab('summary-data', this)">
+          <i class="fa-solid fa-table"></i> Summary Data
         </div>
       </div>
-
-      <!-- Navigation Menu -->
-      <nav class="mt-4 px-3 space-y-1">
-        <div class="px-3 py-2 text-[11px] font-semibold text-green-300 tracking-wider uppercase">CORE MODULE</div>
-        <button onclick="switchTab('report-dashboard')" id="nav-report-dashboard" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors bg-citilink text-white shadow-md">
-          <i class="fa-solid fa-chart-pie w-5 text-center"></i>
-          <span>Report Dashboard</span>
-        </button>
-
-        <div class="px-3 py-2 mt-4 text-[11px] font-semibold text-green-300 tracking-wider uppercase">MANAGEMENT</div>
-        <button onclick="switchTab('media-market')" id="nav-media-market" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
-          <i class="fa-solid fa-plane w-5 text-center"></i>
-          <span>Media Placement</span>
-        </button>
-        <button onclick="switchTab('new-campaign')" id="nav-new-campaign" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
-          <i class="fa-solid fa-rectangle-ad w-5 text-center"></i>
-          <span>New Campaign</span>
-        </button>
-        <button onclick="switchTab('administrasi')" id="nav-administrasi" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
-          <i class="fa-solid fa-folder-open w-5 text-center"></i>
-          <span>Administrasi</span>
-        </button>
-        <button onclick="switchTab('revenue-streams')" id="nav-revenue-streams" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
-          <i class="fa-solid fa-sack-dollar w-5 text-center"></i>
-          <span>Revenue Streams</span>
-        </button>
-        <button onclick="switchTab('billing-payment')" id="nav-billing-payment" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
-          <i class="fa-solid fa-credit-card w-5 text-center"></i>
-          <span>Billing & Payment</span>
-        </button>
-
-        <div class="px-3 py-2 mt-4 text-[11px] font-semibold text-green-300 tracking-wider uppercase">ANALYTICS</div>
-        <button onclick="switchTab('visual-charts')" id="nav-visual-charts" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
-          <i class="fa-solid fa-chart-column w-5 text-center"></i>
-          <span>Visual Charts</span>
-        </button>
-        <button onclick="switchTab('summary-data')" id="nav-summary-data" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
-          <i class="fa-solid fa-table w-5 text-center"></i>
-          <span>Summary Data</span>
-        </button>
-      </nav>
     </div>
 
-    <!-- User Profile Footer -->
-    <div class="p-4 border-t border-green-800/50 flex items-center gap-3 bg-green-950/40">
-      <div class="w-9 h-9 rounded-full bg-citilink flex items-center justify-center font-bold text-white shadow-sm border border-green-400">
-        QG
-      </div>
-      <div class="overflow-hidden">
-        <p class="text-sm font-semibold text-white truncate">Hi Refgina!</p>
-        <p class="text-xs text-green-300 truncate">refgina@citilink.co.id</p>
+    <div class="sidebar-footer">
+      <div class="user-avatar">QG</div>
+      <div class="user-info">
+        <div class="user-name">Hi Refgina!</div>
+        <div class="user-email">refgina@citilink.co.id</div>
       </div>
     </div>
   </aside>
 
-  <!-- MAIN CONTENT AREA CONTAINER -->
-  <div class="flex-1 flex flex-col h-screen overflow-hidden">
-
-    <header class="bg-white border-b border-gray-200 py-3 px-6 flex items-center justify-between shadow-sm z-10">
-      <div class="flex items-center gap-3">
-        <button class="text-gray-500 hover:text-citilink text-lg"><i class="fa-solid fa-bars"></i></button>
-        <h2 id="page-title" class="text-lg font-bold text-gray-800">Inflight Advertising Report</h2>
-        <span class="bg-citilink-light text-citilink font-semibold text-xs px-2.5 py-0.5 rounded-full border border-green-200">Data Live</span>
+  <!-- MAIN CONTAINER -->
+  <main class="main-container">
+    <!-- TOP HEADER -->
+    <header class="top-header">
+      <div class="header-title-group">
+        <i class="fa-solid fa-bars" style="color: var(--text-muted); cursor: pointer;"></i>
+        <h1 class="header-title" id="page-title">Inflight Advertising Report</h1>
+        <span class="badge-live">Data Live</span>
       </div>
-      <div class="flex items-center gap-3">
-        <button onclick="openModal()" class="bg-citilink hover:bg-citilink-dark text-white font-medium text-xs px-3.5 py-2 rounded-lg shadow-sm flex items-center gap-2 transition-all">
-          <i class="fa-solid fa-pen-to-square"></i>
-          <span>Update Report Data</span>
+      <div class="header-actions">
+        <button class="btn-action-primary">
+          <i class="fa-solid fa-pen-to-square"></i> Update Report Data
         </button>
-        <div class="h-6 w-px bg-gray-300 mx-1"></div>
-        <button class="flex items-center gap-2 text-sm text-gray-700 hover:text-citilink font-semibold">
-          <div class="w-8 h-8 rounded-full bg-citilink text-white flex items-center justify-center font-bold text-xs">QG</div>
-          <span>Hi Refgina!</span>
-          <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
-        </button>
+        <div style="font-weight: 700; font-size: 12px; display: flex; align-items: center; gap: 6px;">
+          <div class="user-avatar" style="width:26px; height:26px; font-size:10px;">QG</div>
+          Hi Refgina! <i class="fa-solid fa-chevron-down" style="font-size:10px;"></i>
+        </div>
       </div>
     </header>
 
-    <!-- CONTENT BODY CONTAINER -->
-    <main class="flex-1 overflow-y-auto p-6 custom-scrollbar bg-gray-50">
+    <!-- CONTENT AREA -->
+    <div class="content-area">
 
-      <div id="tab-report-dashboard" class="space-y-6">
-        
-        <!-- Summary Cards Row -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-2 h-full bg-citilink"></div>
-            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Total Revenue</p>
-            <p id="card-total-revenue" class="text-xl font-extrabold text-gray-900 mt-1">Rp 0</p>
-            <div class="mt-2 flex items-center text-xs text-emerald-600 font-medium">
-              <i class="fa-solid fa-arrow-trend-up mr-1"></i>
-              <span>All recorded periods</span>
-            </div>
+      <!-- VIEW 1: REPORT DASHBOARD (SESUAI GAMBAR DAHULU) -->
+      <section id="view-dashboard" class="view-section active">
+        <!-- Metric Cards -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-label">TOTAL REVENUE</div>
+            <div class="metric-value">Rp47.690.527.495</div>
+            <div class="metric-sub" style="color: var(--citilink-green);"><i class="fa-solid fa-arrow-trend-up"></i> All recorded periods</div>
           </div>
-
-          <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-2 h-full bg-emerald-500"></div>
-            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Total Agency</p>
-            <p id="card-agency-revenue" class="text-xl font-extrabold text-gray-900 mt-1">Rp 0</p>
-            <div id="card-agency-percentage" class="mt-2 text-xs text-gray-500 font-medium">
-              0% of total revenue
-            </div>
+          <div class="metric-card">
+            <div class="metric-label">TOTAL AGENCY</div>
+            <div class="metric-value">Rp15.983.214.295</div>
+            <div class="metric-sub">33.5% of total revenue</div>
           </div>
-
-          <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-2 h-full bg-citilink-accent"></div>
-            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Total Direct</p>
-            <p id="card-direct-revenue" class="text-xl font-extrabold text-gray-900 mt-1">Rp 0</p>
-            <div id="card-direct-percentage" class="mt-2 text-xs text-gray-500 font-medium">
-              0% of total revenue
-            </div>
+          <div class="metric-card">
+            <div class="metric-label">TOTAL DIRECT</div>
+            <div class="metric-value">Rp31.707.313.200</div>
+            <div class="metric-sub">66.5% of total revenue</div>
           </div>
-
-          <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-2 h-full bg-teal-600"></div>
-            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Latest Run Rate (2026 Q3)</p>
-            <p id="card-latest-revenue" class="text-xl font-extrabold text-teal-700 mt-1">Rp 0</p>
-            <div class="mt-2 text-xs text-teal-600 font-medium flex items-center gap-1">
-              <i class="fa-solid fa-chart-line"></i>
-              <span>Agency + Direct</span>
-            </div>
+          <div class="metric-card">
+            <div class="metric-label">LATEST RUN RATE (2026 Q3)</div>
+            <div class="metric-value">Rp3.608.939.495</div>
+            <div class="metric-sub"><i class="fa-solid fa-chart-line"></i> Agency + Direct</div>
           </div>
         </div>
 
         <!-- Charts Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div class="lg:col-span-2 bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
-            <div class="flex items-center justify-between mb-4">
+        <div class="charts-grid">
+          <div class="chart-card">
+            <div class="chart-header">
               <div>
-                <h3 class="text-base font-bold text-gray-800">Pendapatan Revenue per Periode</h3>
-                <p class="text-xs text-gray-500">Perbandingan Agency Value vs Direct Value (IDR)</p>
+                <div class="chart-title">Pendapatan Revenue per Periode</div>
+                <div class="chart-subtitle">Perbandingan Agency Value vs Direct Value (IDR)</div>
               </div>
-              <span class="text-xs font-semibold px-2 py-1 bg-green-50 text-citilink border border-green-200 rounded">Interactive</span>
+              <span style="font-size: 11px; background: #f1f5f9; padding: 3px 8px; border-radius: 4px; color: var(--citilink-green); font-weight: 600;">Interactive</span>
             </div>
-            <div class="h-72">
-              <canvas id="revenueBarChart"></canvas>
+            <div style="height: 220px;">
+              <canvas id="barRevenueChart"></canvas>
             </div>
           </div>
 
-          <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
-            <div class="mb-4">
-              <h3 class="text-base font-bold text-gray-800">Proporsi Channel</h3>
-              <p class="text-xs text-gray-500">Agensi vs Langsung (Keseluruhan)</p>
+          <div class="chart-card">
+            <div class="chart-header">
+              <div>
+                <div class="chart-title">Proporsi Channel</div>
+                <div class="chart-subtitle">Agensi vs Langsung (Keseluruhan)</div>
+              </div>
             </div>
-            <div class="h-72 flex items-center justify-center">
-              <canvas id="revenuePieChart"></canvas>
+            <div style="height: 220px; display: flex; justify-content: center;">
+              <canvas id="donutChannelChart"></canvas>
             </div>
           </div>
         </div>
 
-        <!-- Summary Table with Drill Down -->
-        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-          <div class="p-5 border-b border-gray-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              <h3 class="text-base font-bold text-gray-800">Tabel Ringkasan Laporan Revenue</h3>
-              <p class="text-xs text-gray-500">Klik ikon panah (<i class="fa-solid fa-chevron-right text-[10px]"></i>) untuk melihat rincian kuartal per tahun</p>
-            </div>
-            <button onclick="openModal()" class="text-xs bg-citilink-light text-citilink hover:bg-green-100 font-semibold px-3 py-1.5 rounded-lg border border-green-300 transition-colors self-start md:self-auto">
-              <i class="fa-solid fa-sliders mr-1"></i> Kelola Data Per Periode
+        <!-- Data Table Summary -->
+        <div class="data-table-container">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div style="font-size: 14px; font-weight: 700;">Tabel Ringkasan Laporan Revenue</div>
+            <button style="border: 1px solid var(--citilink-green); background: transparent; color: var(--citilink-green); padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
+              <i class="fa-solid fa-sliders"></i> Kelola Data Per Periode
             </button>
           </div>
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm text-gray-600">
-              <thead class="bg-gray-50 text-gray-700 text-xs uppercase font-semibold border-b border-gray-200">
-                <tr>
-                  <th class="py-3 px-4 w-12 text-center"></th>
-                  <th class="py-3 px-4">Periode</th>
-                  <th class="py-3 px-4 text-right">Agency Value (IDR)</th>
-                  <th class="py-3 px-4 text-right">Direct Value (IDR)</th>
-                  <th class="py-3 px-4 text-right">Total Revenue (IDR)</th>
-                  <th class="py-3 px-4 text-center">Kontribusi Agency</th>
-                </tr>
-              </thead>
-              <tbody id="summaryTableBody" class="divide-y divide-gray-200">
-                <!-- Dynamic Content -->
-              </tbody>
-            </table>
-          </div>
+
+          <table class="table-custom">
+            <thead>
+              <tr>
+                <th style="width: 40px;"></th>
+                <th>PERIODE</th>
+                <th>AGENCY VALUE (IDR)</th>
+                <th>DIRECT VALUE (IDR)</th>
+                <th>TOTAL REVENUE (IDR)</th>
+                <th>KONTRIBUSI AGENCY</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><i class="fa-solid fa-chevron-right" style="color: #94a3b8; font-size: 10px;"></i></td>
+                <td style="font-weight: 700;">2023</td>
+                <td>Rp9.789.370.000</td>
+                <td>Rp9.382.218.000</td>
+                <td style="font-weight: 700;">Rp19.171.588.000</td>
+                <td><span style="background: #e6f4ea; color: #137333; padding: 2px 8px; border-radius: 10px; font-weight: 700; font-size: 11px;">51.1%</span></td>
+              </tr>
+              <tr>
+                <td><i class="fa-solid fa-chevron-right" style="color: #94a3b8; font-size: 10px;"></i></td>
+                <td style="font-weight: 700;">2024</td>
+                <td>Rp5.000.000.000</td>
+                <td>Rp11.110.000.000</td>
+                <td style="font-weight: 700;">Rp16.110.000.000</td>
+                <td><span style="background: #f1f5f9; color: #475569; padding: 2px 8px; border-radius: 10px; font-weight: 700; font-size: 11px;">31.0%</span></td>
+              </tr>
+              <tr>
+                <td><i class="fa-solid fa-chevron-right" style="color: #94a3b8; font-size: 10px;"></i></td>
+                <td style="font-weight: 700;">2025</td>
+                <td>Rp0</td>
+                <td>Rp8.800.000.000</td>
+                <td style="font-weight: 700;">Rp8.800.000.000</td>
+                <td><span style="background: #f1f5f9; color: #475569; padding: 2px 8px; border-radius: 10px; font-weight: 700; font-size: 11px;">0.0%</span></td>
+              </tr>
+              <tr>
+                <td><i class="fa-solid fa-chevron-right" style="color: #94a3b8; font-size: 10px;"></i></td>
+                <td style="font-weight: 700;">2026 (Q3)</td>
+                <td>Rp1.193.844.295</td>
+                <td>Rp2.415.095.200</td>
+                <td style="font-weight: 700;">Rp3.608.939.495</td>
+                <td><span style="background: #e6f4ea; color: #137333; padding: 2px 8px; border-radius: 10px; font-weight: 700; font-size: 11px;">33.1%</span></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+      </section>
 
-      </div>
-
-      <div id="tab-media-market" class="space-y-6 hidden">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
-          <div>
-            <h3 class="text-xl font-bold text-gray-800">Media Placement Tracker</h3>
-            <p class="text-xs text-gray-500">Status pemasangan iklan per armada pesawat Citilink</p>
+      <!-- VIEW 2: MODUL ADMINISTRASI PIPELINE (SESUAI PERINTAH LENGKAP) -->
+      <section id="view-administrasi" class="view-section">
+        <div class="admin-toolbar">
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass" style="color: #94a3b8;"></i>
+            <input type="text" id="adminSearchInput" onkeyup="filterAdminTable()" placeholder="Cari Perusahaan, Brand, No. MO, PKS...">
           </div>
-          <div class="flex items-center gap-3">
-            <span id="armada-count-badge" class="text-xs font-bold text-citilink bg-green-50 px-3 py-1.5 rounded-lg border border-green-200">
-              Armada: 5 Pesawat
-            </span>
-            <button onclick="openAddPlaneModal()" class="bg-citilink hover:bg-citilink-dark text-white font-medium text-xs px-3.5 py-2 rounded-lg shadow-sm flex items-center gap-2 transition-all">
-              <i class="fa-solid fa-plus"></i>
-              <span>Registrasi Pesawat</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Dynamic Category Counter Badges -->
-        <div id="placement-category-cards" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-          <!-- Cards Rendered via JS -->
-        </div>
-
-        <!-- Matrix Table Placement -->
-        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-          <div class="overflow-x-auto custom-scrollbar">
-            <table class="w-full text-left text-xs">
-              <thead class="bg-gray-50 text-gray-700 uppercase font-bold border-b border-gray-200">
-                <tr id="matrix-header-row">
-                  <th class="py-3.5 px-4 min-w-[140px] sticky left-0 bg-gray-50 z-10 border-r">PESAWAT</th>
-                  <!-- Dynamic 9 Columns -->
-                </tr>
-              </thead>
-              <tbody id="matrixTableBody" class="divide-y divide-gray-200 font-medium">
-                <!-- Dynamic Rows per Aircraft -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <div id="tab-new-campaign" class="space-y-6 hidden">
-        
-        <!-- Header Banner -->
-        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <h3 class="text-xl font-extrabold text-gray-800 flex items-center gap-2">
-              <i class="fa-solid fa-rectangle-ad text-citilink"></i>
-              <span>New Campaign Registration</span>
-            </h3>
-            <p class="text-xs text-gray-500 mt-1">Formulir pendaftaran kemitraan kampanye iklan baru Inflight Advertising Citilink.</p>
-          </div>
-          <div class="flex items-center gap-2 text-xs text-gray-500 bg-gray-50 px-3 py-2 rounded-lg border">
-            <i class="fa-solid fa-circle-info text-citilink"></i>
-            <span>Semua data terhubung ke database live</span>
-          </div>
-        </div>
-
-        <!-- Success Toast Alert -->
-        <div id="campaign-success-toast" class="hidden bg-emerald-50 border border-emerald-300 text-emerald-800 p-4 rounded-xl flex items-center justify-between shadow-sm animate-fade-in">
-          <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">
-              <i class="fa-solid fa-check"></i>
-            </div>
-            <div>
-              <p class="font-bold text-sm">Kampanye Berhasil Disimpan!</p>
-              <p class="text-xs text-emerald-700">Data PT & PIC baru telah berhasil terdaftar ke dalam sistem.</p>
-            </div>
-          </div>
-          <button onclick="document.getElementById('campaign-success-toast').classList.add('hidden')" class="text-emerald-500 hover:text-emerald-700">
-            <i class="fa-solid fa-xmark text-lg"></i>
+          <button class="btn-action-primary" onclick="openAddModal()">
+            <i class="fa-solid fa-plus"></i> Tambah Data Administrasi
           </button>
         </div>
 
-        <!-- Campaign Registration Form -->
-        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-          <div class="p-5 border-b border-gray-200 bg-gray-50/50 flex items-center justify-between">
-            <h4 class="font-bold text-gray-800 text-sm flex items-center gap-2">
-              <i class="fa-solid fa-wpforms text-citilink"></i>
-              <span>Formulir Data Kemitraan & Perusahaan</span>
-            </h4>
-            <span class="text-xs text-red-500 font-semibold">* Wajib Diisi</span>
-          </div>
+        <div class="admin-table-wrapper">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th class="sticky-col" style="min-width: 180px;">Nama Perusahaan & Brand</th>
+                <th style="min-width: 150px;">Quotation</th>
+                <th style="min-width: 170px;">Media Order</th>
+                <th style="min-width: 170px;">Agreement</th>
+                <th style="min-width: 150px;">Request Invoice</th>
+                <th style="min-width: 170px;">Kajian Bisnis</th>
+                <th style="min-width: 200px;">Penayangan</th>
+                <th style="min-width: 160px;">BA Penayangan</th>
+                <th style="min-width: 160px;">BA Penyelesaian</th>
+              </tr>
+            </thead>
+            <tbody id="adminTableBody">
+              <!-- Data Baris Administrasi -->
+              <tr>
+                <td class="sticky-col">
+                  <div class="company-cell">PT Telekomunikasi Seluler</div>
+                  <div class="brand-cell">Brand: Telkomsel MyTelkomsel</div>
+                </td>
+                <td>
+                  <div class="doc-date"><i class="fa-regular fa-calendar"></i> 10 Sep 2026</div>
+                  <span class="status-badge badge-approval">Approval</span>
+                </td>
+                <td>
+                  <div class="doc-number">MO/CIT/2026/09/088</div>
+                  <div class="doc-date"><i class="fa-regular fa-calendar"></i> 12 Sep 2026</div>
+                  <span class="status-badge badge-approval">Approval</span>
+                </td>
+                <td>
+                  <div class="doc-number">PKS/TKL-CIT/0926</div>
+                  <div class="doc-date"><i class="fa-regular fa-calendar"></i> 15 Sep 2026</div>
+                  <span class="status-badge badge-versioning">Versioning</span>
+                </td>
+                <td>
+                  <div class="doc-date"><i class="fa-regular fa-calendar"></i> 18 Sep 2026</div>
+                  <span class="status-badge badge-draft">Draft</span>
+                </td>
+                <td>
+                  <div class="doc-number">KB/ADV/2026/102</div>
+                  <div class="doc-date"><i class="fa-regular fa-calendar"></i> 08 Sep 2026</div>
+                  <span class="status-badge badge-approval">Approval</span>
+                </td>
+                <td>
+                  <div class="doc-date"><i class="fa-regular fa-calendar"></i> 01 Oct 2026 s/d 31 Oct 2026</div>
+                  <span class="status-badge badge-versioning">Versioning</span>
+                </td>
+                <td>
+                  <div class="doc-date"><i class="fa-regular fa-calendar"></i> -</div>
+                  <span class="status-badge badge-draft">Draft</span>
+                </td>
+                <td>
+                  <div class="doc-date"><i class="fa-regular fa-calendar"></i> -</div>
+                  <span class="status-badge badge-draft">Draft</span>
+                </td>
+              </tr>
 
-          <form id="campaignForm" onsubmit="handleSaveCampaign(event)" class="p-6 space-y-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              
-              <!-- Nama PT -->
-              <div class="space-y-1.5">
-                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wide">
-                  Nama PT / Perusahaan <span class="text-red-500">*</span>
-                </label>
-                <div class="relative">
-                  <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
-                    <i class="fa-solid fa-building"></i>
-                  </div>
-                  <input type="text" id="camp-nama-pt" required placeholder="Contoh: PT Telekomunikasi Selular" class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:border-citilink focus:outline-none transition-all">
-                </div>
-              </div>
-
-              <!-- Agency / Direct Dropdown -->
-              <div class="space-y-1.5">
-                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wide">
-                  Tipe Kemitraan (Agency / Direct) <span class="text-red-500">*</span>
-                </label>
-                <div class="relative">
-                  <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
-                    <i class="fa-solid fa-handshake"></i>
-                  </div>
-                  <select id="camp-tipe" required class="w-full pl-10 pr-10 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:border-citilink focus:outline-none bg-white appearance-none transition-all">
-                    <option value="" disabled selected>-- Pilih Tipe Kemitraan --</option>
-                    <option value="Agency">Agency</option>
-                    <option value="Direct">Direct</option>
-                  </select>
-                  <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-gray-400">
-                    <i class="fa-solid fa-chevron-down text-xs"></i>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Nama Brand -->
-              <div class="space-y-1.5">
-                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wide">
-                  Nama Brand <span class="text-red-500">*</span>
-                </label>
-                <div class="relative">
-                  <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
-                    <i class="fa-solid fa-tag"></i>
-                  </div>
-                  <input type="text" id="camp-nama-brand" required placeholder="Contoh: Telkomsel / Indihome" class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:border-citilink focus:outline-none transition-all">
-                </div>
-              </div>
-
-              <!-- PIC -->
-              <div class="space-y-1.5">
-                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wide">
-                  Nama PIC (Person In Charge) <span class="text-red-500">*</span>
-                </label>
-                <div class="relative">
-                  <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
-                    <i class="fa-solid fa-user"></i>
-                  </div>
-                  <input type="text" id="camp-pic" required placeholder="Contoh: Budi Santoso" class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:border-citilink focus:outline-none transition-all">
-                </div>
-              </div>
-
-              <!-- Email PIC -->
-              <div class="space-y-1.5">
-                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wide">
-                  Email PIC <span class="text-red-500">*</span>
-                </label>
-                <div class="relative">
-                  <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
-                    <i class="fa-solid fa-envelope"></i>
-                  </div>
-                  <input type="email" id="camp-email-pic" required placeholder="budi.santoso@company.com" class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:border-citilink focus:outline-none transition-all">
-                </div>
-              </div>
-
-              <!-- No HP / Whatsapp PIC -->
-              <div class="space-y-1.5">
-                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wide">
-                  No HP / WhatsApp PIC <span class="text-red-500">*</span>
-                </label>
-                <div class="relative">
-                  <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
-                    <i class="fa-solid fa-phone"></i>
-                  </div>
-                  <input type="tel" id="camp-nohp" required placeholder="081234567890" class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:border-citilink focus:outline-none transition-all">
-                </div>
-              </div>
-
-            </div>
-
-            <!-- Alamat Perusahaan Full Width -->
-            <div class="space-y-1.5">
-              <label class="block text-xs font-bold text-gray-700 uppercase tracking-wide">
-                Alamat Perusahaan <span class="text-red-500">*</span>
-              </label>
-              <div class="relative">
-                <div class="absolute top-3 left-0 pl-3.5 pointer-events-none text-gray-400">
-                  <i class="fa-solid fa-location-dot"></i>
-                </div>
-                <textarea id="camp-alamat" required rows="3" placeholder="Masukkan alamat lengkap kantor/perusahaan..." class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:border-citilink focus:outline-none transition-all resize-none"></textarea>
-              </div>
-            </div>
-
-            <!-- Form Actions -->
-            <div class="pt-4 border-t border-gray-100 flex items-center justify-end gap-3">
-              <button type="button" onclick="resetCampaignForm()" class="px-5 py-2.5 rounded-xl text-xs font-semibold text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors flex items-center gap-2">
-                <i class="fa-solid fa-rotate-left"></i>
-                <span>Reset Form</span>
-              </button>
-              <button type="submit" class="px-6 py-2.5 rounded-xl text-xs font-semibold bg-citilink text-white hover:bg-citilink-dark shadow-md hover:shadow-lg transition-all flex items-center gap-2">
-                <i class="fa-solid fa-paper-plane"></i>
-                <span>Simpan Campaign</span>
-              </button>
-            </div>
-          </form>
+              <tr>
+                <td class="sticky-col">
+                  <div class="company-cell">PT Bank Central Asia Tbk</div>
+                  <div class="brand-cell">Brand: BCA Mobile</div>
+                </td>
+                <td>
+                  <div class="doc-date"><i class="fa-regular fa-calendar"></i> 01 Aug 2026</div>
+                  <span class="status-badge badge-approval">Approval</span>
+                </td>
+                <td>
+                  <div class="doc-number">MO/CIT/2026/08/041</div>
+                  <div class="doc-date"><i class="fa-regular fa-calendar"></i> 05 Aug 2026</div>
+                  <span class="status-badge badge-approval">Approval</span>
+                </td>
+                <td>
+                  <div class="doc-number">PKS/BCA-CIT/0826</div>
+                  <div class="doc-date"><i class="fa-regular fa-calendar"></i> 10 Aug 2026</div>
+                  <span class="status-badge badge-approval">Approval</span>
+                </td>
+                <td>
+                  <div class="doc-date"><i class="fa-regular fa-calendar"></i> 12 Aug 2026</div>
+                  <span class="status-badge badge-approval">Approval</span>
+                </td>
+                <td>
+                  <div class="doc-number">KB/ADV/2026/077</div>
+                  <div class="doc-date"><i class="fa-regular fa-calendar"></i> 02 Aug 2026</div>
+                  <span class="status-badge badge-approval">Approval</span>
+                </td>
+                <td>
+                  <div class="doc-date"><i class="fa-regular fa-calendar"></i> 15 Aug 2026 s/d 15 Sep 2026</div>
+                  <span class="status-badge badge-approval">Approval</span>
+                </td>
+                <td>
+                  <div class="doc-date"><i class="fa-regular fa-calendar"></i> 16 Sep 2026</div>
+                  <span class="status-badge badge-approval">Approval</span>
+                </td>
+                <td>
+                  <div class="doc-date"><i class="fa-regular fa-calendar"></i> 18 Sep 2026</div>
+                  <span class="status-badge badge-approval">Approval</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+      </section>
 
-        <!-- Registered Campaign List Table -->
-        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-          <div class="p-5 border-b border-gray-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              <h4 class="font-bold text-gray-800 text-base">Daftar Kampanye Terdaftar</h4>
-              <p class="text-xs text-gray-500">Daftar riwayat mitra perusahaan dan data PIC kampanye</p>
-            </div>
-            
-            <!-- Search & Filter Bar -->
-            <div class="flex items-center gap-3">
-              <div class="relative">
-                <input type="text" id="searchCampaignInput" onkeyup="filterCampaignTable()" placeholder="Cari PT, Brand, atau PIC..." class="pl-8 pr-4 py-1.5 text-xs rounded-lg border border-gray-300 focus:ring-2 focus:ring-citilink focus:outline-none w-48 md:w-64">
-                <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2 text-gray-400 text-xs"></i>
-              </div>
-              <select id="filterTipeSelect" onchange="filterCampaignTable()" class="px-3 py-1.5 text-xs rounded-lg border border-gray-300 focus:ring-2 focus:ring-citilink focus:outline-none bg-white font-semibold">
-                <option value="ALL">Semua Tipe</option>
-                <option value="Agency">Agency</option>
-                <option value="Direct">Direct</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm text-gray-600">
-              <thead class="bg-gray-50 text-gray-700 text-xs uppercase font-semibold border-b border-gray-200">
-                <tr>
-                  <th class="py-3.5 px-4">Nama PT</th>
-                  <th class="py-3.5 px-4">Tipe</th>
-                  <th class="py-3.5 px-4">Brand</th>
-                  <th class="py-3.5 px-4">PIC</th>
-                  <th class="py-3.5 px-4">Kontak (Email & HP)</th>
-                  <th class="py-3.5 px-4">Alamat Perusahaan</th>
-                  <th class="py-3.5 px-4 text-center">Aksi</th>
-                </tr>
-              </thead>
-              <tbody id="campaignTableBody" class="divide-y divide-gray-200 font-medium">
-                <!-- Dynamic Content via JS -->
-              </tbody>
-            </table>
-          </div>
+      <!-- VIEW 3: DUMMY SECTION FOR OTHER TAB -->
+      <section id="view-other" class="view-section">
+        <div style="background: #fff; padding: 40px; text-align: center; border-radius: 8px;">
+          <i class="fa-solid fa-folder-open" style="font-size: 40px; color: var(--citilink-green); margin-bottom: 10px;"></i>
+          <h2>Halaman Sedang Dalam Pengembangan</h2>
+          <p style="color: var(--text-muted); margin-top: 5px;">Silakan pilih menu <b>Report Dashboard</b> atau <b>Administrasi</b> pada sidebar.</p>
         </div>
-
-      </div>
-
-      <div id="tab-generic-placeholder" class="bg-white p-12 rounded-xl border border-gray-200 text-center shadow-sm hidden">
-        <div class="w-16 h-16 bg-green-50 text-citilink rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
-          <i class="fa-solid fa-layer-group"></i>
-        </div>
-        <h3 id="placeholder-title" class="text-lg font-bold text-gray-800">Module View</h3>
-        <p class="text-sm text-gray-500 mt-1 max-w-md mx-auto">Fitur modul ini terhubung dengan database live Inflight Advertising Citilink.</p>
-      </div>
-
-    </main>
-  </div>
-
-  
-  <!-- MODAL 1: UPDATE REPORT DATA -->
-  <div id="reportDataModal" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden transition-opacity">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl overflow-hidden border border-gray-100 flex flex-col max-h-[90vh]">
-      
-      <div class="p-5 border-b border-gray-100 flex items-center justify-between bg-gray-50">
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-lg bg-green-100 text-citilink flex items-center justify-center font-bold">
-            <i class="fa-solid fa-pen-to-square"></i>
-          </div>
-          <div>
-            <h3 class="text-base font-bold text-gray-800">Update Report Data</h3>
-            <p class="text-xs text-gray-500">Ubah atau perbarui nilai revenue (IDR) per periode di bawah ini:</p>
-          </div>
-        </div>
-        <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 p-1 rounded-lg">
-          <i class="fa-solid fa-xmark text-xl"></i>
-        </button>
-      </div>
-
-      <div class="p-6 overflow-y-auto custom-scrollbar flex-1 space-y-4">
-        <div class="grid grid-cols-12 gap-3 text-xs font-bold text-gray-600 uppercase tracking-wider pb-1 border-b">
-          <div class="col-span-3">Nama Periode</div>
-          <div class="col-span-4">Agency Value (IDR)</div>
-          <div class="col-span-4">Direct Value (IDR)</div>
-          <div class="col-span-1 text-center">Aksi</div>
-        </div>
-
-        <div id="modal-period-rows" class="space-y-3">
-          <!-- Dynamic Row Items -->
-        </div>
-
-        <button onclick="addNewPeriodInputRow()" class="w-full py-2.5 border-2 border-dashed border-green-300 rounded-xl text-citilink hover:bg-green-50 font-semibold text-xs flex items-center justify-center gap-2 transition-colors">
-          <i class="fa-solid fa-plus-circle"></i>
-          <span>Tambah Periode Baru (misal: 2027, 2028)</span>
-        </button>
-      </div>
-
-      <div class="p-4 border-t border-gray-100 bg-gray-50 flex items-center justify-end gap-3">
-        <button onclick="closeModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-gray-600 hover:bg-gray-200 transition-colors">
-          Batal
-        </button>
-        <button onclick="saveUpdatedReportData()" class="px-5 py-2 rounded-xl text-xs font-semibold bg-citilink text-white hover:bg-citilink-dark shadow-md transition-all flex items-center gap-2">
-          <i class="fa-solid fa-floppy-disk"></i>
-          <span>Simpan & Perbarui</span>
-        </button>
-      </div>
+      </section>
 
     </div>
-  </div>
+  </main>
 
-  <!-- MODAL 2: REGISTRASI PESAWAT / TAMBAH ARMADA -->
-  <div id="addPlaneModal" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden transition-opacity">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden border border-gray-100">
-      <div class="p-5 border-b border-gray-100 flex items-center justify-between bg-gray-50">
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-lg bg-green-100 text-citilink flex items-center justify-center font-bold">
-            <i class="fa-solid fa-plane-arrival"></i>
-          </div>
-          <div>
-            <h3 class="text-base font-bold text-gray-800">Registrasi Pesawat Baru</h3>
-            <p class="text-xs text-gray-500">Tambah armada ke daftar Media Placement Tracker</p>
-          </div>
-        </div>
-        <button onclick="closeAddPlaneModal()" class="text-gray-400 hover:text-gray-600 p-1 rounded-lg">
-          <i class="fa-solid fa-xmark text-xl"></i>
-        </button>
+  <!-- MODAL ADD/EDIT DATA -->
+  <div class="modal" id="addModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="font-size: 16px;">Tambah Entry Pipeline Administrasi</h3>
+        <i class="fa-solid fa-xmark" onclick="closeAddModal()" style="cursor: pointer;"></i>
       </div>
 
-      <div class="p-6 space-y-4">
-        <div>
-          <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Tail Number (Kode Ekor) *</label>
-          <input type="text" id="input-tail-number" placeholder="Contoh: PK-G15" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none uppercase">
+      <div class="form-group-grid">
+        <div class="form-control">
+          <label>Nama Perusahaan / PT</label>
+          <input type="text" placeholder="Contoh: PT Unilever Indonesia">
         </div>
-        <div>
-          <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Pesawat (Model / Tipe) *</label>
-          <select id="input-plane-model" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none bg-white">
-            <option value="Airbus A320">Airbus A320</option>
-            <option value="ATR 72-600">ATR 72-600</option>
-          </select>
+        <div class="form-control">
+          <label>Brand</label>
+          <input type="text" placeholder="Contoh: Pepsodent">
         </div>
       </div>
 
-      <div class="p-4 border-t border-gray-100 bg-gray-50 flex items-center justify-end gap-3">
-        <button onclick="closeAddPlaneModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-gray-600 hover:bg-gray-200">
-          Batal
-        </button>
-        <button onclick="saveNewPlane()" class="px-5 py-2 rounded-xl text-xs font-semibold bg-citilink text-white hover:bg-citilink-dark shadow-md flex items-center gap-2">
-          <i class="fa-solid fa-check"></i>
-          <span>Simpan Pesawat</span>
-        </button>
+      <!-- Quotation & Media Order -->
+      <div class="form-group-grid">
+        <div class="form-control">
+          <label>Tgl Quotation</label>
+          <input type="date">
+          <select style="margin-top: 4px;"><option>Draft</option><option>Versioning</option><option>Approval</option></select>
+        </div>
+        <div class="form-control">
+          <label>Media Order (Nomor & Tgl)</label>
+          <input type="text" placeholder="Nomor Media Order">
+          <input type="date" style="margin-top: 4px;">
+          <select style="margin-top: 4px;"><option>Draft</option><option>Versioning</option><option>Approval</option></select>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <!-- MODAL 3: ISI MEDIA SLOT MODAL -->
-  <div id="addMediaSlotModal" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden border border-gray-100">
-      <div class="p-5 border-b border-gray-100 flex items-center justify-between bg-gray-50">
-        <div>
-          <h3 class="text-base font-bold text-gray-800">Isi Slot Media Placement</h3>
-          <p id="slot-modal-subtitle" class="text-xs text-gray-500">Pesawat & Kategori Media</p>
+      <!-- Agreement & Request Invoice -->
+      <div class="form-group-grid">
+        <div class="form-control">
+          <label>Agreement (Nomor PKS & Tgl)</label>
+          <input type="text" placeholder="Nomor PKS">
+          <input type="date" style="margin-top: 4px;">
+          <select style="margin-top: 4px;"><option>Draft</option><option>Versioning</option><option>Approval</option></select>
         </div>
-        <button onclick="closeMediaSlotModal()" class="text-gray-400 hover:text-gray-600">
-          <i class="fa-solid fa-xmark text-xl"></i>
-        </button>
-      </div>
-      <div class="p-6 space-y-4">
-        <div>
-          <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nama Brand / Campaign *</label>
-          <input type="text" id="slot-brand-name" placeholder="Contoh: Bank BCA" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none">
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Tanggal Mulai</label>
-            <input type="date" id="slot-start-date" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:ring-2 focus:ring-citilink focus:outline-none">
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Tanggal Selesai</label>
-            <input type="date" id="slot-end-date" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:ring-2 focus:ring-citilink focus:outline-none">
-          </div>
+        <div class="form-control">
+          <label>Tgl Request Invoice</label>
+          <input type="date">
+          <select style="margin-top: 4px;"><option>Draft</option><option>Versioning</option><option>Approval</option></select>
         </div>
       </div>
-      <div class="p-4 border-t border-gray-100 bg-gray-50 flex items-center justify-end gap-3">
-        <button onclick="closeMediaSlotModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-gray-600 hover:bg-gray-200">Batal</button>
-        <button onclick="saveMediaSlot()" class="px-5 py-2 rounded-xl text-xs font-semibold bg-citilink text-white hover:bg-citilink-dark shadow-md">Simpan Placement</button>
+
+      <!-- Kajian Bisnis & Penayangan -->
+      <div class="form-group-grid">
+        <div class="form-control">
+          <label>Kajian Bisnis (Nomor & Tgl)</label>
+          <input type="text" placeholder="No. Kajian Bisnis">
+          <input type="date" style="margin-top: 4px;">
+          <select style="margin-top: 4px;"><option>Draft</option><option>Versioning</option><option>Approval</option></select>
+        </div>
+        <div class="form-control">
+          <label>Periode Penayangan (2 Tanggal)</label>
+          <input type="date" placeholder="Mulai">
+          <input type="date" style="margin-top: 4px;" placeholder="Selesai">
+          <select style="margin-top: 4px;"><option>Draft</option><option>Versioning</option><option>Approval</option></select>
+        </div>
+      </div>
+
+      <!-- BA Penayangan & BA Penyelesaian -->
+      <div class="form-group-grid">
+        <div class="form-control">
+          <label>Berita Acara Penayangan</label>
+          <input type="date">
+          <select style="margin-top: 4px;"><option>Draft</option><option>Versioning</option><option>Approval</option></select>
+        </div>
+        <div class="form-control">
+          <label>Berita Acara Penyelesaian</label>
+          <input type="date">
+          <select style="margin-top: 4px;"><option>Draft</option><option>Versioning</option><option>Approval</option></select>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button style="padding: 8px 16px; border: 1px solid var(--border-color); background: #fff; border-radius: 4px; cursor: pointer;" onclick="closeAddModal()">Batal</button>
+        <button class="btn-action-primary" onclick="closeAddModal()">Simpan Data</button>
       </div>
     </div>
   </div>
 
   <script>
-    // GLOBAL DATA STORES
-    let reportData = [
-      { id: '2023', name: '2023', agency: 9789370000, direct: 9382218000 },
-      { id: '2024', name: '2024', agency: 5000000000, direct: 11110000000 },
-      { id: '2025', name: '2025', agency: 0, direct: 8800000000 },
-      { id: '2026_q3', name: '2026 (Q3)', agency: 1193844295, direct: 2415095200 }
-    ];
+    // Tab Navigation Logic
+    function switchTab(tabName, element) {
+      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+      element.classList.add('active');
 
-    const quarterlyBreakdownData = {
-      '2023': [
-        { period: 'Q1 2023', agency: 2400000000, direct: 2300000000 },
-        { period: 'Q2 2023', agency: 2500000000, direct: 2350000000 },
-        { period: 'Q3 2023', agency: 2400000000, direct: 2350000000 },
-        { period: 'Q4 2023', agency: 2489370000, direct: 2382218000 }
-      ],
-      '2024': [
-        { period: 'Q1 2024', agency: 1250000000, direct: 2700000000 },
-        { period: 'Q2 2024', agency: 1250000000, direct: 2800000000 },
-        { period: 'Q3 2024', agency: 1250000000, direct: 2800000000 },
-        { period: 'Q4 2024', agency: 1250000000, direct: 2810000000 }
-      ],
-      '2025': [
-        { period: 'Q1 2025', agency: 0, direct: 2200000000 },
-        { period: 'Q2 2025', agency: 0, direct: 2200000000 },
-        { period: 'Q3 2025', agency: 0, direct: 2200000000 },
-        { period: 'Q4 2025', agency: 0, direct: 2200000000 }
-      ],
-      '2026_q3': [
-        { period: 'Q1 2026', agency: 400000000, direct: 800000000 },
-        { period: 'Q2 2026', agency: 400000000, direct: 800000000 },
-        { period: 'Q3 2026', agency: 393844295, direct: 815095200 }
-      ]
-    };
+      document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
 
-    const mediaCategories = [
-      { id: 'overhead_bins', name: 'Overhead Bins', icon: 'fa-box-archive' },
-      { id: 'head_cover_seat', name: 'Head Cover Seat', icon: 'fa-chair' },
-      { id: 'inflight_magazine', name: 'Inflight Megazine', icon: 'fa-book-open' },
-      { id: 'e_boarding_pass', name: 'E-Boarding Pass', icon: 'fa-ticket' },
-      { id: 'aircraft_livery', name: 'AirCraft Livery', icon: 'fa-plane-up' },
-      { id: 'sampling_product', name: 'Sampling Product', icon: 'fa-box-open' },
-      { id: 'meal_tray', name: 'Meal Tray', icon: 'fa-utensils' },
-      { id: 'cabin_announcement', name: 'Cabin Annoucement', icon: 'fa-bullhorn' },
-      { id: 'fb_catalogue', name: 'F&B Catalogue', icon: 'fa-utensils-slash' }
-    ];
-
-    let fleetData = [
-      { tailNumber: 'PK-GLY', model: 'Airbus A320', placements: {} },
-      {
-        tailNumber: 'PK-G01',
-        model: 'ATR 72-600',
-        placements: {
-          'head_cover_seat': { brand: 'Bank BCA', date: '01 Jun 26 - 31 Des 26' },
-          'inflight_magazine': { brand: 'Telkomsel', date: '15 Mei 26 - 15 Agu 26' },
-          'e_boarding_pass': { brand: 'Indomie', date: '10 Jun 26 - 10 Sep 26' },
-          'aircraft_livery': { brand: 'Tokopedia', date: '01 Mei 26 - 31 Jul 26' },
-          'cabin_announcement': { brand: 'Kopi Kenangan', date: '01 Jun 26 - 01 Jul 26' }
-        }
-      },
-      { tailNumber: 'PK-G02', model: 'Airbus A320', placements: { 'meal_tray': { brand: 'Traveloka', date: '01 Jul 26 - 01 Okt 26' } } },
-      { tailNumber: 'PK-G03', model: 'ATR 72-600', placements: { 'overhead_bins': { brand: 'Bank BCA', date: '01 Jun 26 - 31 Des 26' } } },
-      { tailNumber: 'PK-G04', model: 'Airbus A320', placements: { 'head_cover_seat': { brand: 'Telkomsel', date: '15 Mei 26 - 15 Agu 26' }, 'meal_tray': { brand: 'Traveloka', date: '01 Jul 26 - 01 Okt 26' } } }
-    ];
-
-    // CAMPAIGNS INITIAL DATA
-    let campaignsData = [
-      {
-        id: 'CMP-001',
-        namaPt: 'PT Telekomunikasi Selular (Telkomsel)',
-        tipe: 'Direct',
-        namaBrand: 'Telkomsel 5G',
-        pic: 'Budi Santoso',
-        emailPic: 'budi.santoso@telkomsel.co.id',
-        alamat: 'Telkomsel Smart Office, Jl. Jend. Gatot Subroto Kav. 52, Jakarta Selatan',
-        noHp: '08112345678'
-      },
-      {
-        id: 'CMP-002',
-        namaPt: 'PT Dentsu Indonesia',
-        tipe: 'Agency',
-        namaBrand: 'Bank BCA',
-        pic: 'Siti Rahmawati',
-        emailPic: 'siti.rahma@dentsu.com',
-        alamat: 'Menara BCA Lt. 38, Jl. M.H. Thamrin No. 1, Jakarta Pusat',
-        noHp: '08129876543'
-      },
-      {
-        id: 'CMP-003',
-        namaPt: 'PT Indofood Sukses Makmur Tbk',
-        tipe: 'Direct',
-        namaBrand: 'Indomie',
-        pic: 'Andi Wijaya',
-        emailPic: 'andi.wijaya@indofood.co.id',
-        alamat: 'Sudirman Plaza, Indofood Tower Lt. 21, Jakarta Selatan',
-        noHp: '081311223344'
-      }
-    ];
-
-    let barChartInstance = null;
-    let pieChartInstance = null;
-    let activeExpandedRows = new Set();
-    let currentActiveSlotTarget = null;
-
-    function formatIDR(num) {
-      return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(num);
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      renderDashboard();
-      renderMediaMarketTracker();
-      renderCampaignTable();
-    });
-
-    function switchTab(tabId) {
-      const tabs = ['report-dashboard', 'media-market', 'new-campaign', 'administrasi', 'revenue-streams', 'billing-payment', 'visual-charts', 'summary-data'];
-      tabs.forEach(t => {
-        const el = document.getElementById(`tab-${t}`);
-        const navEl = document.getElementById(`nav-${t}`);
-        if (el) el.classList.add('hidden');
-        if (navEl) {
-          navEl.classList.remove('bg-citilink', 'text-white', 'shadow-md');
-          navEl.classList.add('text-gray-300', 'hover:bg-green-800/40', 'hover:text-white');
-        }
-      });
-
-      const placeholder = document.getElementById('tab-generic-placeholder');
-      const targetTab = document.getElementById(`tab-${tabId}`);
-
-      if (targetTab) {
-        targetTab.classList.remove('hidden');
-        if (placeholder) placeholder.classList.add('hidden');
-      } else if (placeholder) {
-        placeholder.classList.remove('hidden');
-        document.getElementById('placeholder-title').innerText = tabId.replace('-', ' ').toUpperCase();
-      }
-
-      const activeNav = document.getElementById(`nav-${tabId}`);
-      if (activeNav) {
-        activeNav.classList.add('bg-citilink', 'text-white', 'shadow-md');
-        activeNav.classList.remove('text-gray-300', 'hover:bg-green-800/40', 'hover:text-white');
+      if (tabName === 'dashboard') {
+        document.getElementById('view-dashboard').classList.add('active');
+        document.getElementById('page-title').innerText = 'Inflight Advertising Report';
+      } else if (tabName === 'administrasi') {
+        document.getElementById('view-administrasi').classList.add('active');
+        document.getElementById('page-title').innerText = 'Administrasi Inflight Advertising';
+      } else {
+        document.getElementById('view-other').classList.add('active');
+        document.getElementById('page-title').innerText = 'Inflight Advertising System';
       }
     }
 
-    function renderDashboard() {
-      let totalRev = 0, totalAgency = 0, totalDirect = 0;
-
-      reportData.forEach(item => {
-        totalRev += (item.agency + item.direct);
-        totalAgency += item.agency;
-        totalDirect += item.direct;
-      });
-
-      document.getElementById('card-total-revenue').innerText = formatIDR(totalRev);
-      document.getElementById('card-agency-revenue').innerText = formatIDR(totalAgency);
-      document.getElementById('card-direct-revenue').innerText = formatIDR(totalDirect);
-
-      const agencyPct = totalRev > 0 ? ((totalAgency / totalRev) * 100).toFixed(1) : 0;
-      const directPct = totalRev > 0 ? ((totalDirect / totalRev) * 100).toFixed(1) : 0;
-
-      document.getElementById('card-agency-percentage').innerText = `${agencyPct}% of total revenue`;
-      document.getElementById('card-direct-percentage').innerText = `${directPct}% of total revenue`;
-
-      const latestItem = reportData[reportData.length - 1];
-      if (latestItem) {
-        document.getElementById('card-latest-revenue').innerText = formatIDR(latestItem.agency + latestItem.direct);
-      }
-
-      renderSummaryTable();
-      renderCharts();
+    // Modal Controls
+    function openAddModal() {
+      document.getElementById('addModal').style.display = 'flex';
+    }
+    function closeAddModal() {
+      document.getElementById('addModal').style.display = 'none';
     }
 
-    function renderSummaryTable() {
-      const tbody = document.getElementById('summaryTableBody');
-      tbody.innerHTML = '';
+    // Filter/Search Administrasi
+    function filterAdminTable() {
+      const input = document.getElementById('adminSearchInput').value.toLowerCase();
+      const rows = document.querySelectorAll('#adminTableBody tr');
 
-      reportData.forEach(item => {
-        const rowTotal = item.agency + item.direct;
-        const agencyPct = rowTotal > 0 ? ((item.agency / rowTotal) * 100).toFixed(1) : 0;
-        const isExpanded = activeExpandedRows.has(item.id);
-
-        const tr = document.createElement('tr');
-        tr.className = "hover:bg-green-50/50 transition-colors bg-white font-medium";
-        tr.innerHTML = `
-          <td class="py-3.5 px-4 text-center">
-            <button onclick="toggleExpandRow('${item.id}')" class="w-6 h-6 rounded border border-gray-300 flex items-center justify-center hover:bg-citilink hover:text-white hover:border-citilink text-gray-500 transition-all text-xs">
-              <i class="fa-solid ${isExpanded ? 'fa-chevron-down' : 'fa-chevron-right'}"></i>
-            </button>
-          </td>
-          <td class="py-3.5 px-4 font-bold text-gray-800">${item.name}</td>
-          <td class="py-3.5 px-4 text-right text-emerald-700 font-semibold">${formatIDR(item.agency)}</td>
-          <td class="py-3.5 px-4 text-right text-citilink font-semibold">${formatIDR(item.direct)}</td>
-          <td class="py-3.5 px-4 text-right font-extrabold text-gray-900">${formatIDR(rowTotal)}</td>
-          <td class="py-3.5 px-4 text-center">
-            <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold ${agencyPct > 50 ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-100 text-gray-700'}">
-              ${agencyPct}%
-            </span>
-          </td>
-        `;
-        tbody.appendChild(tr);
-
-        if (isExpanded) {
-          const breakdown = quarterlyBreakdownData[item.id] || [
-            { period: `${item.name} Q1`, agency: item.agency * 0.25, direct: item.direct * 0.25 },
-            { period: `${item.name} Q2`, agency: item.agency * 0.25, direct: item.direct * 0.25 },
-            { period: `${item.name} Q3`, agency: item.agency * 0.25, direct: item.direct * 0.25 },
-            { period: `${item.name} Q4`, agency: item.agency * 0.25, direct: item.direct * 0.25 }
-          ];
-
-          breakdown.forEach(sub => {
-            const subTotal = sub.agency + sub.direct;
-            const subAgencyPct = subTotal > 0 ? ((sub.agency / subTotal) * 100).toFixed(1) : 0;
-            const subTr = document.createElement('tr');
-            subTr.className = "bg-green-50/30 text-xs text-gray-600 border-l-4 border-citilink";
-            subTr.innerHTML = `
-              <td></td>
-              <td class="py-2.5 px-4 pl-8 font-medium italic flex items-center gap-2">
-                <i class="fa-solid fa-turn-up rotate-90 text-citilink text-[10px]"></i>
-                <span>${sub.period}</span>
-              </td>
-              <td class="py-2.5 px-4 text-right">${formatIDR(sub.agency)}</td>
-              <td class="py-2.5 px-4 text-right">${formatIDR(sub.direct)}</td>
-              <td class="py-2.5 px-4 text-right font-semibold text-gray-800">${formatIDR(subTotal)}</td>
-              <td class="py-2.5 px-4 text-center text-gray-500">${subAgencyPct}%</td>
-            `;
-            tbody.appendChild(subTr);
-          });
-        }
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        row.style.display = text.includes(input) ? '' : 'none';
       });
     }
 
-    function toggleExpandRow(id) {
-      if (activeExpandedRows.has(id)) activeExpandedRows.delete(id);
-      else activeExpandedRows.add(id);
-      renderSummaryTable();
-    }
-
-    function renderCharts() {
-      const labels = reportData.map(d => d.name);
-      const agencyValues = reportData.map(d => d.agency);
-      const directValues = reportData.map(d => d.direct);
-
-      const ctxBar = document.getElementById('revenueBarChart').getContext('2d');
-      if (barChartInstance) barChartInstance.destroy();
-
-      barChartInstance = new Chart(ctxBar, {
+    // Chart.js Rendering (Report Dashboard View)
+    window.onload = function() {
+      // Bar Chart
+      const ctxBar = document.getElementById('barRevenueChart').getContext('2d');
+      new Chart(ctxBar, {
         type: 'bar',
         data: {
-          labels: labels,
+          labels: ['2023', '2024', '2025', '2026 (Q3)'],
           datasets: [
-            { label: 'Agency Value (IDR)', data: agencyValues, backgroundColor: '#008752', borderRadius: 6 },
-            { label: 'Direct Value (IDR)', data: directValues, backgroundColor: '#82c341', borderRadius: 6 }
+            {
+              label: 'Agency Value (IDR)',
+              data: [9.78, 5.0, 0, 1.19],
+              backgroundColor: '#006837'
+            },
+            {
+              label: 'Direct Value (IDR)',
+              data: [9.38, 11.11, 8.8, 2.41],
+              backgroundColor: '#8cc63f'
+            }
           ]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: {
-            legend: { position: 'top' },
-            tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${formatIDR(ctx.raw)}` } }
-          },
-          scales: {
-            y: { beginAtZero: true, ticks: { callback: (val) => 'Rp ' + (val / 1e9).toFixed(1) + ' B' } }
-          }
+          plugins: { legend: { position: 'bottom' } }
         }
       });
 
-      const totalAgencyAll = agencyValues.reduce((a, b) => a + b, 0);
-      const totalDirectAll = directValues.reduce((a, b) => a + b, 0);
-
-      const ctxPie = document.getElementById('revenuePieChart').getContext('2d');
-      if (pieChartInstance) pieChartInstance.destroy();
-
-      pieChartInstance = new Chart(ctxPie, {
+      // Donut Chart
+      const ctxDonut = document.getElementById('donutChannelChart').getContext('2d');
+      new Chart(ctxDonut, {
         type: 'doughnut',
         data: {
           labels: ['Agency Value', 'Direct Value'],
-          datasets: [{ data: [totalAgencyAll, totalDirectAll], backgroundColor: ['#008752', '#82c341'], hoverOffset: 6 }]
+          datasets: [{
+            data: [15.98, 31.70],
+            backgroundColor: ['#006837', '#8cc63f']
+          }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: {
-            legend: { position: 'bottom' },
-            tooltip: { callbacks: { label: (ctx) => `${ctx.label}: ${formatIDR(ctx.raw)}` } }
-          }
+          plugins: { legend: { position: 'bottom' } }
         }
       });
-    }
-
-    function renderMediaMarketTracker() {
-      document.getElementById('armada-count-badge').innerText = `Armada: ${fleetData.length} Pesawat`;
-
-      const cardsContainer = document.getElementById('placement-category-cards');
-      cardsContainer.innerHTML = '';
-
-      mediaCategories.forEach(cat => {
-        let terisi = 0;
-        fleetData.forEach(plane => {
-          if (plane.placements && plane.placements[cat.id]) terisi++;
-        });
-        const sisa = fleetData.length - terisi;
-
-        const card = document.createElement('div');
-        card.className = "bg-white p-3.5 rounded-xl border border-gray-200 shadow-sm flex flex-col justify-between";
-        card.innerHTML = `
-          <div class="flex items-center gap-2 mb-2 text-gray-700">
-            <i class="fa-solid ${cat.icon} text-citilink text-sm"></i>
-            <span class="font-bold text-xs truncate" title="${cat.name}">${cat.name}</span>
-          </div>
-          <div class="flex items-center justify-between text-xs">
-            <div>
-              <span class="text-gray-400 text-[10px] block">Sisa</span>
-              <span class="font-extrabold text-citilink text-lg">${sisa}</span>
-            </div>
-            <div class="text-right">
-              <span class="text-gray-400 text-[10px] block">Terisi</span>
-              <span class="font-bold text-gray-700 text-base">${terisi}</span>
-            </div>
-          </div>
-        `;
-        cardsContainer.appendChild(card);
-      });
-
-      const headerRow = document.getElementById('matrix-header-row');
-      headerRow.innerHTML = `<th class="py-3.5 px-4 min-w-[150px] sticky left-0 bg-gray-50 z-10 border-r">PESAWAT</th>`;
-      
-      mediaCategories.forEach(cat => {
-        const th = document.createElement('th');
-        th.className = "py-3.5 px-3 min-w-[160px] text-center border-r";
-        th.innerText = cat.name.toUpperCase();
-        headerRow.appendChild(th);
-      });
-
-      const tbody = document.getElementById('matrixTableBody');
-      tbody.innerHTML = '';
-
-      fleetData.forEach((plane, pIdx) => {
-        const tr = document.createElement('tr');
-        tr.className = "hover:bg-gray-50 transition-colors";
-
-        let html = `
-          <td class="py-3 px-4 font-bold text-gray-800 sticky left-0 bg-white z-10 border-r shadow-sm">
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="text-sm font-extrabold text-citilink">${plane.tailNumber}</p>
-                <p class="text-[10px] text-gray-400">${plane.model}</p>
-              </div>
-              <button onclick="removeAircraft(${pIdx})" class="text-gray-300 hover:text-red-500 text-xs px-1">
-                <i class="fa-solid fa-trash-can"></i>
-              </button>
-            </div>
-          </td>
-        `;
-
-        mediaCategories.forEach(cat => {
-          const slot = plane.placements ? plane.placements[cat.id] : null;
-
-          if (slot) {
-            html += `
-              <td class="py-2.5 px-2 text-center border-r bg-green-50/40">
-                <div class="bg-emerald-100 border border-emerald-300 text-emerald-900 rounded-lg p-2 text-xs relative group shadow-sm">
-                  <p class="font-bold truncate">${slot.brand}</p>
-                  <p class="text-[10px] text-emerald-700 mt-0.5">${slot.date}</p>
-                  <button onclick="clearMediaSlot(${pIdx}, '${cat.id}')" class="absolute -top-1.5 -right-1.5 bg-red-500 text-white rounded-full w-4 h-4 text-[9px] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow">
-                    <i class="fa-solid fa-xmark"></i>
-                  </button>
-                </div>
-              </td>
-            `;
-          } else {
-            html += `
-              <td class="py-2.5 px-2 text-center border-r">
-                <button onclick="openMediaSlotModal(${pIdx}, '${cat.id}', '${cat.name}')" class="text-xs text-citilink hover:text-citilink-dark hover:bg-green-100/60 border border-dashed border-green-300 rounded-lg px-3 py-1.5 font-semibold transition-all">
-                  + Isi Media
-                </button>
-              </td>
-            `;
-          }
-        });
-
-        tr.innerHTML = html;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function handleSaveCampaign(e) {
-      e.preventDefault();
-
-      const namaPt = document.getElementById('camp-nama-pt').value.trim();
-      const tipe = document.getElementById('camp-tipe').value;
-      const namaBrand = document.getElementById('camp-nama-brand').value.trim();
-      const pic = document.getElementById('camp-pic').value.trim();
-      const emailPic = document.getElementById('camp-email-pic').value.trim();
-      const noHp = document.getElementById('camp-nohp').value.trim();
-      const alamat = document.getElementById('camp-alamat').value.trim();
-
-      const newCampaign = {
-        id: `CMP-00${campaignsData.length + 1}`,
-        namaPt,
-        tipe,
-        namaBrand,
-        pic,
-        emailPic,
-        noHp,
-        alamat
-      };
-
-      campaignsData.unshift(newCampaign); // Add to top
-      renderCampaignTable();
-      resetCampaignForm();
-
-      // Show Toast Notification
-      const toast = document.getElementById('campaign-success-toast');
-      toast.classList.remove('hidden');
-      toast.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-
-    function resetCampaignForm() {
-      document.getElementById('campaignForm').reset();
-    }
-
-    function renderCampaignTable() {
-      const tbody = document.getElementById('campaignTableBody');
-      const searchQuery = document.getElementById('searchCampaignInput') ? document.getElementById('searchCampaignInput').value.toLowerCase() : '';
-      const filterTipe = document.getElementById('filterTipeSelect') ? document.getElementById('filterTipeSelect').value : 'ALL';
-
-      tbody.innerHTML = '';
-
-      const filtered = campaignsData.filter(item => {
-        const matchesSearch = item.namaPt.toLowerCase().includes(searchQuery) ||
-                              item.namaBrand.toLowerCase().includes(searchQuery) ||
-                              item.pic.toLowerCase().includes(searchQuery);
-        const matchesTipe = (filterTipe === 'ALL') || (item.tipe === filterTipe);
-        return matchesSearch && matchesTipe;
-      });
-
-      if (filtered.length === 0) {
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="7" class="py-8 text-center text-gray-400 italic">
-              Tidak ada data kampanye yang cocok.
-            </td>
-          </tr>
-        `;
-        return;
-      }
-
-      filtered.forEach((item, index) => {
-        const tr = document.createElement('tr');
-        tr.className = "hover:bg-green-50/40 transition-colors bg-white";
-        tr.innerHTML = `
-          <td class="py-3.5 px-4 font-bold text-gray-800">
-            <div>${item.namaPt}</div>
-            <span class="text-[10px] text-gray-400 font-mono">${item.id}</span>
-          </td>
-          <td class="py-3.5 px-4">
-            <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold ${item.tipe === 'Agency' ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-lime-100 text-lime-800 border border-lime-300'}">
-              ${item.tipe}
-            </span>
-          </td>
-          <td class="py-3.5 px-4 font-semibold text-citilink">${item.namaBrand}</td>
-          <td class="py-3.5 px-4 font-medium text-gray-800">${item.pic}</td>
-          <td class="py-3.5 px-4 text-xs space-y-0.5">
-            <p class="text-gray-700"><i class="fa-solid fa-envelope text-gray-400 mr-1"></i>${item.emailPic}</p>
-            <p class="text-gray-600"><i class="fa-solid fa-phone text-gray-400 mr-1"></i>${item.noHp}</p>
-          </td>
-          <td class="py-3.5 px-4 text-xs text-gray-500 max-w-xs truncate" title="${item.alamat}">
-            ${item.alamat}
-          </td>
-          <td class="py-3.5 px-4 text-center">
-            <div class="flex items-center justify-center gap-2">
-              <button onclick="deleteCampaign('${item.id}')" class="text-gray-400 hover:text-red-600 transition-colors p-1" title="Hapus Kampanye">
-                <i class="fa-solid fa-trash-can"></i>
-              </button>
-            </div>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function filterCampaignTable() {
-      renderCampaignTable();
-    }
-
-    function deleteCampaign(id) {
-      if (confirm('Apakah Anda yakin ingin menghapus data kampanye ini?')) {
-        campaignsData = campaignsData.filter(c => c.id !== id);
-        renderCampaignTable();
-      }
-    }
-
-    function openModal() {
-      renderModalRows();
-      document.getElementById('reportDataModal').classList.remove('hidden');
-    }
-
-    function closeModal() {
-      document.getElementById('reportDataModal').classList.add('hidden');
-    }
-
-    function renderModalRows() {
-      const container = document.getElementById('modal-period-rows');
-      container.innerHTML = '';
-
-      reportData.forEach((item, index) => {
-        const row = document.createElement('div');
-        row.className = "grid grid-cols-12 gap-3 items-center bg-gray-50 p-2.5 rounded-xl border border-gray-200";
-        row.innerHTML = `
-          <div class="col-span-3">
-            <input type="text" value="${item.name}" data-idx="${index}" data-field="name" class="modal-input-field w-full px-3 py-2 rounded-lg border border-gray-300 text-xs font-semibold text-gray-800 focus:ring-2 focus:ring-citilink focus:outline-none">
-          </div>
-          <div class="col-span-4">
-            <input type="number" value="${item.agency}" data-idx="${index}" data-field="agency" class="modal-input-field w-full px-3 py-2 rounded-lg border border-gray-300 text-xs font-semibold text-gray-800 focus:ring-2 focus:ring-citilink focus:outline-none">
-          </div>
-          <div class="col-span-4">
-            <input type="number" value="${item.direct}" data-idx="${index}" data-field="direct" class="modal-input-field w-full px-3 py-2 rounded-lg border border-gray-300 text-xs font-semibold text-gray-800 focus:ring-2 focus:ring-citilink focus:outline-none">
-          </div>
-          <div class="col-span-1 text-center">
-            <button onclick="removePeriodInputRow(${index})" class="text-gray-400 hover:text-red-500 p-1">
-              <i class="fa-solid fa-trash-can"></i>
-            </button>
-          </div>
-        `;
-        container.appendChild(row);
-      });
-    }
-
-    function addNewPeriodInputRow() {
-      const nextYear = 2026 + reportData.length - 3;
-      reportData.push({ id: `year_${Date.now()}`, name: `${nextYear}`, agency: 0, direct: 0 });
-      renderModalRows();
-    }
-
-    function removePeriodInputRow(index) {
-      reportData.splice(index, 1);
-      renderModalRows();
-    }
-
-    function saveUpdatedReportData() {
-      const inputs = document.querySelectorAll('.modal-input-field');
-      inputs.forEach(input => {
-        const idx = parseInt(input.getAttribute('data-idx'));
-        const field = input.getAttribute('data-field');
-        if (reportData[idx]) {
-          if (field === 'name') reportData[idx].name = input.value;
-          else if (field === 'agency') reportData[idx].agency = parseFloat(input.value) || 0;
-          else if (field === 'direct') reportData[idx].direct = parseFloat(input.value) || 0;
-        }
-      });
-      renderDashboard();
-      closeModal();
-    }
-
-    function openAddPlaneModal() {
-      document.getElementById('input-tail-number').value = '';
-      document.getElementById('addPlaneModal').classList.remove('hidden');
-    }
-
-    function closeAddPlaneModal() {
-      document.getElementById('addPlaneModal').classList.add('hidden');
-    }
-
-    function saveNewPlane() {
-      const tailNumber = document.getElementById('input-tail-number').value.trim();
-      const model = document.getElementById('input-plane-model').value;
-
-      if (!tailNumber) {
-        alert('Silakan masukkan Tail Number.');
-        return;
-      }
-
-      fleetData.push({ tailNumber: tailNumber.toUpperCase(), model: model, placements: {} });
-      renderMediaMarketTracker();
-      closeAddPlaneModal();
-    }
-
-    function removeAircraft(idx) {
-      if (confirm(`Hapus pesawat ${fleetData[idx].tailNumber}?`)) {
-        fleetData.splice(idx, 1);
-        renderMediaMarketTracker();
-      }
-    }
-
-    function openMediaSlotModal(planeIdx, catId, catName) {
-      currentActiveSlotTarget = { planeIdx, catId };
-      const plane = fleetData[planeIdx];
-      document.getElementById('slot-modal-subtitle').innerText = `${plane.tailNumber} (${plane.model}) - ${catName}`;
-      document.getElementById('slot-brand-name').value = '';
-      document.getElementById('addMediaSlotModal').classList.remove('hidden');
-    }
-
-    function closeMediaSlotModal() {
-      document.getElementById('addMediaSlotModal').classList.add('hidden');
-      currentActiveSlotTarget = null;
-    }
-
-    function saveMediaSlot() {
-      if (!currentActiveSlotTarget) return;
-
-      const brand = document.getElementById('slot-brand-name').value.trim();
-      const startDate = document.getElementById('slot-start-date').value;
-      const endDate = document.getElementById('slot-end-date').value;
-
-      if (!brand) {
-        alert('Silakan masukkan Nama Brand.');
-        return;
-      }
-
-      const dateText = (startDate && endDate) ? `${startDate} - ${endDate}` : 'Active Period';
-      const plane = fleetData[currentActiveSlotTarget.planeIdx];
-      if (!plane.placements) plane.placements = {};
-      
-      plane.placements[currentActiveSlotTarget.catId] = { brand: brand, date: dateText };
-
-      renderMediaMarketTracker();
-      closeMediaSlotModal();
-    }
-
-    function clearMediaSlot(planeIdx, catId) {
-      if (fleetData[planeIdx] && fleetData[planeIdx].placements) {
-        delete fleetData[planeIdx].placements[catId];
-        renderMediaMarketTracker();
-      }
-    }
+    };
   </script>
 </body>
 </html>
