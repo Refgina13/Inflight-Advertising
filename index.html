@@ -437,6 +437,26 @@
     .badge-versioning { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
     .badge-approval { background-color: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
 
+    /* Media Placement Grid */
+    .placement-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .placement-card {
+      background: #fff;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      padding: 16px;
+    }
+
+    .placement-card h4 {
+      color: var(--citilink-green);
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
     /* Modal Form */
     .modal {
       display: none;
@@ -578,7 +598,7 @@
     <!-- CONTENT AREA -->
     <div class="content-area">
 
-      <!-- VIEW 1: REPORT DASHBOARD (SESUAI GAMBAR DAHULU) -->
+      <!-- VIEW 1: REPORT DASHBOARD -->
       <section id="view-dashboard" class="view-section active">
         <!-- Metric Cards -->
         <div class="metrics-grid">
@@ -690,7 +710,99 @@
         </div>
       </section>
 
-      <!-- VIEW 2: MODUL ADMINISTRASI PIPELINE (SESUAI PERINTAH LENGKAP) -->
+      <!-- VIEW: MEDIA PLACEMENT (KEMBALI DISEDIAKAN) -->
+      <section id="view-media-placement" class="view-section">
+        <div style="background: #fff; padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid var(--border-color);">
+          <h3 style="margin-bottom: 10px;">Daftar Spot Inflight Media Placement</h3>
+          <p style="color: var(--text-muted); font-size: 13px;">Kelola ketersediaan slot promosi dan inventory iklan pada armada Citilink.</p>
+        </div>
+
+        <div class="placement-grid">
+          <div class="placement-card">
+            <h4><i class="fa-solid fa-chair"></i> Headrest Cover</h4>
+            <p style="font-size: 12px; color: var(--text-muted);">Slot iklan pada sandaran kepala kursi penumpang A320 & ATR.</p>
+            <div style="margin-top: 15px; font-size: 12px; font-weight: 700; color: var(--citilink-green);">Status: 18/20 Aircraft Occupied</div>
+          </div>
+          <div class="placement-card">
+            <h4><i class="fa-solid fa-ticket"></i> Boarding Pass Advertising</h4>
+            <p style="font-size: 12px; color: var(--text-muted);">Cetakan fisik/digital logo brand pada fisik tiket penumpangnya.</p>
+            <div style="margin-top: 15px; font-size: 12px; font-weight: 700; color: var(--citilink-green);">Status: Active Campaign Available</div>
+          </div>
+          <div class="placement-card">
+            <h4><i class="fa-solid fa-wifi"></i> Inflight Wi-Fi Portal Landing Page</h4>
+            <p style="font-size: 12px; color: var(--text-muted);">Banner digital & splash screen saat penumpang login Wi-Fi.</p>
+            <div style="margin-top: 15px; font-size: 12px; font-weight: 700; color: var(--citilink-green);">Status: 5 Slot Active</div>
+          </div>
+          <div class="placement-card">
+            <h4><i class="fa-solid fa-book-open"></i> Inflight Magazine (Linkers)</h4>
+            <p style="font-size: 12px; color: var(--text-muted);">Halaman Full Page / Double Spread pada majalah Linkers Citilink.</p>
+            <div style="margin-top: 15px; font-size: 12px; font-weight: 700; color: var(--citilink-green);">Status: Edition Oct 2026 Ready</div>
+          </div>
+          <div class="placement-card">
+            <h4><i class="fa-solid fa-box-open"></i> Meal Tray Table Wraps</h4>
+            <p style="font-size: 12px; color: var(--text-muted);">Stiker promosi pada meja lipat penumpang.</p>
+            <div style="margin-top: 15px; font-size: 12px; font-weight: 700; color: var(--citilink-green);">Status: 12 Aircraft Occupied</div>
+          </div>
+          <div class="placement-card">
+            <h4><i class="fa-solid fa-plane-gantt"></i> Aircraft Livery (Exterior Body)</h4>
+            <p style="font-size: 12px; color: var(--text-muted);">Stiker / pengecatan bodi luar pesawat Citilink.</p>
+            <div style="margin-top: 15px; font-size: 12px; font-weight: 700; color: var(--citilink-green);">Status: 2 Aircraft Active</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: NEW CAMPAIGN (KEMBALI DISEDIAKAN) -->
+      <section id="view-new-campaign" class="view-section">
+        <div style="background: #fff; padding: 25px; border-radius: 8px; border: 1px solid var(--border-color); max-width: 800px; margin: 0 auto;">
+          <h3 style="margin-bottom: 15px; font-size: 16px;"><i class="fa-rectangle-ad"></i> Buat Campaign Iklan Baru</h3>
+
+          <div class="form-group-grid">
+            <div class="form-control">
+              <label>Nama Client / PT</label>
+              <input type="text" placeholder="Masukkan nama PT">
+            </div>
+            <div class="form-control">
+              <label>Brand Name</label>
+              <input type="text" placeholder="Masukkan nama brand">
+            </div>
+          </div>
+
+          <div class="form-group-grid">
+            <div class="form-control">
+              <label>Pilihan Placement Media</label>
+              <select>
+                <option>Headrest Cover</option>
+                <option>Boarding Pass</option>
+                <option>Inflight Wi-Fi Portal</option>
+                <option>Inflight Magazine</option>
+                <option>Meal Tray Table</option>
+              </select>
+            </div>
+            <div class="form-control">
+              <label>Target Value Contract (IDR)</label>
+              <input type="text" placeholder="Rp 0">
+            </div>
+          </div>
+
+          <div class="form-group-grid">
+            <div class="form-control">
+              <label>Rencana Tanggal Mulai</label>
+              <input type="date">
+            </div>
+            <div class="form-control">
+              <label>Rencana Tanggal Selesai</label>
+              <input type="date">
+            </div>
+          </div>
+
+          <div style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">
+            <button style="padding: 8px 16px; border: 1px solid var(--border-color); background: #fff; border-radius: 4px; cursor: pointer;">Reset Form</button>
+            <button class="btn-action-primary"><i class="fa-solid fa-paper-plane"></i> Submit New Campaign</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2: MODUL ADMINISTRASI PIPELINE (8 KELOMPOK) -->
       <section id="view-administrasi" class="view-section">
         <div class="admin-toolbar">
           <div class="search-box">
@@ -718,7 +830,6 @@
               </tr>
             </thead>
             <tbody id="adminTableBody">
-              <!-- Data Baris Administrasi -->
               <tr>
                 <td class="sticky-col">
                   <div class="company-cell">PT Telekomunikasi Seluler</div>
@@ -807,19 +918,19 @@
         </div>
       </section>
 
-      <!-- VIEW 3: DUMMY SECTION FOR OTHER TAB -->
+      <!-- VIEW DUMMY UNTUK MENU LAIN -->
       <section id="view-other" class="view-section">
         <div style="background: #fff; padding: 40px; text-align: center; border-radius: 8px;">
           <i class="fa-solid fa-folder-open" style="font-size: 40px; color: var(--citilink-green); margin-bottom: 10px;"></i>
           <h2>Halaman Sedang Dalam Pengembangan</h2>
-          <p style="color: var(--text-muted); margin-top: 5px;">Silakan pilih menu <b>Report Dashboard</b> atau <b>Administrasi</b> pada sidebar.</p>
+          <p style="color: var(--text-muted); margin-top: 5px;">Silakan pilih menu utama di sidebar.</p>
         </div>
       </section>
 
     </div>
   </main>
 
-  <!-- MODAL ADD/EDIT DATA -->
+  <!-- MODAL ADD DATA -->
   <div class="modal" id="addModal">
     <div class="modal-content">
       <div class="modal-header">
@@ -838,7 +949,6 @@
         </div>
       </div>
 
-      <!-- Quotation & Media Order -->
       <div class="form-group-grid">
         <div class="form-control">
           <label>Tgl Quotation</label>
@@ -853,7 +963,6 @@
         </div>
       </div>
 
-      <!-- Agreement & Request Invoice -->
       <div class="form-group-grid">
         <div class="form-control">
           <label>Agreement (Nomor PKS & Tgl)</label>
@@ -868,7 +977,6 @@
         </div>
       </div>
 
-      <!-- Kajian Bisnis & Penayangan -->
       <div class="form-group-grid">
         <div class="form-control">
           <label>Kajian Bisnis (Nomor & Tgl)</label>
@@ -884,7 +992,6 @@
         </div>
       </div>
 
-      <!-- BA Penayangan & BA Penyelesaian -->
       <div class="form-group-grid">
         <div class="form-control">
           <label>Berita Acara Penayangan</label>
@@ -906,7 +1013,6 @@
   </div>
 
   <script>
-    // Tab Navigation Logic
     function switchTab(tabName, element) {
       document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
       element.classList.add('active');
@@ -916,6 +1022,12 @@
       if (tabName === 'dashboard') {
         document.getElementById('view-dashboard').classList.add('active');
         document.getElementById('page-title').innerText = 'Inflight Advertising Report';
+      } else if (tabName === 'media-placement') {
+        document.getElementById('view-media-placement').classList.add('active');
+        document.getElementById('page-title').innerText = 'Media Placement Management';
+      } else if (tabName === 'new-campaign') {
+        document.getElementById('view-new-campaign').classList.add('active');
+        document.getElementById('page-title').innerText = 'Create New Campaign';
       } else if (tabName === 'administrasi') {
         document.getElementById('view-administrasi').classList.add('active');
         document.getElementById('page-title').innerText = 'Administrasi Inflight Advertising';
@@ -925,7 +1037,6 @@
       }
     }
 
-    // Modal Controls
     function openAddModal() {
       document.getElementById('addModal').style.display = 'flex';
     }
@@ -933,7 +1044,6 @@
       document.getElementById('addModal').style.display = 'none';
     }
 
-    // Filter/Search Administrasi
     function filterAdminTable() {
       const input = document.getElementById('adminSearchInput').value.toLowerCase();
       const rows = document.querySelectorAll('#adminTableBody tr');
@@ -944,50 +1054,28 @@
       });
     }
 
-    // Chart.js Rendering (Report Dashboard View)
     window.onload = function() {
-      // Bar Chart
       const ctxBar = document.getElementById('barRevenueChart').getContext('2d');
       new Chart(ctxBar, {
         type: 'bar',
         data: {
           labels: ['2023', '2024', '2025', '2026 (Q3)'],
           datasets: [
-            {
-              label: 'Agency Value (IDR)',
-              data: [9.78, 5.0, 0, 1.19],
-              backgroundColor: '#006837'
-            },
-            {
-              label: 'Direct Value (IDR)',
-              data: [9.38, 11.11, 8.8, 2.41],
-              backgroundColor: '#8cc63f'
-            }
+            { label: 'Agency Value (IDR)', data: [9.78, 5.0, 0, 1.19], backgroundColor: '#006837' },
+            { label: 'Direct Value (IDR)', data: [9.38, 11.11, 8.8, 2.41], backgroundColor: '#8cc63f' }
           ]
         },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { position: 'bottom' } }
-        }
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
       });
 
-      // Donut Chart
       const ctxDonut = document.getElementById('donutChannelChart').getContext('2d');
       new Chart(ctxDonut, {
         type: 'doughnut',
         data: {
           labels: ['Agency Value', 'Direct Value'],
-          datasets: [{
-            data: [15.98, 31.70],
-            backgroundColor: ['#006837', '#8cc63f']
-          }]
+          datasets: [{ data: [15.98, 31.70], backgroundColor: ['#006837', '#8cc63f'] }]
         },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { position: 'bottom' } }
-        }
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
       });
     };
   </script>
