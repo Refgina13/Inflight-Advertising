@@ -3,13 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inflight Advertising Dashboard - Citilink Theme</title>
+  <title>Inflight Advertising Dashboard - Citilink</title>
+  
   <!-- Tailwind CSS & FontAwesome -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
+
   <script>
     tailwind.config = {
       theme: {
@@ -27,6 +29,7 @@
       }
     }
   </script>
+  
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
     body { font-family: 'Inter', sans-serif; }
@@ -38,13 +41,12 @@
 </head>
 <body class="bg-gray-100 font-sans text-gray-800 flex h-screen overflow-hidden">
 
-  <!-- SIDEBAR -->
   <aside class="w-64 bg-citilink-sidebar text-white flex flex-col justify-between shadow-xl z-20 shrink-0">
     <div>
       <!-- Header / Logo Area -->
       <div class="p-5 flex items-center justify-between border-b border-green-800/50">
         <div class="flex items-center gap-3">
-          <!-- Official Citilink Vector Logo -->
+          <!-- Official Citilink Vector Logo & Badge -->
           <div class="flex items-center gap-2">
             <svg class="h-7 w-auto fill-current text-white" viewBox="0 0 160 38" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12.5 4.5C6 4.5 1 9.5 1 16c0 6.5 5 11.5 11.5 11.5 4.5 0 8.5-2.5 10.5-6.5h-5.5c-1.2 2.2-3.2 3.5-5 3.5-3.5 0-6.2-3-6.2-7s2.7-7 6.2-7c1.8 0 3.8 1.3 5 3.5h5.5C21 7 17 4.5 12.5 4.5zM27 1.5h5v25h-5v-25zm11 0h5v25h-5v-25zm11 0h5v25h-5v-25z" fill="#82c341"/>
@@ -111,10 +113,9 @@
     </div>
   </aside>
 
-  <!-- MAIN CONTENT AREA -->
+  <!-- MAIN CONTENT AREA CONTAINER -->
   <div class="flex-1 flex flex-col h-screen overflow-hidden">
 
-    <!-- TOP HEADER NAVBAR -->
     <header class="bg-white border-b border-gray-200 py-3 px-6 flex items-center justify-between shadow-sm z-10">
       <div class="flex items-center gap-3">
         <button class="text-gray-500 hover:text-citilink text-lg"><i class="fa-solid fa-bars"></i></button>
@@ -138,12 +139,10 @@
     <!-- CONTENT BODY CONTAINER -->
     <main class="flex-1 overflow-y-auto p-6 custom-scrollbar bg-gray-50">
 
-      <!-- SECTION 1: REPORT DASHBOARD TAB -->
       <div id="tab-report-dashboard" class="space-y-6">
         
         <!-- Summary Cards Row -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <!-- Total Revenue Card -->
           <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 w-2 h-full bg-citilink"></div>
             <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Total Revenue</p>
@@ -154,7 +153,6 @@
             </div>
           </div>
 
-          <!-- Agency Revenue Card -->
           <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 w-2 h-full bg-emerald-500"></div>
             <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Total Agency</p>
@@ -164,7 +162,6 @@
             </div>
           </div>
 
-          <!-- Direct Revenue Card -->
           <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 w-2 h-full bg-citilink-accent"></div>
             <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Total Direct</p>
@@ -174,7 +171,6 @@
             </div>
           </div>
 
-          <!-- Latest Period Growth Card -->
           <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 w-2 h-full bg-teal-600"></div>
             <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Latest Run Rate (2026 Q3)</p>
@@ -188,7 +184,6 @@
 
         <!-- Charts Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <!-- Main Comparison Bar Chart -->
           <div class="lg:col-span-2 bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
             <div class="flex items-center justify-between mb-4">
               <div>
@@ -202,7 +197,6 @@
             </div>
           </div>
 
-          <!-- Distribution Doughnut Chart -->
           <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
             <div class="mb-4">
               <h3 class="text-base font-bold text-gray-800">Proporsi Channel</h3>
@@ -246,7 +240,6 @@
 
       </div>
 
-      <!-- SECTION 2: MEDIA PLACEMENT TRACKER TAB -->
       <div id="tab-media-market" class="space-y-6 hidden">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
           <div>
@@ -264,9 +257,9 @@
           </div>
         </div>
 
-        <!-- Dynamic Category Counter Badges (9 Items) -->
+        <!-- Dynamic Category Counter Badges -->
         <div id="placement-category-cards" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-          <!-- Rendered Cards -->
+          <!-- Cards Rendered via JS -->
         </div>
 
         <!-- Matrix Table Placement -->
@@ -287,7 +280,210 @@
         </div>
       </div>
 
-      <!-- PLACEHOLDER FOR OTHER TABS -->
+      <div id="tab-new-campaign" class="space-y-6 hidden">
+        
+        <!-- Header Banner -->
+        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h3 class="text-xl font-extrabold text-gray-800 flex items-center gap-2">
+              <i class="fa-solid fa-rectangle-ad text-citilink"></i>
+              <span>New Campaign Registration</span>
+            </h3>
+            <p class="text-xs text-gray-500 mt-1">Formulir pendaftaran kemitraan kampanye iklan baru Inflight Advertising Citilink.</p>
+          </div>
+          <div class="flex items-center gap-2 text-xs text-gray-500 bg-gray-50 px-3 py-2 rounded-lg border">
+            <i class="fa-solid fa-circle-info text-citilink"></i>
+            <span>Semua data terhubung ke database live</span>
+          </div>
+        </div>
+
+        <!-- Success Toast Alert -->
+        <div id="campaign-success-toast" class="hidden bg-emerald-50 border border-emerald-300 text-emerald-800 p-4 rounded-xl flex items-center justify-between shadow-sm animate-fade-in">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">
+              <i class="fa-solid fa-check"></i>
+            </div>
+            <div>
+              <p class="font-bold text-sm">Kampanye Berhasil Disimpan!</p>
+              <p class="text-xs text-emerald-700">Data PT & PIC baru telah berhasil terdaftar ke dalam sistem.</p>
+            </div>
+          </div>
+          <button onclick="document.getElementById('campaign-success-toast').classList.add('hidden')" class="text-emerald-500 hover:text-emerald-700">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+
+        <!-- Campaign Registration Form -->
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="p-5 border-b border-gray-200 bg-gray-50/50 flex items-center justify-between">
+            <h4 class="font-bold text-gray-800 text-sm flex items-center gap-2">
+              <i class="fa-solid fa-wpforms text-citilink"></i>
+              <span>Formulir Data Kemitraan & Perusahaan</span>
+            </h4>
+            <span class="text-xs text-red-500 font-semibold">* Wajib Diisi</span>
+          </div>
+
+          <form id="campaignForm" onsubmit="handleSaveCampaign(event)" class="p-6 space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              
+              <!-- Nama PT -->
+              <div class="space-y-1.5">
+                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wide">
+                  Nama PT / Perusahaan <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                    <i class="fa-solid fa-building"></i>
+                  </div>
+                  <input type="text" id="camp-nama-pt" required placeholder="Contoh: PT Telekomunikasi Selular" class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:border-citilink focus:outline-none transition-all">
+                </div>
+              </div>
+
+              <!-- Agency / Direct Dropdown -->
+              <div class="space-y-1.5">
+                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wide">
+                  Tipe Kemitraan (Agency / Direct) <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                    <i class="fa-solid fa-handshake"></i>
+                  </div>
+                  <select id="camp-tipe" required class="w-full pl-10 pr-10 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:border-citilink focus:outline-none bg-white appearance-none transition-all">
+                    <option value="" disabled selected>-- Pilih Tipe Kemitraan --</option>
+                    <option value="Agency">Agency</option>
+                    <option value="Direct">Direct</option>
+                  </select>
+                  <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-gray-400">
+                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Nama Brand -->
+              <div class="space-y-1.5">
+                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wide">
+                  Nama Brand <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                    <i class="fa-solid fa-tag"></i>
+                  </div>
+                  <input type="text" id="camp-nama-brand" required placeholder="Contoh: Telkomsel / Indihome" class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:border-citilink focus:outline-none transition-all">
+                </div>
+              </div>
+
+              <!-- PIC -->
+              <div class="space-y-1.5">
+                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wide">
+                  Nama PIC (Person In Charge) <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                    <i class="fa-solid fa-user"></i>
+                  </div>
+                  <input type="text" id="camp-pic" required placeholder="Contoh: Budi Santoso" class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:border-citilink focus:outline-none transition-all">
+                </div>
+              </div>
+
+              <!-- Email PIC -->
+              <div class="space-y-1.5">
+                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wide">
+                  Email PIC <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                    <i class="fa-solid fa-envelope"></i>
+                  </div>
+                  <input type="email" id="camp-email-pic" required placeholder="budi.santoso@company.com" class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:border-citilink focus:outline-none transition-all">
+                </div>
+              </div>
+
+              <!-- No HP / Whatsapp PIC -->
+              <div class="space-y-1.5">
+                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wide">
+                  No HP / WhatsApp PIC <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                    <i class="fa-solid fa-phone"></i>
+                  </div>
+                  <input type="tel" id="camp-nohp" required placeholder="081234567890" class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:border-citilink focus:outline-none transition-all">
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Alamat Perusahaan Full Width -->
+            <div class="space-y-1.5">
+              <label class="block text-xs font-bold text-gray-700 uppercase tracking-wide">
+                Alamat Perusahaan <span class="text-red-500">*</span>
+              </label>
+              <div class="relative">
+                <div class="absolute top-3 left-0 pl-3.5 pointer-events-none text-gray-400">
+                  <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <textarea id="camp-alamat" required rows="3" placeholder="Masukkan alamat lengkap kantor/perusahaan..." class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:border-citilink focus:outline-none transition-all resize-none"></textarea>
+              </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="pt-4 border-t border-gray-100 flex items-center justify-end gap-3">
+              <button type="button" onclick="resetCampaignForm()" class="px-5 py-2.5 rounded-xl text-xs font-semibold text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-rotate-left"></i>
+                <span>Reset Form</span>
+              </button>
+              <button type="submit" class="px-6 py-2.5 rounded-xl text-xs font-semibold bg-citilink text-white hover:bg-citilink-dark shadow-md hover:shadow-lg transition-all flex items-center gap-2">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>Simpan Campaign</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Registered Campaign List Table -->
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="p-5 border-b border-gray-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <h4 class="font-bold text-gray-800 text-base">Daftar Kampanye Terdaftar</h4>
+              <p class="text-xs text-gray-500">Daftar riwayat mitra perusahaan dan data PIC kampanye</p>
+            </div>
+            
+            <!-- Search & Filter Bar -->
+            <div class="flex items-center gap-3">
+              <div class="relative">
+                <input type="text" id="searchCampaignInput" onkeyup="filterCampaignTable()" placeholder="Cari PT, Brand, atau PIC..." class="pl-8 pr-4 py-1.5 text-xs rounded-lg border border-gray-300 focus:ring-2 focus:ring-citilink focus:outline-none w-48 md:w-64">
+                <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2 text-gray-400 text-xs"></i>
+              </div>
+              <select id="filterTipeSelect" onchange="filterCampaignTable()" class="px-3 py-1.5 text-xs rounded-lg border border-gray-300 focus:ring-2 focus:ring-citilink focus:outline-none bg-white font-semibold">
+                <option value="ALL">Semua Tipe</option>
+                <option value="Agency">Agency</option>
+                <option value="Direct">Direct</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm text-gray-600">
+              <thead class="bg-gray-50 text-gray-700 text-xs uppercase font-semibold border-b border-gray-200">
+                <tr>
+                  <th class="py-3.5 px-4">Nama PT</th>
+                  <th class="py-3.5 px-4">Tipe</th>
+                  <th class="py-3.5 px-4">Brand</th>
+                  <th class="py-3.5 px-4">PIC</th>
+                  <th class="py-3.5 px-4">Kontak (Email & HP)</th>
+                  <th class="py-3.5 px-4">Alamat Perusahaan</th>
+                  <th class="py-3.5 px-4 text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="campaignTableBody" class="divide-y divide-gray-200 font-medium">
+                <!-- Dynamic Content via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
       <div id="tab-generic-placeholder" class="bg-white p-12 rounded-xl border border-gray-200 text-center shadow-sm hidden">
         <div class="w-16 h-16 bg-green-50 text-citilink rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
           <i class="fa-solid fa-layer-group"></i>
@@ -299,11 +495,11 @@
     </main>
   </div>
 
+  
   <!-- MODAL 1: UPDATE REPORT DATA -->
   <div id="reportDataModal" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden transition-opacity">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl overflow-hidden border border-gray-100 flex flex-col max-h-[90vh]">
       
-      <!-- Modal Header -->
       <div class="p-5 border-b border-gray-100 flex items-center justify-between bg-gray-50">
         <div class="flex items-center gap-3">
           <div class="w-9 h-9 rounded-lg bg-green-100 text-citilink flex items-center justify-center font-bold">
@@ -319,9 +515,7 @@
         </button>
       </div>
 
-      <!-- Modal Body -->
       <div class="p-6 overflow-y-auto custom-scrollbar flex-1 space-y-4">
-        
         <div class="grid grid-cols-12 gap-3 text-xs font-bold text-gray-600 uppercase tracking-wider pb-1 border-b">
           <div class="col-span-3">Nama Periode</div>
           <div class="col-span-4">Agency Value (IDR)</div>
@@ -337,10 +531,8 @@
           <i class="fa-solid fa-plus-circle"></i>
           <span>Tambah Periode Baru (misal: 2027, 2028)</span>
         </button>
-
       </div>
 
-      <!-- Modal Footer -->
       <div class="p-4 border-t border-gray-100 bg-gray-50 flex items-center justify-end gap-3">
         <button onclick="closeModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-gray-600 hover:bg-gray-200 transition-colors">
           Batal
@@ -433,9 +625,8 @@
     </div>
   </div>
 
-  <!-- JAVASCRIPT APP LOGIC -->
   <script>
-    // DATA STATE
+    // GLOBAL DATA STORES
     let reportData = [
       { id: '2023', name: '2023', agency: 9789370000, direct: 9382218000 },
       { id: '2024', name: '2024', agency: 5000000000, direct: 11110000000 },
@@ -499,6 +690,40 @@
       { tailNumber: 'PK-G04', model: 'Airbus A320', placements: { 'head_cover_seat': { brand: 'Telkomsel', date: '15 Mei 26 - 15 Agu 26' }, 'meal_tray': { brand: 'Traveloka', date: '01 Jul 26 - 01 Okt 26' } } }
     ];
 
+    // CAMPAIGNS INITIAL DATA
+    let campaignsData = [
+      {
+        id: 'CMP-001',
+        namaPt: 'PT Telekomunikasi Selular (Telkomsel)',
+        tipe: 'Direct',
+        namaBrand: 'Telkomsel 5G',
+        pic: 'Budi Santoso',
+        emailPic: 'budi.santoso@telkomsel.co.id',
+        alamat: 'Telkomsel Smart Office, Jl. Jend. Gatot Subroto Kav. 52, Jakarta Selatan',
+        noHp: '08112345678'
+      },
+      {
+        id: 'CMP-002',
+        namaPt: 'PT Dentsu Indonesia',
+        tipe: 'Agency',
+        namaBrand: 'Bank BCA',
+        pic: 'Siti Rahmawati',
+        emailPic: 'siti.rahma@dentsu.com',
+        alamat: 'Menara BCA Lt. 38, Jl. M.H. Thamrin No. 1, Jakarta Pusat',
+        noHp: '08129876543'
+      },
+      {
+        id: 'CMP-003',
+        namaPt: 'PT Indofood Sukses Makmur Tbk',
+        tipe: 'Direct',
+        namaBrand: 'Indomie',
+        pic: 'Andi Wijaya',
+        emailPic: 'andi.wijaya@indofood.co.id',
+        alamat: 'Sudirman Plaza, Indofood Tower Lt. 21, Jakarta Selatan',
+        noHp: '081311223344'
+      }
+    ];
+
     let barChartInstance = null;
     let pieChartInstance = null;
     let activeExpandedRows = new Set();
@@ -511,6 +736,7 @@
     window.addEventListener('DOMContentLoaded', () => {
       renderDashboard();
       renderMediaMarketTracker();
+      renderCampaignTable();
     });
 
     function switchTab(tabId) {
@@ -783,6 +1009,113 @@
         tr.innerHTML = html;
         tbody.appendChild(tr);
       });
+    }
+
+    function handleSaveCampaign(e) {
+      e.preventDefault();
+
+      const namaPt = document.getElementById('camp-nama-pt').value.trim();
+      const tipe = document.getElementById('camp-tipe').value;
+      const namaBrand = document.getElementById('camp-nama-brand').value.trim();
+      const pic = document.getElementById('camp-pic').value.trim();
+      const emailPic = document.getElementById('camp-email-pic').value.trim();
+      const noHp = document.getElementById('camp-nohp').value.trim();
+      const alamat = document.getElementById('camp-alamat').value.trim();
+
+      const newCampaign = {
+        id: `CMP-00${campaignsData.length + 1}`,
+        namaPt,
+        tipe,
+        namaBrand,
+        pic,
+        emailPic,
+        noHp,
+        alamat
+      };
+
+      campaignsData.unshift(newCampaign); // Add to top
+      renderCampaignTable();
+      resetCampaignForm();
+
+      // Show Toast Notification
+      const toast = document.getElementById('campaign-success-toast');
+      toast.classList.remove('hidden');
+      toast.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function resetCampaignForm() {
+      document.getElementById('campaignForm').reset();
+    }
+
+    function renderCampaignTable() {
+      const tbody = document.getElementById('campaignTableBody');
+      const searchQuery = document.getElementById('searchCampaignInput') ? document.getElementById('searchCampaignInput').value.toLowerCase() : '';
+      const filterTipe = document.getElementById('filterTipeSelect') ? document.getElementById('filterTipeSelect').value : 'ALL';
+
+      tbody.innerHTML = '';
+
+      const filtered = campaignsData.filter(item => {
+        const matchesSearch = item.namaPt.toLowerCase().includes(searchQuery) ||
+                              item.namaBrand.toLowerCase().includes(searchQuery) ||
+                              item.pic.toLowerCase().includes(searchQuery);
+        const matchesTipe = (filterTipe === 'ALL') || (item.tipe === filterTipe);
+        return matchesSearch && matchesTipe;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" class="py-8 text-center text-gray-400 italic">
+              Tidak ada data kampanye yang cocok.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      filtered.forEach((item, index) => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-green-50/40 transition-colors bg-white";
+        tr.innerHTML = `
+          <td class="py-3.5 px-4 font-bold text-gray-800">
+            <div>${item.namaPt}</div>
+            <span class="text-[10px] text-gray-400 font-mono">${item.id}</span>
+          </td>
+          <td class="py-3.5 px-4">
+            <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold ${item.tipe === 'Agency' ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-lime-100 text-lime-800 border border-lime-300'}">
+              ${item.tipe}
+            </span>
+          </td>
+          <td class="py-3.5 px-4 font-semibold text-citilink">${item.namaBrand}</td>
+          <td class="py-3.5 px-4 font-medium text-gray-800">${item.pic}</td>
+          <td class="py-3.5 px-4 text-xs space-y-0.5">
+            <p class="text-gray-700"><i class="fa-solid fa-envelope text-gray-400 mr-1"></i>${item.emailPic}</p>
+            <p class="text-gray-600"><i class="fa-solid fa-phone text-gray-400 mr-1"></i>${item.noHp}</p>
+          </td>
+          <td class="py-3.5 px-4 text-xs text-gray-500 max-w-xs truncate" title="${item.alamat}">
+            ${item.alamat}
+          </td>
+          <td class="py-3.5 px-4 text-center">
+            <div class="flex items-center justify-center gap-2">
+              <button onclick="deleteCampaign('${item.id}')" class="text-gray-400 hover:text-red-600 transition-colors p-1" title="Hapus Kampanye">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterCampaignTable() {
+      renderCampaignTable();
+    }
+
+    function deleteCampaign(id) {
+      if (confirm('Apakah Anda yakin ingin menghapus data kampanye ini?')) {
+        campaignsData = campaignsData.filter(c => c.id !== id);
+        renderCampaignTable();
+      }
     }
 
     function openModal() {
