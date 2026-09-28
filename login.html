@@ -1,69 +1,830 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Login - SB Admin</title>
-        <link href="css/styles.css" rel="stylesheet" />
-        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    </head>
-    <body class="bg-primary">
-        <div id="layoutAuthentication">
-            <div id="layoutAuthentication_content">
-                <main>
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-5">
-                                <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
-                                    <div class="card-body">
-                                        <form>
-                                            <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
-                                                <label for="inputEmail">Email address</label>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputPassword" type="password" placeholder="Password" />
-                                                <label for="inputPassword">Password</label>
-                                            </div>
-                                            <div class="form-check mb-3">
-                                                <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
-                                                <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
-                                            </div>
-                                            <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <a class="small" href="password.html">Forgot Password?</a>
-                                                <a class="btn btn-primary" href="index.html">Login</a>
-                                            </div>
-                                        </form>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inflight Advertising Dashboard</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --sb-width: 250px;
+            --sb-bg: #1e2229;
+            --sb-hover: #2c313a;
+            --sb-active: #0d6efd;
+            --topbar-height: 56px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar Styling */
+        #sidebar-wrapper {
+            min-height: 100vh;
+            width: var(--sb-width);
+            background-color: var(--sb-bg);
+            transition: margin 0.25s ease-out;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        #sidebar-wrapper .sidebar-heading {
+            padding: 1rem 1.25rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-heading i {
+            color: #0d6efd;
+        }
+
+        .sidebar-section-title {
+            padding: 0.75rem 1.25rem 0.25rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #6c757d;
+        }
+
+        .list-group-item-sidebar {
+            padding: 0.75rem 1.25rem;
+            color: #a2a9b1;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+        }
+
+        .list-group-item-sidebar:hover {
+            color: #ffffff;
+            background-color: var(--sb-hover);
+        }
+
+        .list-group-item-sidebar.active {
+            color: #ffffff;
+            background-color: var(--sb-active);
+            font-weight: 600;
+        }
+
+        .list-group-item-sidebar i {
+            width: 24px;
+            font-size: 1rem;
+            margin-right: 10px;
+        }
+
+        /* Page Content Wrapper */
+        #page-content-wrapper {
+            width: 100%;
+            margin-left: var(--sb-width);
+            transition: margin 0.25s ease-out;
+        }
+
+        body.sb-collapsed #sidebar-wrapper {
+            margin-left: calc(-1 * var(--sb-width));
+        }
+
+        body.sb-collapsed #page-content-wrapper {
+            margin-left: 0;
+        }
+
+        /* Top Navbar */
+        .navbar-top {
+            height: var(--topbar-height);
+            background-color: #ffffff;
+            border-bottom: 1px solid #e3e6f0;
+        }
+
+        /* Metric Cards */
+        .card-metric {
+            border-left: 4px solid;
+            border-radius: 0.35rem;
+            transition: transform 0.2s ease;
+        }
+
+        .card-metric:hover {
+            transform: translateY(-2px);
+        }
+
+        .card-metric-primary { border-left-color: #0d6efd; }
+        .card-metric-success { border-left-color: #198754; }
+        .card-metric-info { border-left-color: #0dcaf0; }
+        .card-metric-warning { border-left-color: #ffc107; }
+
+        .metric-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .metric-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        /* Custom Toast notification */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1090;
+        }
+
+        @media (max-width: 768px) {
+            #sidebar-wrapper {
+                margin-left: calc(-1 * var(--sb-width));
+            }
+            #page-content-wrapper {
+                margin-left: 0;
+            }
+            body.sb-collapsed #sidebar-wrapper {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <div class="sidebar-heading d-flex align-items-center">
+                <i class="fa-solid fa-plane-departure me-2 fs-5"></i>
+                <span>Inflight Advertising</span>
+            </div>
+            <div class="list-group list-group-flush py-2">
+                <div class="sidebar-section-title">Core</div>
+                <button class="list-group-item-sidebar active" id="nav-report" onclick="switchTab('report')">
+                    <i class="fa-solid fa-chart-line"></i> Report
+                </button>
+
+                <div class="sidebar-section-title">Interface</div>
+                <button class="list-group-item-sidebar" id="nav-mediamarket" onclick="switchTab('mediamarket')">
+                    <i class="fa-solid fa-bullhorn"></i> Media Market
+                </button>
+                <button class="list-group-item-sidebar" onclick="showToast('Modul New Project siap digunakan!', 'info')">
+                    <i class="fa-solid fa-folder-plus"></i> New Project
+                </button>
+                <button class="list-group-item-sidebar" onclick="showToast('Akses Administrasi dibatasi', 'warning')">
+                    <i class="fa-solid fa-file-invoice"></i> Administrasi
+                </button>
+                <button class="list-group-item-sidebar" onclick="showToast('Menu Revenue aktif di Dashboard Report', 'info')">
+                    <i class="fa-solid fa-wallet"></i> Revenue
+                </button>
+                <button class="list-group-item-sidebar" onclick="showToast('Halaman Payment sedang diperbarui', 'info')">
+                    <i class="fa-solid fa-credit-card"></i> Payment
+                </button>
+
+                <div class="sidebar-section-title">Addons</div>
+                <button class="list-group-item-sidebar" onclick="switchTab('report')">
+                    <i class="fa-solid fa-chart-pie"></i> Charts
+                </button>
+                <button class="list-group-item-sidebar" onclick="switchTab('report')">
+                    <i class="fa-solid fa-table"></i> Tables
+                </button>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <!-- Top Navigation Bar -->
+            <nav class="navbar navbar-expand-lg navbar-top px-3 justify-content-between">
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-sm btn-light border" id="sidebarToggle" onclick="toggleSidebar()">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <span class="ms-3 fw-bold text-secondary" id="page-title">Report Dashboard</span>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateDataModal">
+                        <i class="fa-solid fa-pen-to-square me-1"></i> Update Data Report
+                    </button>
+                    <div class="dropdown">
+                        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle text-dark" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://placehold.co/32x32/0d6efd/ffffff?text=ADM" alt="Admin" class="rounded-circle me-2">
+                            <span class="d-none d-md-inline fw-semibold small">Administrator</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user me-2"></i>Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i>Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="#"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container-fluid p-4">
+                
+                <!-- VIEW 1: REPORT DASHBOARD -->
+                <div id="view-report">
+                    <!-- Metric Cards Row -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card card-metric card-metric-primary shadow-sm h-100 py-2 bg-white">
+                                <div class="card-body">
+                                    <div class="row align-items-center g-0">
+                                        <div class="col me-2">
+                                            <div class="metric-title text-primary mb-1">Grand Total Revenue</div>
+                                            <div class="metric-value" id="card-grand-total">IDR 54,084,867,495</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa-solid fa-coins fa-2x text-gray-300 text-primary opacity-50"></i>
+                                        </div>
                                     </div>
-                                    <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="register.html">Need an account? Sign up!</a></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card card-metric card-metric-info shadow-sm h-100 py-2 bg-white">
+                                <div class="card-body">
+                                    <div class="row align-items-center g-0">
+                                        <div class="col me-2">
+                                            <div class="metric-title text-info mb-1">Total Agency Value</div>
+                                            <div class="metric-value" id="card-agency-total">IDR 22,377,554,295</div>
+                                            <div class="text-xs text-muted mt-1"><span id="card-agency-pct" class="badge bg-info text-dark">41%</span> Share Contribution</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa-solid fa-building fa-2x text-info opacity-50"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card card-metric card-metric-success shadow-sm h-100 py-2 bg-white">
+                                <div class="card-body">
+                                    <div class="row align-items-center g-0">
+                                        <div class="col me-2">
+                                            <div class="metric-title text-success mb-1">Total Direct Value</div>
+                                            <div class="metric-value" id="card-direct-total">IDR 31,707,313,200</div>
+                                            <div class="text-xs text-muted mt-1"><span id="card-direct-pct" class="badge bg-success">59%</span> Share Contribution</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa-solid fa-handshake fa-2x text-success opacity-50"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card card-metric card-metric-warning shadow-sm h-100 py-2 bg-white">
+                                <div class="card-body">
+                                    <div class="row align-items-center g-0">
+                                        <div class="col me-2">
+                                            <div class="metric-title text-warning mb-1">Total Channel / Brand (2026)</div>
+                                            <div class="metric-value" id="card-channel-count">14 Channel</div>
+                                            <div class="text-xs text-muted mt-1">
+                                                <span class="text-info fw-bold" id="card-agency-count">4 Agency (29%)</span> / 
+                                                <span class="text-success fw-bold" id="card-direct-count">10 Direct (71%)</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa-solid fa-bullhorn fa-2x text-warning opacity-50"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </main>
-            </div>
-            <div id="layoutAuthentication_footer">
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
+
+                    <!-- Charts Row 1 -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-lg-8">
+                            <div class="card shadow-sm border-0 h-100">
+                                <div class="card-header bg-white py-3 d-flex align-items-center justify-content-between border-0">
+                                    <h6 class="m-0 fw-bold text-primary"><i class="fa-solid fa-chart-column me-2"></i>Revenue Comparison: Agency vs Direct (Per Year)</h6>
+                                    <span class="badge bg-light text-dark border">In Rupiah (IDR)</span>
+                                </div>
+                                <div class="card-body">
+                                    <div style="height: 320px; position: relative;">
+                                        <canvas id="barChartRevenue"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="card shadow-sm border-0 h-100">
+                                <div class="card-header bg-white py-3 border-0">
+                                    <h6 class="m-0 fw-bold text-primary"><i class="fa-solid fa-chart-pie me-2"></i>Channel Share Distribution (2026)</h6>
+                                </div>
+                                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                                    <div style="height: 250px; width: 100%; position: relative;">
+                                        <canvas id="pieChartChannel"></canvas>
+                                    </div>
+                                    <div class="text-center mt-3 small text-muted">
+                                        Perbandingan Rasio Channel Agency & Direct (2026 Q3)
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </footer>
+
+                    <!-- Summary Table & Breakdown Row -->
+                    <div class="row g-3">
+                        <div class="col-lg-8">
+                            <div class="card shadow-sm border-0">
+                                <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-0">
+                                    <h6 class="m-0 fw-bold text-primary"><i class="fa-solid fa-table me-2"></i>Data Summary Revenue & Contribution</h6>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover align-middle mb-0" id="summaryTable">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Period</th>
+                                                    <th class="text-end">Agency (IDR)</th>
+                                                    <th class="text-center">% Agency</th>
+                                                    <th class="text-end">Direct (IDR)</th>
+                                                    <th class="text-center">% Direct</th>
+                                                    <th class="text-end">Grand Total (IDR)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="table-body">
+                                                <!-- Dynamic Rows -->
+                                            </tbody>
+                                            <tfoot class="table-dark fw-bold" id="table-foot">
+                                                <!-- Dynamic Totals -->
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="card shadow-sm border-0">
+                                <div class="card-header bg-white py-3 border-0">
+                                    <h6 class="m-0 fw-bold text-primary"><i class="fa-solid fa-percent me-2"></i>Annual Contribution Ratio</h6>
+                                </div>
+                                <div class="card-body" id="contribution-progress-container">
+                                    <!-- Dynamic Progress Bars -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW 2: MEDIA MARKET FORM -->
+                <div id="view-mediamarket" class="d-none">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8 col-md-10">
+                            <div class="card shadow-sm border-0">
+                                <div class="card-header bg-primary text-white py-3">
+                                    <h5 class="m-0 fw-bold"><i class="fa-solid fa-pen-to-square me-2"></i>Form Input Media Market</h5>
+                                </div>
+                                <div class="card-body p-4">
+                                    <form id="mediaMarketForm" onsubmit="handleFormSubmit(event)">
+                                        <div class="mb-3">
+                                            <label for="mediaPlacement" class="form-label fw-semibold">Media Placement <span class="text-danger">*</span></label>
+                                            <select class="form-select" id="mediaPlacement" required>
+                                                <option value="" selected disabled>-- Pilih Media Placement --</option>
+                                                <option value="Overhead Bin Sticker">Overhead Bin Sticker</option>
+                                                <option value="Seat Back Headrest Cover">Seat Back Headrest Cover</option>
+                                                <option value="Inflight Wi-Fi Portal Banner">Inflight Wi-Fi Portal Banner</option>
+                                                <option value="Inflight Magazine Full Page">Inflight Magazine Full Page</option>
+                                                <option value="Boarding Pass Ads">Boarding Pass Ads</option>
+                                                <option value="Meal Tray Table Wrap">Meal Tray Table Wrap</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-md-6">
+                                                <label for="namaBrand" class="form-label fw-semibold">Nama Brand / Campaign <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="namaBrand" placeholder="Contoh: Bank Mandiri / Samsung" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="channelType" class="form-label fw-semibold">Channel <span class="text-danger">*</span></label>
+                                                <select class="form-select" id="channelType" required>
+                                                    <option value="" selected disabled>-- Pilih Channel --</option>
+                                                    <option value="Agency">Agency</option>
+                                                    <option value="Direct">Direct</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-md-6">
+                                                <label for="namaPIC" class="form-label fw-semibold">Nama PIC <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="namaPIC" placeholder="Nama penanggung jawab" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="namaEmail" class="form-label fw-semibold">Email PIC <span class="text-danger">*</span></label>
+                                                <input type="email" class="form-control" id="namaEmail" placeholder="email@perusahaan.com" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="noHandphone" class="form-label fw-semibold">No Handphone / WA <span class="text-danger">*</span></label>
+                                            <input type="tel" class="form-control" id="noHandphone" placeholder="0812xxxxxxx" required>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label for="alamatPerusahaan" class="form-label fw-semibold">Alamat Perusahaan</label>
+                                            <textarea class="form-control" id="alamatPerusahaan" rows="3" placeholder="Alamat lengkap perusahaan..."></textarea>
+                                        </div>
+
+                                        <div class="d-flex justify-content-end gap-2">
+                                            <button type="reset" class="btn btn-light border px-4">
+                                                <i class="fa-solid fa-rotate-left me-1"></i> Reset
+                                            </button>
+                                            <button type="submit" class="btn btn-primary px-4">
+                                                <i class="fa-solid fa-paper-plane me-1"></i> Simpan Data
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
-    </body>
+    </div>
+
+    <!-- UPDATE DATA MODAL -->
+    <div class="modal fade" id="updateDataModal" tabindex="-1" aria-labelledby="updateDataModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title fw-bold" id="updateDataModalLabel"><i class="fa-solid fa-pen-to-square me-2"></i>Update Data Revenue</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="updateReportForm" onsubmit="saveReportData(event)">
+                        <div class="mb-3">
+                            <label for="modalYear" class="form-label fw-semibold">Pilih Periode Tahun</label>
+                            <select class="form-select" id="modalYear" onchange="loadYearDataToModal()">
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                                <option value="2026 (Q3)">2026 (Q3)</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="modalAgency" class="form-label fw-semibold">Revenue Agency (IDR)</label>
+                            <input type="number" class="form-control" id="modalAgency" required min="0">
+                        </div>
+                        <div class="mb-3">
+                            <label for="modalDirect" class="form-label fw-semibold">Revenue Direct (IDR)</label>
+                            <input type="number" class="form-control" id="modalDirect" required min="0">
+                        </div>
+                        <div class="d-flex justify-content-end gap-2">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary">Simpan & Perbarui</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Element -->
+    <div class="toast-container">
+        <div id="liveToast" class="toast align-items-center text-white bg-success border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body" id="toast-message">
+                    Data berhasil disimpan!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Global Data Store (Matching the provided spreadsheet report)
+        let reportData = [
+            { year: "2023", agency: 9789370000, direct: 9382218000 },
+            { year: "2024", agency: 4894340000, direct: 11110000000 },
+            { year: "2025", agency: 6500000000, direct: 8800000000 },
+            { year: "2026 (Q3)", agency: 1193844295, direct: 2415095200 }
+        ];
+
+        // Channel Distribution for 2026
+        let channelStats = {
+            agency: 4,
+            direct: 10
+        };
+
+        let barChartInstance = null;
+        let pieChartInstance = null;
+
+        // Helper: Format Rupiah
+        function formatIDR(amount) {
+            return "IDR " + Math.round(amount).toLocaleString('id-ID');
+        }
+
+        // Core Renderer Function
+        function renderDashboard() {
+            let grandTotalAgency = 0;
+            let grandTotalDirect = 0;
+
+            const tbody = document.getElementById('table-body');
+            const progressContainer = document.getElementById('contribution-progress-container');
+            tbody.innerHTML = '';
+            progressContainer.innerHTML = '';
+
+            reportData.forEach((item) => {
+                const totalYear = item.agency + item.direct;
+                grandTotalAgency += item.agency;
+                grandTotalDirect += item.direct;
+
+                const agencyPct = totalYear > 0 ? ((item.agency / totalYear) * 100).toFixed(0) : 0;
+                const directPct = totalYear > 0 ? ((item.direct / totalYear) * 100).toFixed(0) : 0;
+
+                // Populate Table Row
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="fw-bold text-secondary">${item.year}</td>
+                    <td class="text-end">${formatIDR(item.agency)}</td>
+                    <td class="text-center"><span class="badge bg-info text-dark">${agencyPct}%</span></td>
+                    <td class="text-end">${formatIDR(item.direct)}</td>
+                    <td class="text-center"><span class="badge bg-success">${directPct}%</span></td>
+                    <td class="text-end fw-bold">${formatIDR(totalYear)}</td>
+                `;
+                tbody.appendChild(tr);
+
+                // Populate Progress Bar Breakdown
+                const progBlock = document.createElement('div');
+                progBlock.className = 'mb-3';
+                progBlock.innerHTML = `
+                    <div class="d-flex justify-content-between small fw-bold mb-1">
+                        <span>${item.year}</span>
+                        <span>Agency ${agencyPct}% | Direct ${directPct}%</span>
+                    </div>
+                    <div class="progress" style="height: 12px;">
+                        <div class="progress-bar bg-info" role="progressbar" style="width: ${agencyPct}%" title="Agency ${agencyPct}%"></div>
+                        <div class="progress-bar bg-success" role="progressbar" style="width: ${directPct}%" title="Direct ${directPct}%"></div>
+                    </div>
+                `;
+                progressContainer.appendChild(progBlock);
+            });
+
+            // Calculate Grand Totals
+            const grandTotalValue = grandTotalAgency + grandTotalDirect;
+            const overallAgencyPct = grandTotalValue > 0 ? Math.round((grandTotalAgency / grandTotalValue) * 100) : 0;
+            const overallDirectPct = grandTotalValue > 0 ? Math.round((grandTotalDirect / grandTotalValue) * 100) : 0;
+
+            // Render Table Footer
+            const tfoot = document.getElementById('table-foot');
+            tfoot.innerHTML = `
+                <tr>
+                    <td>Grand Total</td>
+                    <td class="text-end">${formatIDR(grandTotalAgency)}</td>
+                    <td class="text-center">${overallAgencyPct}%</td>
+                    <td class="text-end">${formatIDR(grandTotalDirect)}</td>
+                    <td class="text-center">${overallDirectPct}%</td>
+                    <td class="text-end text-warning">${formatIDR(grandTotalValue)}</td>
+                </tr>
+            `;
+
+            // Update Metric Summary Cards
+            document.getElementById('card-grand-total').innerText = formatIDR(grandTotalValue);
+            document.getElementById('card-agency-total').innerText = formatIDR(grandTotalAgency);
+            document.getElementById('card-agency-pct').innerText = `${overallAgencyPct}%`;
+            document.getElementById('card-direct-total').innerText = formatIDR(grandTotalDirect);
+            document.getElementById('card-direct-pct').innerText = `${overallDirectPct}%`;
+
+            const totalChannels = channelStats.agency + channelStats.direct;
+            const channelAgencyPct = totalChannels > 0 ? Math.round((channelStats.agency / totalChannels) * 100) : 0;
+            const channelDirectPct = totalChannels > 0 ? Math.round((channelStats.direct / totalChannels) * 100) : 0;
+
+            document.getElementById('card-channel-count').innerText = `${totalChannels} Channel`;
+            document.getElementById('card-agency-count').innerText = `${channelStats.agency} Agency (${channelAgencyPct}%)`;
+            document.getElementById('card-direct-count').innerText = `${channelStats.direct} Direct (${channelDirectPct}%)`;
+
+            // Update Charts
+            updateCharts();
+        }
+
+        function updateCharts() {
+            const labels = reportData.map(d => d.year);
+            const agencyValues = reportData.map(d => d.agency);
+            const directValues = reportData.map(d => d.direct);
+
+            // Bar Chart Initialization or Update
+            if (barChartInstance) {
+                barChartInstance.data.labels = labels;
+                barChartInstance.data.datasets[0].data = agencyValues;
+                barChartInstance.data.datasets[1].data = directValues;
+                barChartInstance.update();
+            } else {
+                const ctxBar = document.getElementById('barChartRevenue').getContext('2d');
+                barChartInstance = new Chart(ctxBar, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Agency (IDR)',
+                                data: agencyValues,
+                                backgroundColor: '#0dcaf0',
+                                borderRadius: 4
+                            },
+                            {
+                                label: 'Direct (IDR)',
+                                data: directValues,
+                                backgroundColor: '#198754',
+                                borderRadius: 4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'top' },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.dataset.label + ': ' + formatIDR(context.raw);
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                ticks: {
+                                    callback: function(value) {
+                                        return 'Rp ' + (value / 1e9).toFixed(1) + 'M';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Pie Chart Initialization or Update
+            const totalChannels = channelStats.agency + channelStats.direct;
+            const agencyRatioPct = Math.round((channelStats.agency / totalChannels) * 100);
+            const directRatioPct = Math.round((channelStats.direct / totalChannels) * 100);
+
+            if (pieChartInstance) {
+                pieChartInstance.data.datasets[0].data = [channelStats.agency, channelStats.direct];
+                pieChartInstance.update();
+            } else {
+                const ctxPie = document.getElementById('pieChartChannel').getContext('2d');
+                pieChartInstance = new Chart(ctxPie, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Agency', 'Direct'],
+                        datasets: [{
+                            data: [channelStats.agency, channelStats.direct],
+                            backgroundColor: ['#0dcaf0', '#198754'],
+                            borderWidth: 2,
+                            borderColor: '#ffffff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'bottom' },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const val = context.raw;
+                                        const pct = Math.round((val / totalChannels) * 100);
+                                        return `${context.label}: ${val} Channel (${pct}%)`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Toggle Sidebar Navigation
+        function toggleSidebar() {
+            document.body.classList.toggle('sb-collapsed');
+        }
+
+        // Tab Navigation Switcher
+        function switchTab(tab) {
+            const reportView = document.getElementById('view-report');
+            const mediaView = document.getElementById('view-mediamarket');
+            const navReport = document.getElementById('nav-report');
+            const navMedia = document.getElementById('nav-mediamarket');
+            const pageTitle = document.getElementById('page-title');
+
+            if (tab === 'report') {
+                reportView.classList.remove('d-none');
+                mediaView.classList.add('d-none');
+                navReport.classList.add('active');
+                navMedia.classList.remove('active');
+                pageTitle.innerText = 'Report Dashboard';
+            } else if (tab === 'mediamarket') {
+                reportView.classList.add('d-none');
+                mediaView.classList.remove('d-none');
+                navReport.classList.remove('active');
+                navMedia.classList.add('active');
+                pageTitle.innerText = 'Form Input Media Market';
+            }
+        }
+
+        // Handle Media Market Form Submit
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const channel = document.getElementById('channelType').value;
+            const brand = document.getElementById('namaBrand').value;
+
+            if (channel === 'Agency') {
+                channelStats.agency += 1;
+            } else if (channel === 'Direct') {
+                channelStats.direct += 1;
+            }
+
+            renderDashboard();
+            showToast(`Data Media Market '${brand}' berhasil ditambahkan!`, 'success');
+            document.getElementById('mediaMarketForm').reset();
+            switchTab('report');
+        }
+
+        // Modal Data Loader & Saver
+        function loadYearDataToModal() {
+            const selectedYear = document.getElementById('modalYear').value;
+            const existing = reportData.find(d => d.year === selectedYear);
+            if (existing) {
+                document.getElementById('modalAgency').value = existing.agency;
+                document.getElementById('modalDirect').value = existing.direct;
+            }
+        }
+
+        function saveReportData(e) {
+            e.preventDefault();
+            const selectedYear = document.getElementById('modalYear').value;
+            const agencyVal = parseFloat(document.getElementById('modalAgency').value) || 0;
+            const directVal = parseFloat(document.getElementById('modalDirect').value) || 0;
+
+            const existingIndex = reportData.findIndex(d => d.year === selectedYear);
+            if (existingIndex !== -1) {
+                reportData[existingIndex].agency = agencyVal;
+                reportData[existingIndex].direct = directVal;
+            } else {
+                reportData.push({ year: selectedYear, agency: agencyVal, direct: directVal });
+            }
+
+            renderDashboard();
+
+            // Hide Modal
+            const modalEl = document.getElementById('updateDataModal');
+            const modalInstance = bootstrap.Modal.getInstance(modalEl);
+            if (modalInstance) modalInstance.hide();
+
+            showToast(`Data Revenue untuk ${selectedYear} berhasil diperbarui!`, 'success');
+        }
+
+        // Toast Helper
+        function showToast(message, type = 'success') {
+            const toastEl = document.getElementById('liveToast');
+            const toastBody = document.getElementById('toast-message');
+            
+            toastEl.className = `toast align-items-center text-white border-0 shadow bg-${type}`;
+            toastBody.innerText = message;
+
+            const toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        }
+
+        // Initialize on DOM Ready
+        window.onload = function() {
+            loadYearDataToModal();
+            renderDashboard();
+        };
+    </script>
+</body>
 </html>
