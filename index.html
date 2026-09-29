@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inflight Advertising Dashboard - Citilink Theme</title>
+  <title>Inflight Advertising Dashboard - Citilink Theme (Interactive CRUD Edition)</title>
   <!-- Tailwind CSS & FontAwesome -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -44,24 +44,1090 @@
       <!-- Header / Logo Area -->
       <div class="p-5 flex items-center justify-between border-b border-green-800/50">
         <div class="flex items-center gap-2">
-          <svg class="h-7 w-auto fill-current text-white" viewBox="0 0 160 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12.5 4.5C6 4.5 1 9.5 1 16c0 6.5 5 11.5 11.5 11.5 4.5 0 8.5-2.5 10.5-6.5h-5.5c-1.2 2.2-3.2 3.5-5 3.5-3.5 0-6.2-3-6.2-7s2.7-7 6.2-7c1.8 0 3.8 1.3 5 3.5h5.5C21 7 17 4.5 12.5 4.5zM27 1.5h5v25h-5v-25zm11 0h5v25h-5v-25zm11 0h5v25h-5v-25z" fill="#82c341"/>
-            <text x="0" y="28" font-family="'Inter', sans-serif" font-style="italic" font-weight="900" font-size="30" fill="#FFFFFF">Citilink</text>
-          </svg>
+          <span class="text-xl font-black italic tracking-wider text-white">Citilink</span>
           <span class="bg-citilink-accent text-citilink-sidebar font-extrabold text-[11px] px-2 py-0.5 rounded-md shadow-sm uppercase tracking-wider">
-            Ads
+            Ads Pro
           </span>
         </div>
       </div>
 
       <!-- Navigation Menu -->
       <nav class="mt-4 px-3 space-y-1">
-        <div class="px-3 py-2 text-[11px] font-semibold text-green-300 tracking-wider uppercase">CORE MODULE</div>
-        <button onclick="switchTab('report-dashboard')" id="nav-report-dashboard" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors bg-citilink text-white shadow-md">
+        <div class="px-3 py-2 text-[11px] font-semibold text-green-300 tracking-wider uppercase">MODUL UTAMA</div>
+        <button onclick="switchTab('report-dashboard')" id="nav-report-dashboard" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors bg-citilink text-white shadow-md">
           <i class="fa-solid fa-chart-pie w-5 text-center"></i>
           <span>Report Dashboard</span>
         </button>
 
+        <div class="px-3 py-2 mt-4 text-[11px] font-semibold text-green-300 tracking-wider uppercase">MANAJEMEN</div>
+        <button onclick="switchTab('media-market')" id="nav-media-market" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
+          <i class="fa-solid fa-plane w-5 text-center"></i>
+          <span>Media Placement</span>
+        </button>
+        <button onclick="switchTab('new-campaign')" id="nav-new-campaign" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
+          <i class="fa-solid fa-rectangle-ad w-5 text-center"></i>
+          <span>New Campaign</span>
+        </button>
+        <button onclick="switchTab('administrasi')" id="nav-administrasi" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
+          <i class="fa-solid fa-folder-open w-5 text-center"></i>
+          <span>Administrasi</span>
+        </button>
+        <button onclick="switchTab('revenue-streams')" id="nav-revenue-streams" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
+          <i class="fa-solid fa-sack-dollar w-5 text-center"></i>
+          <span>Revenue Streams</span>
+        </button>
+        <button onclick="switchTab('billing-payment')" id="nav-billing-payment" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
+          <i class="fa-solid fa-credit-card w-5 text-center"></i>
+          <span>Billing & Payment</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- User Profile Footer -->
+    <div class="p-4 border-t border-green-800/50 flex items-center gap-3 bg-green-950/40">
+      <div class="w-9 h-9 rounded-full bg-citilink flex items-center justify-center font-bold text-white shadow-sm border border-green-400">
+        QG
+      </div>
+      <div class="overflow-hidden">
+        <p class="text-sm font-semibold text-white truncate">Hi Refgina!</p>
+        <p class="text-xs text-green-300 truncate">refgina@citilink.co.id</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT AREA -->
+  <div class="flex-1 flex flex-col h-screen overflow-hidden">
+
+    <!-- TOP HEADER NAVBAR -->
+    <header class="bg-white border-b border-gray-200 py-3 px-6 flex items-center justify-between shadow-sm z-10">
+      <div class="flex items-center gap-3">
+        <h2 id="page-title" class="text-lg font-bold text-gray-800">Laporan Inflight Advertising</h2>
+        <span class="bg-citilink-light text-citilink font-semibold text-xs px-2.5 py-0.5 rounded-full border border-green-200">
+          <i class="fa-solid fa-bolt text-citilink-accent mr-1"></i> Interactive CRUD Mode
+        </span>
+      </div>
+      <div class="flex items-center gap-3">
+        <button onclick="openAddYearModal()" class="bg-citilink hover:bg-citilink-dark text-white font-medium text-xs px-3.5 py-2 rounded-lg shadow-sm flex items-center gap-2 transition-all">
+          <i class="fa-solid fa-plus"></i>
+          <span>Tambah Tahun Baru (2027 dst)</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- CONTENT BODY CONTAINER -->
+    <main class="flex-1 overflow-y-auto p-6 custom-scrollbar bg-gray-50">
+
+      <!-- SECTION 1: REPORT DASHBOARD TAB -->
+      <div id="tab-report-dashboard" class="tab-content space-y-6">
+
+        <!-- QUARTERLY YOY GROWTH CARDS -->
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm font-extrabold text-gray-700 uppercase tracking-wider flex items-center gap-2">
+              <i class="fa-solid fa-chart-line text-citilink"></i> Pertumbuhan YoY Kuartalan (Q1 - Q4)
+            </h3>
+            <span class="text-xs text-gray-500 font-medium">*Hitungan otomatis berdasarkan input bulanan</span>
+          </div>
+          <div id="quarterly-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Dynamic Cards generated by JS -->
+          </div>
+        </div>
+
+        <!-- MAIN MONTHLY & YOY GROWTH REVENUE TABLE -->
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="p-5 border-b border-gray-200 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gray-50/50">
+            <div>
+              <h3 class="text-base font-bold text-gray-800">Tabel Rincian Revenue Bulanan & Pertumbuhan YoY</h3>
+              <p class="text-xs text-gray-500">Rekapitulasi pendapatan iklan per bulan (IDR) beserta grafik tren sparkline</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="openAddYearModal()" class="text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-3 py-2 rounded-lg shadow-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-calendar-plus"></i> Tambah Tahun (2027+)
+              </button>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto custom-scrollbar">
+            <table class="w-full text-left text-xs">
+              <thead id="monthly-table-head" class="bg-gray-100 text-gray-800 uppercase font-bold border-b border-gray-200">
+                <!-- Dynamic Header Row -->
+              </thead>
+              <tbody id="monthly-table-body" class="divide-y divide-gray-200 font-medium">
+                <!-- Dynamic Monthly Data Rows -->
+              </tbody>
+              <tfoot id="monthly-table-foot" class="bg-gray-50 font-bold border-t-2 border-gray-300">
+                <!-- Dynamic Totals & YoY Rows -->
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <!-- CHANNEL CONTRIBUTION SECTION (AGENCY VS DIRECT) -->
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="p-5 border-b border-gray-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <h3 class="text-base font-bold text-gray-800">Kontribusi Channel Penjualan (Agensi vs Langsung)</h3>
+              <p class="text-xs text-gray-500">Perbandingan perolehan nilai iklan dari Agency vs Direct (*Nilai dalam IDR)</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
+                <i class="fa-solid fa-tags mr-1"></i> IDR Currency
+              </span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 p-5 border-b border-gray-100">
+            <div class="lg:col-span-2 overflow-x-auto custom-scrollbar">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-gray-50 text-gray-700 uppercase font-bold border-b border-gray-200">
+                  <tr>
+                    <th class="py-3 px-3">Periode</th>
+                    <th class="py-3 px-3 text-right">Agensi (IDR)</th>
+                    <th class="py-3 px-3 text-center">Kontribusi %</th>
+                    <th class="py-3 px-3 text-right">Langsung (IDR)</th>
+                    <th class="py-3 px-3 text-center">Kontribusi %</th>
+                    <th class="py-3 px-3 text-right">Total (IDR)</th>
+                    <th class="py-3 px-3 text-center">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="channel-table-body" class="divide-y divide-gray-200 font-medium">
+                  <!-- Dynamic Channel Data -->
+                </tbody>
+                <tfoot id="channel-table-foot" class="bg-gray-50 font-bold border-t-2 border-gray-300">
+                  <!-- Dynamic Totals -->
+                </tfoot>
+              </table>
+              <p class="mt-2 text-[11px] text-gray-400 italic">* Termasuk akumulasi data historis &lt; 2023</p>
+            </div>
+
+            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 flex flex-col justify-center">
+              <h4 class="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 text-center">Proporsi Kanal Penjualan</h4>
+              <div class="h-56 flex items-center justify-center">
+                <canvas id="channelPieChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SECTION 2: MEDIA PLACEMENT TRACKER TAB -->
+      <div id="tab-media-market" class="tab-content space-y-6 hidden">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+          <div>
+            <h3 class="text-xl font-bold text-gray-800">Pelacak Penempatan Media (Media Placement Tracker)</h3>
+            <p class="text-xs text-gray-500">Klik langsung pada sel status (Tersedia / Terpesan / Pemeliharaan / Direservasi) untuk mengubah secara individual!</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <span id="armada-count-badge" class="text-xs font-bold text-citilink bg-green-50 px-3 py-1.5 rounded-lg border border-green-200">
+              Armada: 5 Pesawat
+            </span>
+            <button onclick="openAddPlaneModal()" class="bg-citilink hover:bg-citilink-dark text-white font-medium text-xs px-3.5 py-2 rounded-lg shadow-sm flex items-center gap-2">
+              <i class="fa-solid fa-plane-arrival"></i>
+              <span>Registrasi Pesawat Baru</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="placement-category-cards" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3"></div>
+
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="overflow-x-auto custom-scrollbar">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-gray-50 text-gray-700 uppercase font-bold border-b border-gray-200">
+                <tr id="matrix-header-row">
+                  <th class="py-3.5 px-4 min-w-[160px] sticky left-0 bg-gray-50 z-10 border-r">REGISTRASI PESAWAT</th>
+                </tr>
+              </thead>
+              <tbody id="matrixTableBody" class="divide-y divide-gray-200 font-medium"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 3: NEW CAMPAIGN TAB -->
+      <div id="tab-new-campaign" class="tab-content space-y-6 hidden">
+        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm max-w-4xl mx-auto">
+          <div class="flex items-center gap-3 pb-4 mb-6 border-b border-gray-200">
+            <div class="w-10 h-10 rounded-xl bg-green-100 text-citilink flex items-center justify-center font-bold text-lg">
+              <i class="fa-solid fa-rectangle-ad"></i>
+            </div>
+            <div>
+              <h3 id="campaign-form-title" class="text-lg font-bold text-gray-800">Registrasi Campaign Baru</h3>
+              <p class="text-xs text-gray-500">Masukkan detail data klien dan pendaftaran iklan baru</p>
+            </div>
+          </div>
+
+          <form id="newCampaignForm" onsubmit="handleCampaignSubmit(event)" class="space-y-4">
+            <input type="hidden" id="campaign-edit-index" value="-1">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nama PT / Perusahaan *</label>
+                <input type="text" id="campaign-nama-pt" required placeholder="Contoh: PT Bank Central Asia Tbk" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Tipe Kemitraan (Agensi / Langsung) *</label>
+                <select id="campaign-type" required class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none bg-white">
+                  <option value="">-- Pilih Tipe --</option>
+                  <option value="Agensi">Agensi</option>
+                  <option value="Langsung">Langsung (Direct)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nama Brand *</label>
+                <input type="text" id="campaign-nama-brand" required placeholder="Contoh: Tahapan BCA" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">PIC (Person in Charge) *</label>
+                <input type="text" id="campaign-pic" required placeholder="Contoh: Budi Santoso" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Email PIC *</label>
+                <input type="email" id="campaign-email-pic" required placeholder="budi@bca.co.id" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">No HP / WhatsApp PIC *</label>
+                <input type="tel" id="campaign-no-hp" required placeholder="081234567890" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Alamat Perusahaan *</label>
+              <textarea id="campaign-alamat" rows="2" required placeholder="Jl. M.H. Thamrin No. 1, Jakarta Pusat" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none"></textarea>
+            </div>
+
+            <div class="pt-3 flex justify-end gap-3">
+              <button type="button" onclick="cancelCampaignEdit()" id="btn-cancel-campaign" class="hidden px-4 py-2.5 rounded-lg border border-gray-300 text-xs font-semibold text-gray-600 hover:bg-gray-100">Batal Edit</button>
+              <button type="submit" id="btn-submit-campaign" class="bg-citilink hover:bg-citilink-dark text-white font-semibold text-sm px-6 py-2.5 rounded-lg shadow-md transition-all flex items-center gap-2">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>Simpan Campaign</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Registered Campaign Table -->
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="p-5 border-b border-gray-200">
+            <h3 class="text-base font-bold text-gray-800">Daftar Campaign Terregistrasi</h3>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs text-gray-600">
+              <thead class="bg-gray-50 text-gray-700 uppercase font-bold border-b border-gray-200">
+                <tr>
+                  <th class="py-3 px-4">Nama PT</th>
+                  <th class="py-3 px-4">Tipe</th>
+                  <th class="py-3 px-4">Nama Brand</th>
+                  <th class="py-3 px-4">PIC</th>
+                  <th class="py-3 px-4">Email PIC</th>
+                  <th class="py-3 px-4">No HP</th>
+                  <th class="py-3 px-4">Alamat</th>
+                  <th class="py-3 px-4 text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="campaignTableBody" class="divide-y divide-gray-200 font-medium"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 4: ADMINISTRASI TAB -->
+      <div id="tab-administrasi" class="tab-content space-y-6 hidden">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+          <div>
+            <h3 class="text-xl font-bold text-gray-800">Pelacakan Status Administrasi</h3>
+            <p class="text-xs text-gray-500">Klik tombol status per dokumen untuk berganti (Draft ➔ Versi Baru ➔ Disetujui ➔ N/A)</p>
+          </div>
+          <button onclick="openAddAdminModal()" class="bg-citilink hover:bg-citilink-dark text-white font-semibold text-xs px-3.5 py-2 rounded-lg shadow-sm flex items-center gap-2">
+            <i class="fa-solid fa-plus"></i> Tambah Perusahaan & Brand
+          </button>
+        </div>
+
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="overflow-x-auto custom-scrollbar">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-gray-50 text-gray-700 uppercase font-bold border-b border-gray-200">
+                <tr>
+                  <th class="py-3.5 px-4 min-w-[200px] sticky left-0 bg-gray-50 z-10 border-r">PERUSAHAAN & BRAND</th>
+                  <th class="py-3.5 px-3 min-w-[130px] text-center border-r">Penawaran (Quotation)</th>
+                  <th class="py-3.5 px-3 min-w-[140px] text-center border-r">Media Order (MO)</th>
+                  <th class="py-3.5 px-3 min-w-[140px] text-center border-r">Perjanjian (PKS)</th>
+                  <th class="py-3.5 px-3 min-w-[130px] text-center border-r">Permintaan Invoice</th>
+                  <th class="py-3.5 px-3 min-w-[140px] text-center border-r">Kajian Bisnis</th>
+                  <th class="py-3.5 px-3 min-w-[120px] text-center border-r">Tayang (Live)</th>
+                  <th class="py-3.5 px-3 min-w-[120px] text-center border-r">BAP</th>
+                  <th class="py-3.5 px-3 min-w-[120px] text-center border-r">BAPS</th>
+                  <th class="py-3.5 px-3 min-w-[100px] text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="adminTableBody" class="divide-y divide-gray-200 font-medium"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 5: REVENUE STREAMS TAB -->
+      <div id="tab-revenue-streams" class="tab-content space-y-6 hidden">
+        <div class="flex items-center justify-between bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+          <div>
+            <h3 class="text-xl font-bold text-gray-800">Breakdown Sumber Pendapatan (Revenue Streams)</h3>
+            <p class="text-xs text-gray-500">Kelola dan ubah nilai estimasi per kategori aset media iklan</p>
+          </div>
+          <button onclick="openModalStream(-1)" class="bg-citilink hover:bg-citilink-dark text-white text-xs font-semibold px-3.5 py-2 rounded-lg shadow-sm flex items-center gap-1.5">
+            <i class="fa-solid fa-plus"></i> Tambah Kategori Baru
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+            <h3 class="text-base font-bold text-gray-800 mb-4">Grafik Nilai Revenue per Aset Media</h3>
+            <div class="h-80"><canvas id="revenueStreamChart"></canvas></div>
+          </div>
+          <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex flex-col justify-center">
+            <h3 class="text-base font-bold text-gray-800 mb-2">Proporsi Aset</h3>
+            <div class="h-64 flex items-center justify-center"><canvas id="revenueStreamPieChart"></canvas></div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="p-5 border-b border-gray-200">
+            <h3 class="text-base font-bold text-gray-800">Daftar Kategori Media & Nilai Stream</h3>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs text-gray-600">
+              <thead class="bg-gray-50 text-gray-700 uppercase font-bold border-b border-gray-200">
+                <tr>
+                  <th class="py-3 px-4">Kategori Stream</th>
+                  <th class="py-3 px-4">Deskripsi / Contoh Aset</th>
+                  <th class="py-3 px-4 text-right">Nilai Revenue (IDR)</th>
+                  <th class="py-3 px-4 text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="streamTableBody" class="divide-y divide-gray-200 font-medium"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 6: BILLING & PAYMENT TAB -->
+      <div id="tab-billing-payment" class="tab-content space-y-6 hidden">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-white p-5 rounded-xl border border-emerald-200 bg-emerald-50/50">
+            <p class="text-xs font-bold text-emerald-700 uppercase">Sudah Dibayar (Lunas)</p>
+            <p id="stat-paid-amount" class="text-2xl font-extrabold text-emerald-800 mt-1">Rp 0</p>
+          </div>
+          <div class="bg-white p-5 rounded-xl border border-amber-200 bg-amber-50/50">
+            <p class="text-xs font-bold text-amber-700 uppercase">Menunggu Pembayaran</p>
+            <p id="stat-pending-amount" class="text-2xl font-extrabold text-amber-800 mt-1">Rp 0</p>
+          </div>
+          <div class="bg-white p-5 rounded-xl border border-red-200 bg-red-50/50">
+            <p class="text-xs font-bold text-red-700 uppercase">Jatuh Tempo (Overdue)</p>
+            <p id="stat-overdue-amount" class="text-2xl font-extrabold text-red-800 mt-1">Rp 0</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="p-5 border-b border-gray-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <h3 class="text-base font-bold text-gray-800">Status Penagihan & Tagihan (Billing)</h3>
+              <p class="text-xs text-gray-500">Klik tombol status atau gunakan aksi edit untuk mengubah data invoice</p>
+            </div>
+            <button onclick="openModalInvoice(-1)" class="bg-citilink hover:bg-citilink-dark text-white text-xs font-semibold px-3.5 py-2 rounded-lg shadow-sm flex items-center gap-1.5">
+              <i class="fa-solid fa-plus"></i> Buat Invoice Baru
+            </button>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs text-gray-600">
+              <thead class="bg-gray-50 text-gray-700 uppercase font-bold border-b border-gray-200">
+                <tr>
+                  <th class="py-3 px-4">No Invoice</th>
+                  <th class="py-3 px-4">Klien / PT</th>
+                  <th class="py-3 px-4">Jatuh Tempo</th>
+                  <th class="py-3 px-4 text-right">Nominal (IDR)</th>
+                  <th class="py-3 px-4 text-center">Status Pembayaran</th>
+                  <th class="py-3 px-4 text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="billingTableBody" class="divide-y divide-gray-200 font-medium"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- MODAL: EDIT MONTHLY DATA FOR A YEAR -->
+  <div id="editYearMonthlyModal" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden border border-gray-100 my-8 max-h-[90vh] flex flex-col">
+      <div class="p-5 border-b border-gray-100 flex items-center justify-between bg-gray-50">
+        <h3 id="modal-year-title" class="text-base font-bold text-gray-800">Edit Data Revenue Bulanan Tahun 2026</h3>
+        <button onclick="closeEditYearMonthlyModal()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+      <div class="p-6 space-y-4 overflow-y-auto custom-scrollbar flex-1">
+        <input type="hidden" id="modal-year-target" value="">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3" id="monthly-inputs-grid">
+          <!-- 12 Month Input Fields generated by JS -->
+        </div>
+      </div>
+      <div class="p-4 border-t border-gray-100 bg-gray-50 flex justify-end gap-3">
+        <button onclick="closeEditYearMonthlyModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-gray-600 hover:bg-gray-200">Batal</button>
+        <button onclick="saveYearMonthlyData()" class="px-5 py-2 rounded-xl text-xs font-semibold bg-citilink text-white hover:bg-citilink-dark shadow-md">Simpan Perubahan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD NEW YEAR (2027+) -->
+  <div id="addYearModal" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden border border-gray-100">
+      <div class="p-5 border-b border-gray-100 flex items-center justify-between bg-gray-50">
+        <h3 class="text-base font-bold text-gray-800">Tambah Tahun Revenue Baru</h3>
+        <button onclick="closeAddYearModal()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+      <div class="p-6 space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Tahun Baru (misal: 2027) *</label>
+          <input type="number" id="new-year-input" placeholder="2027" min="2020" max="2035" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink">
+        </div>
+        <p class="text-xs text-gray-500">Tahun baru akan secara otomatis dibuatkan slot 12 bulan (Jan–Des) dan terintegrasi ke dalam tabel pertumbuhan YoY serta kontribusi kanal.</p>
+      </div>
+      <div class="p-4 border-t border-gray-100 bg-gray-50 flex justify-end gap-3">
+        <button onclick="closeAddYearModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-gray-600 hover:bg-gray-200">Batal</button>
+        <button onclick="submitNewYear()" class="px-5 py-2 rounded-xl text-xs font-semibold bg-citilink text-white hover:bg-citilink-dark shadow-md">Tambah Tahun</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD NEW PLANE -->
+  <div id="addPlaneModal" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden border border-gray-100">
+      <div class="p-5 border-b border-gray-100 flex items-center justify-between bg-gray-50">
+        <h3 class="text-base font-bold text-gray-800">Registrasi Pesawat Baru</h3>
+        <button onclick="closeAddPlaneModal()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+      <div class="p-6 space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Kode Registrasi Armada *</label>
+          <input type="text" id="modal-plane-reg" placeholder="Contoh: PK-GQF" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm uppercase focus:ring-2 focus:ring-citilink">
+        </div>
+      </div>
+      <div class="p-4 border-t border-gray-100 bg-gray-50 flex justify-end gap-3">
+        <button onclick="closeAddPlaneModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-gray-600 hover:bg-gray-200">Batal</button>
+        <button onclick="saveNewPlane()" class="px-5 py-2 rounded-xl text-xs font-semibold bg-citilink text-white hover:bg-citilink-dark shadow-md">Simpan Pesawat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // --- STATE MANAGEMENT ---
+    let monthlyData = {
+      "2024": [1457256302, 1128873840, 1353604484, 4000579662, 1171193100, 1046916001, 398728818, 445522549, 761976050, 550202691, 1145376236, 1277288779],
+      "2025": [1072982941, 966850869, 2234843329, 2854805291, 736956619, 513172471, 317172513, 357374125, 313704792, 371650289, 1296390364, 1867303549],
+      "2026": [857813539, 1181738169, 4143687698, 1711459497, 1166705763, 1137309980, 1125587404, 1079308046, 1345153863, 0, 0, 0]
+    };
+
+    let channelData = [
+      { year: "< 2023", agency: 6376395000, direct: 7202368500 },
+      { year: "2024", agency: 3984053070, direct: 9663600900 },
+      { year: "2025", agency: 6301175850, direct: 13225894200 },
+      { year: "2026", agency: 5715930375, direct: 1615449600 }
+    ];
+
+    let mediaPlacements = ["Overhead Bin", "Headrest Cover", "Meal Tray Table", "Aircraft Body Livery", "Inflight Wi-Fi Portal", "E-Boarding Pass"];
+    let fleetData = [
+      { reg: "PK-GQA", spots: { "Overhead Bin": "Booked", "Headrest Cover": "Available", "Meal Tray Table": "Booked", "Aircraft Body Livery": "Maintenance", "Inflight Wi-Fi Portal": "Available", "E-Boarding Pass": "Available" } },
+      { reg: "PK-GQB", spots: { "Overhead Bin": "Available", "Headrest Cover": "Booked", "Meal Tray Table": "Available", "Aircraft Body Livery": "Available", "Inflight Wi-Fi Portal": "Booked", "E-Boarding Pass": "Reserved" } },
+      { reg: "PK-GQC", spots: { "Overhead Bin": "Booked", "Headrest Cover": "Booked", "Meal Tray Table": "Booked", "Aircraft Body Livery": "Available", "Inflight Wi-Fi Portal": "Available", "E-Boarding Pass": "Available" } },
+      { reg: "PK-GQD", spots: { "Overhead Bin": "Available", "Headrest Cover": "Available", "Meal Tray Table": "Maintenance", "Aircraft Body Livery": "Available", "Inflight Wi-Fi Portal": "Booked", "E-Boarding Pass": "Booked" } },
+      { reg: "PK-GQE", spots: { "Overhead Bin": "Reserved", "Headrest Cover": "Booked", "Meal Tray Table": "Available", "Aircraft Body Livery": "Booked", "Inflight Wi-Fi Portal": "Available", "E-Boarding Pass": "Available" } }
+    ];
+
+    let registeredCampaigns = [
+      { namaPt: "PT Tirta Investama", type: "Agensi", brand: "Danone Aqua", pic: "Andi Wijaya", email: "andi@danone.com", phone: "081122334455", alamat: "Jakarta Selatan" },
+      { namaPt: "PT Bintang Toedjoe", type: "Langsung", brand: "Extra Joss", pic: "Siti Rahma", email: "siti@bintang7.com", phone: "081299887766", alamat: "Jakarta Timur" }
+    ];
+
+    let adminData = [
+      { id: 1, ptBrand: "PT Tirta Investama (Aqua)", quotation: "Approved", mo: "Approved", pks: "Approved", reqInv: "Approved", kajian: "Approved", live: "Approved", bap: "Approved", baps: "Versioning" },
+      { id: 2, ptBrand: "PT Bintang Toedjoe (Extra Joss)", quotation: "Approved", mo: "Approved", pks: "Draft", reqInv: "Draft", kajian: "Approved", live: "Draft", bap: "Draft", baps: "N/A" }
+    ];
+
+    let streamData = [
+      { id: 1, category: "Overhead Bin Branding", desc: "Stiker eksklusif di kompartemen bagasi kabin", value: 4500000000 },
+      { id: 2, category: "Headrest Covers", desc: "Sarung sandaran kepala penumpang di seluruh baris kursi", value: 3800000000 },
+      { id: 3, category: "Meal Tray Tables", desc: "Iklan meja lipat penumpang", value: 2900000000 },
+      { id: 4, category: "Aircraft Body Livery", desc: "Branding stiker bodi luar pesawat", value: 8500000000 }
+    ];
+
+    let billingData = [
+      { id: 1, invNo: "INV/2026/08/001", client: "PT Tirta Investama", dueDate: "2026-09-30", amount: 1250000000, status: "Paid" },
+      { id: 2, invNo: "INV/2026/09/004", client: "PT Bintang Toedjoe", dueDate: "2026-10-15", amount: 850000000, status: "Pending" }
+    ];
+
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    let channelPieChartObj = null;
+
+    // --- HELPER FUNCTIONS ---
+    function formatIDR(num) {
+      return "Rp " + (num || 0).toLocaleString('id-ID');
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.getElementById('tab-' + tabId).classList.remove('hidden');
+
+      document.querySelectorAll('.nav-item').forEach(el => {
+        el.classList.remove('bg-citilink', 'text-white', 'shadow-md');
+        el.classList.add('text-gray-300');
+      });
+      const activeNav = document.getElementById('nav-' + tabId);
+      if(activeNav) {
+        activeNav.classList.add('bg-citilink', 'text-white', 'shadow-md');
+        activeNav.classList.remove('text-gray-300');
+      }
+
+      if (tabId === 'media-market') renderMediaMatrix();
+      if (tabId === 'new-campaign') renderCampaignTable();
+      if (tabId === 'administrasi') renderAdminTable();
+      if (tabId === 'revenue-streams') renderStreamTable();
+      if (tabId === 'billing-payment') renderBillingTable();
+    }
+
+    // --- RENDER MONTHLY & YOY REPORT DASHBOARD ---
+    function renderMonthlyReport() {
+      const years = Object.keys(monthlyData).sort();
+      
+      // 1. Render Quarterly YoY Cards
+      const cardContainer = document.getElementById('quarterly-cards-container');
+      cardContainer.innerHTML = '';
+
+      const quarters = [
+        { name: "Q1 (Jan - Mar)", months: [0, 1, 2] },
+        { name: "Q2 (Apr - Jun)", months: [3, 4, 5] },
+        { name: "Q3 (Jul - Sep)", months: [6, 7, 8] },
+        { name: "Q4 (Okt - Des)", months: [9, 10, 11] }
+      ];
+
+      const latestYear = years[years.length - 1];
+      const prevYear = years[years.length - 2];
+
+      quarters.forEach(q => {
+        let currVal = q.months.reduce((sum, mIdx) => sum + (monthlyData[latestYear] ? monthlyData[latestYear][mIdx] : 0), 0);
+        let prevVal = prevYear ? q.months.reduce((sum, mIdx) => sum + (monthlyData[prevYear] ? monthlyData[prevYear][mIdx] : 0), 0) : 0;
+        
+        let growthPct = prevVal > 0 ? ((currVal - prevVal) / prevVal * 100).toFixed(1) : 0;
+        let isPositive = growthPct >= 0;
+
+        cardContainer.innerHTML += `
+          <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm relative overflow-hidden">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-gray-500 uppercase">${q.name}</span>
+              <span class="text-[11px] font-extrabold px-2 py-0.5 rounded-full ${isPositive ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'}">
+                ${isPositive ? '+' : ''}${growthPct}% YoY
+              </span>
+            </div>
+            <p class="text-lg font-extrabold text-gray-900 mt-2">${formatIDR(currVal)}</p>
+            <p class="text-[11px] text-gray-400 mt-1">${latestYear} vs ${prevYear || '-'}</p>
+          </div>
+        `;
+      });
+
+      // 2. Render Header Row for Monthly Table
+      const tHead = document.getElementById('monthly-table-head');
+      let headHTML = `<tr><th class="py-3 px-4 min-w-[120px] sticky left-0 bg-gray-100 z-10 border-r">BULAN</th>`;
+      years.forEach(y => {
+        headHTML += `<th class="py-3 px-4 text-right">${y} (IDR)</th>`;
+      });
+      headHTML += `<th class="py-3 px-4 text-center">SPARKLINE TREN</th></tr>`;
+      tHead.innerHTML = headHTML;
+
+      // 3. Render Body Rows (Months)
+      const tBody = document.getElementById('monthly-table-body');
+      tBody.innerHTML = '';
+
+      for (let m = 0; m < 12; m++) {
+        let rowHTML = `<tr><td class="py-2.5 px-4 font-bold text-gray-700 sticky left-0 bg-white border-r">${monthNames[m]}</td>`;
+        let monthTrendValues = [];
+
+        years.forEach(y => {
+          let val = monthlyData[y][m];
+          monthTrendValues.push(val);
+          rowHTML += `<td class="py-2.5 px-4 text-right font-medium">${formatIDR(val)}</td>`;
+        });
+
+        // Generate SVG Sparkline
+        let maxV = Math.max(...monthTrendValues, 1);
+        let minV = Math.min(...monthTrendValues, 0);
+        let pts = monthTrendValues.map((v, idx) => {
+          let x = 10 + (idx * (80 / Math.max(years.length - 1, 1)));
+          let y = 25 - ((v - minV) / (maxV - minV || 1) * 20);
+          return `${x},${y}`;
+        }).join(' ');
+
+        rowHTML += `
+          <td class="py-2 px-4 text-center">
+            <svg class="w-24 h-7 inline-block" viewBox="0 0 100 30">
+              <polyline fill="none" stroke="#008752" stroke-width="2" points="${pts}" />
+              ${monthTrendValues.map((v, idx) => {
+                let x = 10 + (idx * (80 / Math.max(years.length - 1, 1)));
+                let y = 25 - ((v - minV) / (maxV - minV || 1) * 20);
+                return `<circle cx="${x}" cy="${y}" r="2.5" fill="#82c341" />`;
+              }).join('')}
+            </svg>
+          </td>
+        </tr>`;
+        tBody.innerHTML += rowHTML;
+      }
+
+      // 4. Render Footer Rows (Totals & YoY Growth)
+      const tFoot = document.getElementById('monthly-table-foot');
+      let totalsHTML = `<tr class="bg-gray-100/80"><td class="py-3 px-4 sticky left-0 bg-gray-100 border-r text-gray-900">TOTAL REVENUE</td>`;
+      let yearTotals = {};
+
+      years.forEach(y => {
+        let sum = monthlyData[y].reduce((a, b) => a + b, 0);
+        yearTotals[y] = sum;
+        totalsHTML += `<td class="py-3 px-4 text-right text-citilink font-extrabold text-sm">${formatIDR(sum)}</td>`;
+      });
+      totalsHTML += `<td></td></tr>`;
+
+      // YoY Growth Row
+      let yoyHTML = `<tr><td class="py-3 px-4 sticky left-0 bg-gray-50 border-r text-gray-700">YOY GROWTH RATE</td>`;
+      years.forEach((y, idx) => {
+        if (idx === 0) {
+          yoyHTML += `<td class="py-3 px-4 text-right text-gray-400">-</td>`;
+        } else {
+          let prevY = years[idx - 1];
+          let prevTot = yearTotals[prevY];
+          let currTot = yearTotals[y];
+          let rate = prevTot > 0 ? ((currTot - prevTot) / prevTot * 100).toFixed(1) : 0;
+          let isPos = rate >= 0;
+          yoyHTML += `
+            <td class="py-3 px-4 text-right">
+              <span class="px-2 py-0.5 rounded text-xs font-bold ${isPos ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'}">
+                ${isPos ? '+' : ''}${rate}%
+              </span>
+              <div class="text-[10px] text-gray-400 font-normal mt-0.5">${y} vs ${prevY}</div>
+            </td>`;
+        }
+      });
+      yoyHTML += `<td class="text-center">
+        <button onclick="openEditYearMonthlyModal('${latestYear}')" class="text-xs bg-citilink text-white font-semibold px-2.5 py-1 rounded shadow-sm hover:bg-citilink-dark">
+          <i class="fa-solid fa-pen-to-square mr-1"></i> Edit Data
+        </button>
+      </td></tr>`;
+
+      tFoot.innerHTML = totalsHTML + yoyHTML;
+
+      // Also render Channel Contribution Table
+      renderChannelContribution();
+    }
+
+    // --- RENDER CHANNEL CONTRIBUTION TABLE & CHART ---
+    function renderChannelContribution() {
+      const cBody = document.getElementById('channel-table-body');
+      const cFoot = document.getElementById('channel-table-foot');
+      cBody.innerHTML = '';
+
+      let totalAgency = 0;
+      let totalDirect = 0;
+
+      channelData.forEach((row, idx) => {
+        let rowTotal = row.agency + row.direct;
+        totalAgency += row.agency;
+        totalDirect += row.direct;
+
+        let agencyPct = rowTotal > 0 ? Math.round((row.agency / rowTotal) * 100) : 0;
+        let directPct = rowTotal > 0 ? Math.round((row.direct / rowTotal) * 100) : 0;
+
+        cBody.innerHTML += `
+          <tr>
+            <td class="py-2.5 px-3 font-bold text-gray-800">${row.year}</td>
+            <td class="py-2.5 px-3 text-right font-semibold text-emerald-700">${formatIDR(row.agency)}</td>
+            <td class="py-2.5 px-3 text-center">
+              <div class="flex items-center justify-center gap-1">
+                <div class="w-12 bg-gray-200 rounded-full h-2 overflow-hidden">
+                  <div class="bg-emerald-600 h-2 rounded-full" style="width: ${agencyPct}%"></div>
+                </div>
+                <span class="text-[11px] font-bold text-gray-600">${agencyPct}%</span>
+              </div>
+            </td>
+            <td class="py-2.5 px-3 text-right font-semibold text-amber-700">${formatIDR(row.direct)}</td>
+            <td class="py-2.5 px-3 text-center">
+              <div class="flex items-center justify-center gap-1">
+                <div class="w-12 bg-gray-200 rounded-full h-2 overflow-hidden">
+                  <div class="bg-amber-500 h-2 rounded-full" style="width: ${directPct}%"></div>
+                </div>
+                <span class="text-[11px] font-bold text-gray-600">${directPct}%</span>
+              </div>
+            </td>
+            <td class="py-2.5 px-3 text-right font-bold text-gray-900">${formatIDR(rowTotal)}</td>
+            <td class="py-2.5 px-3 text-center">
+              <button onclick="editChannelRow(${idx})" class="text-xs text-citilink hover:text-citilink-dark"><i class="fa-solid fa-pen-to-square"></i></button>
+            </td>
+          </tr>
+        `;
+      });
+
+      let grandTotal = totalAgency + totalDirect;
+      let grandAgencyPct = grandTotal > 0 ? Math.round((totalAgency / grandTotal) * 100) : 0;
+      let grandDirectPct = grandTotal > 0 ? Math.round((totalDirect / grandTotal) * 100) : 0;
+
+      cFoot.innerHTML = `
+        <tr>
+          <td class="py-3 px-3 text-gray-900">GRAND TOTAL</td>
+          <td class="py-3 px-3 text-right text-emerald-800 font-extrabold">${formatIDR(totalAgency)}</td>
+          <td class="py-3 px-3 text-center text-emerald-800 font-extrabold">${grandAgencyPct}%</td>
+          <td class="py-3 px-3 text-right text-amber-800 font-extrabold">${formatIDR(totalDirect)}</td>
+          <td class="py-3 px-3 text-center text-amber-800 font-extrabold">${grandDirectPct}%</td>
+          <td class="py-3 px-3 text-right text-citilink font-extrabold">${formatIDR(grandTotal)}</td>
+          <td></td>
+        </tr>
+      `;
+
+      // Render Pie Chart
+      const ctx = document.getElementById('channelPieChart').getContext('2d');
+      if (channelPieChartObj) channelPieChartObj.destroy();
+
+      channelPieChartObj = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Agensi (Agency)', 'Langsung (Direct)'],
+          datasets: [{
+            data: [totalAgency, totalDirect],
+            backgroundColor: ['#008752', '#82c341'],
+            borderWidth: 2,
+            borderColor: '#ffffff'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom', labels: { font: { size: 11, family: 'Inter' } } }
+          }
+        }
+      });
+    }
+
+    // --- EDIT & ADD YEAR MODAL LOGIC ---
+    function openEditYearMonthlyModal(year) {
+      document.getElementById('modal-year-target').value = year;
+      document.getElementById('modal-year-title').innerText = `Edit Data Revenue Bulanan Tahun ${year}`;
+      
+      const grid = document.getElementById('monthly-inputs-grid');
+      grid.innerHTML = '';
+
+      let vals = monthlyData[year] || new Array(12).fill(0);
+
+      monthNames.forEach((m, idx) => {
+        grid.innerHTML += `
+          <div>
+            <label class="block text-xs font-bold text-gray-600 uppercase mb-1">${m}</label>
+            <input type="number" id="input-month-${idx}" value="${vals[idx]}" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:ring-2 focus:ring-citilink">
+          </div>
+        `;
+      });
+
+      document.getElementById('editYearMonthlyModal').classList.remove('hidden');
+    }
+
+    function closeEditYearMonthlyModal() {
+      document.getElementById('editYearMonthlyModal').classList.add('hidden');
+    }
+
+    function saveYearMonthlyData() {
+      let year = document.getElementById('modal-year-target').value;
+      let newVals = [];
+
+      for (let i = 0; i < 12; i++) {
+        let v = parseFloat(document.getElementById(`input-month-${i}`).value) || 0;
+        newVals.push(v);
+      }
+
+      monthlyData[year] = newVals;
+      closeEditYearMonthlyModal();
+      renderMonthlyReport();
+    }
+
+    function openAddYearModal() {
+      document.getElementById('addYearModal').classList.remove('hidden');
+    }
+
+    function closeAddYearModal() {
+      document.getElementById('addYearModal').classList.add('hidden');
+    }
+
+    function submitNewYear() {
+      let newYear = document.getElementById('new-year-input').value;
+      if (!newYear) return;
+
+      if (!monthlyData[newYear]) {
+        monthlyData[newYear] = new Array(12).fill(0);
+        channelData.push({ year: newYear.toString(), agency: 0, direct: 0 });
+      }
+
+      closeAddYearModal();
+      renderMonthlyReport();
+    }
+
+    function editChannelRow(idx) {
+      let item = channelData[idx];
+      let newAgency = prompt(`Masukkan nilai Agensi (IDR) untuk ${item.year}:`, item.agency);
+      let newDirect = prompt(`Masukkan nilai Langsung/Direct (IDR) untuk ${item.year}:`, item.direct);
+
+      if (newAgency !== null && newDirect !== null) {
+        channelData[idx].agency = parseFloat(newAgency) || 0;
+        channelData[idx].direct = parseFloat(newDirect) || 0;
+        renderChannelContribution();
+      }
+    }
+
+    // --- MEDIA PLACEMENT MATRIX LOGIC ---
+    function renderMediaMatrix() {
+      const headerRow = document.getElementById('matrix-header-row');
+      const tableBody = document.getElementById('matrixTableBody');
+
+      let headHTML = `<th class="py-3.5 px-4 min-w-[160px] sticky left-0 bg-gray-50 z-10 border-r">REGISTRASI PESAWAT</th>`;
+      mediaPlacements.forEach(spot => {
+        headHTML += `<th class="py-3.5 px-3 min-w-[140px] text-center border-r">${spot}</th>`;
+      });
+      headerRow.innerHTML = headHTML;
+
+      tableBody.innerHTML = '';
+      fleetData.forEach((plane, pIdx) => {
+        let rowHTML = `<tr><td class="py-3 px-4 font-bold text-gray-800 sticky left-0 bg-white border-r">${plane.reg}</td>`;
+        mediaPlacements.forEach(spot => {
+          let status = plane.spots[spot] || "Available";
+          let badgeClass = "bg-green-100 text-green-800 border-green-200";
+          if (status === "Booked") badgeClass = "bg-blue-100 text-blue-800 border-blue-200";
+          if (status === "Maintenance") badgeClass = "bg-amber-100 text-amber-800 border-amber-200";
+          if (status === "Reserved") badgeClass = "bg-purple-100 text-purple-800 border-purple-200";
+
+          rowHTML += `
+            <td class="py-3 px-3 text-center border-r">
+              <button onclick="toggleSpotStatus(${pIdx}, '${spot}')" class="px-2.5 py-1 rounded-md text-[11px] font-bold border transition-all ${badgeClass}">
+                ${status}
+              </button>
+            </td>
+          `;
+        });
+        rowHTML += `</tr>`;
+        tableBody.innerHTML += rowHTML;
+      });
+
+      document.getElementById('armada-count-badge').innerText = `Armada: ${fleetData.length} Pesawat`;
+    }
+
+    function toggleSpotStatus(pIdx, spot) {
+      const statuses = ["Available", "Booked", "Maintenance", "Reserved"];
+      let curr = fleetData[pIdx].spots[spot] || "Available";
+      let nextIdx = (statuses.indexOf(curr) + 1) % statuses.length;
+      fleetData[pIdx].spots[spot] = statuses[nextIdx];
+      renderMediaMatrix();
+    }
+
+    function openAddPlaneModal() { document.getElementById('addPlaneModal').classList.remove('hidden'); }
+    function closeAddPlaneModal() { document.getElementById('addPlaneModal').classList.add('hidden'); }
+    function saveNewPlane() {
+      let reg = document.getElementById('modal-plane-reg').value.toUpperCase();
+      if (!reg) return;
+      let spots = {};
+      mediaPlacements.forEach(s => spots[s] = "Available");
+      fleetData.push({ reg, spots });
+      closeAddPlaneModal();
+      renderMediaMatrix();
+    }
+
+    // --- NEW CAMPAIGN LOGIC ---
+    function renderCampaignTable() {
+      const tbody = document.getElementById('campaignTableBody');
+      tbody.innerHTML = '';
+      registeredCampaigns.forEach((c, idx) => {
+        tbody.innerHTML += `
+          <tr>
+            <td class="py-3 px-4 font-bold text-gray-800">${c.namaPt}</td>
+            <td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-gray-100 text-gray-700">${c.type}</span></td>
+            <td class="py-3 px-4 font-semibold text-citilink">${c.brand}</td>
+            <td class="py-3 px-4">${c.pic}</td>
+            <td class="py-3 px-4">${c.email}</td>
+            <td class="py-3 px-4">${c.phone}</td>
+            <td class="py-3 px-4 truncate max-w-[150px]">${c.alamat}</td>
+            <td class="py-3 px-4 text-center">
+              <button onclick="deleteCampaign(${idx})" class="text-red-500 hover:text-red-700"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    function handleCampaignSubmit(e) {
+      e.preventDefault();
+      registeredCampaigns.push({
+        namaPt: document.getElementById('campaign-nama-pt').value,
+        type: document.getElementById('campaign-type').value,
+        brand: document.getElementById('campaign-nama-brand').value,
+        pic: document.getElementById('campaign-pic').value,
+        email: document.getElementById('campaign-email-pic').value,
+        phone: document.getElementById('campaign-no-hp').value,
+        alamat: document.getElementById('campaign-alamat').value
+      });
+      document.getElementById('newCampaignForm').reset();
+      renderCampaignTable();
+    }
+
+    // --- ADMINISTRASI LOGIC ---
+    function renderAdminTable() {
+      const tbody = document.getElementById('adminTableBody');
+      tbody.innerHTML = '';
+      const docTypes = ['quotation', 'mo', 'pks', 'reqInv', 'kajian', 'live', 'bap', 'baps'];
+
+      adminData.forEach((row, idx) => {
+        let rowHTML = `<tr><td class="py-3 px-4 font-bold text-gray-800 sticky left-0 bg-white border-r">${row.ptBrand}</td>`;
+        docTypes.forEach(doc => {
+          let st = row[doc] || 'Draft';
+          let badgeClass = "bg-gray-100 text-gray-600";
+          if (st === "Approved") badgeClass = "bg-emerald-100 text-emerald-800 font-bold";
+          if (st === "Versioning") badgeClass = "bg-amber-100 text-amber-800 font-semibold";
+
+          rowHTML += `
+            <td class="py-3 px-3 text-center border-r">
+              <button onclick="toggleAdminDoc(${idx}, '${doc}')" class="px-2 py-0.5 rounded text-[11px] ${badgeClass}">
+                ${st}
+              </button>
+            </td>
+          `;
+        });
+        rowHTML += `<td class="py-3 px-3 text-center"><button onclick="deleteAdminRow(${idx})" class="text-red-500"><i class="fa-solid fa-trash"></i></button></td></tr>`;
+        tbody.innerHTML += rowHTML;
+      });
+    }
+
+    function toggleAdminDoc(idx, doc) {
+      const statuses = ["Draft", "Versioning", "Approved", "N/A"];
+      let curr = adminData[idx][doc] || "Draft";
+      let nextIdx = (statuses.indexOf(curr) + 1) % statuses.length;
+      adminData[idx][doc] = statuses[nextIdx];
+      renderAdminTable();
+    }
+
+    function openAddAdminModal() {
+      let ptBrand = prompt("Masukkan Perusahaan & Brand Baru:");
+      if (ptBrand) {
+        adminData.push({ id: Date.now(), ptBrand, quotation: "Draft", mo: "Draft", pks: "Draft", reqInv: "Draft", kajian: "Draft", live: "Draft", bap: "Draft", baps: "N/A" });
+        renderAdminTable();
+      }
+    }
+
+    function deleteAdminRow(idx) {
+      adminData.splice(idx, 1);
+      renderAdminTable();
+    }
+
+    // --- REVENUE STREAMS LOGIC ---
+    function renderStreamTable() {
+      const tbody = document.getElementById('streamTableBody');
+      tbody.innerHTML = '';
+      streamData.forEach((s, idx) => {
+        tbody.innerHTML += `
+          <tr>
+            <td class="py-3 px-4 font-bold text-gray-800">${s.category}</td>
+            <td class="py-3 px-4 text-gray-600">${s.desc}</td>
+            <td class="py-3 px-4 text-right font-bold text-citilink">${formatIDR(s.value)}</td>
+            <td class="py-3 px-4 text-center">
+              <button onclick="deleteStream(${idx})" class="text-red-500"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    function openModalStream() {
+      let category = prompt("Kategori Stream:");
+      let desc = prompt("Deskripsi:");
+      let value = parseFloat(prompt("Nilai Revenue (IDR):", "1000000000"));
+      if (category && value) {
+        streamData.push({ id: Date.now(), category, desc, value });
+        renderStreamTable();
+      }
+    }
+
+    function deleteStream(idx) {
+      streamData.splice(idx, 1);
+      renderStreamTable();
+    }
+
+    // --- BILLING LOGIC ---
+    function renderBillingTable() {
+      const tbody = document.getElementById('billingTableBody');
+      tbody.innerHTML = '';
+
+      let totalPaid = 0, totalPending = 0, totalOverdue = 0;
+
+      billingData.forEach((inv, idx) => {
+        if (inv.status === "Paid") totalPaid += inv.amount;
+        if (inv.status === "Pending") totalPending += inv.amount;
+        if (inv.status === "Overdue") totalOverdue += inv.amount;
+
+        let badge = inv.status === "Paid" ? "bg-emerald-100 text-emerald-800" : (inv.status === "Pending" ? "bg-amber-100 text-amber-800" : "bg-red-100 text-red-800");
+
+        tbody.innerHTML += `
+          <tr>
+            <td class="py-3 px-4 font-bold text-gray-800">${inv.invNo}</td>
+            <td class="py-3 px-4">${inv.client}</td>
+            <td class="py-3 px-4">${inv.dueDate}</td>
+            <td class="py-3 px-4 text-right font-bold text-gray-900">${formatIDR(inv.amount)}</td>
+            <td class="py-3 px-4 text-center">
+              <button onclick="toggleBillingStatus(${idx})" class="px-2.5 py-1 rounded text-[11px] font-bold ${badge}">${inv.status}</button>
+            </td>
+            <td class="py-3 px-4 text-center">
+              <button onclick="deleteBilling(${idx})" class="text-red-500"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+        `;
+      });
+
+      document.getElementById('stat-paid-amount').innerText = formatIDR(totalPaid);
+      document.getElementById('stat-pending-amount').innerText = formatIDR(totalPending);
+      document.getElementById('stat-overdue-amount').innerText = formatIDR(totalOverdue);
+    }
+
+    function toggleBillingStatus(idx) {
+      const st = ["Pending", "Paid", "Overdue"];
+      let curr = billingData[idx].status;
+      billingData[idx].status = st[(st.indexOf(curr) + 1) % st.length];
+      renderBillingTable();
+    }
+
+    function openModalInvoice() {
+      let invNo = prompt("No Invoice:", "INV/2026/09/00" + (billingData.length + 1));
+      let client = prompt("Nama Klien:");
+      let amount = parseFloat(prompt("Nominal (IDR):", "500000000"));
+      if (invNo && client && amount) {
+        billingData.push({ id: Date.now(), invNo, client, dueDate: "2026-10-30", amount, status: "Pending" });
+        renderBillingTable();
+      }
+    }
+
+    function deleteBilling(idx) {
+      billingData.splice(idx, 1);
+      renderBillingTable();
+    }
+
+    // --- INITIALIZE APP ---
+    window.onload = function() {
+      renderMonthlyReport();
+    };
+  </script>
+</body>
+</html>
         <div class="px-3 py-2 mt-4 text-[11px] font-semibold text-green-300 tracking-wider uppercase">MANAGEMENT</div>
         <button onclick="switchTab('media-market')" id="nav-media-market" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
           <i class="fa-solid fa-plane w-5 text-center"></i>
