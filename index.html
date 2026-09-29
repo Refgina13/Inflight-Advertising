@@ -1097,7 +1097,81 @@
             calculateMetrics();
             renderTable();
             renderCharts();
-        };
+        };<!-- JAVASCRIPT LOGIC -->
+    <script>
+        function switchTab(tabId, element) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('bg-citilink-light', 'shadow-sm');
+                item.classList.add('hover:bg-citilink-light');
+            });
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            element.classList.add('bg-citilink-light', 'shadow-sm');
+            element.classList.remove('hover:bg-citilink-light');
+        }
+
+        function openModal(mode) {
+            document.getElementById('docModal').classList.remove('hidden');
+            if(mode === 'add') {
+                document.getElementById('modalTitle').innerText = 'Tambah Dokumen Baru';
+                document.getElementById('docForm').reset();
+            } else {
+                document.getElementById('modalTitle').innerText = 'Edit Dokumen';
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('docModal').classList.add('hidden');
+        }
+
+        function getBadgeClass(status) {
+            if(status === 'Approval') return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+            if(status === 'Revisi') return 'bg-blue-50 text-blue-700 border-blue-200';
+            return 'bg-amber-50 text-amber-700 border-amber-200';
+        }
+
+        function saveDocument(event) {
+            event.preventDefault();
+            
+            const company = document.getElementById('inputCompany').value;
+            const brand = document.getElementById('inputBrand').value;
+            
+            const sMO = document.getElementById('statusMO').value;
+            const nMO = document.getElementById('noMO').value;
+            const sPKS = document.getElementById('statusPKS').value;
+            const nPKS = document.getElementById('noPKS').value;
+            const sInv = document.getElementById('statusInvoice').value;
+            const sKB = document.getElementById('statusKB').value;
+            const nKB = document.getElementById('noKB').value;
+            const sLive = document.getElementById('statusLive').value;
+            const pLive = document.getElementById('periodeLive').value;
+            const sBAP = document.getElementById('statusBAP').value;
+            const sBAPS = document.getElementById('statusBAPS').value;
+
+            const tbody = document.getElementById('admin-table-body');
+            const newRow = document.createElement('tr');
+            newRow.className = 'hover:bg-gray-50 transition';
+            newRow.innerHTML = `
+                <td class="py-3 px-3 font-bold text-gray-900">${company}</td>
+                <td class="py-3 px-3 text-gray-600">${brand}</td>
+                <td class="py-3 px-3"><span class="inline-block ${getBadgeClass(sMO)} border px-2 py-0.5 rounded font-medium text-[11px]">${sMO}</span><div class="text-[10px] text-gray-500 font-mono mt-0.5">${nMO}</div></td>
+                <td class="py-3 px-3"><span class="inline-block ${getBadgeClass(sPKS)} border px-2 py-0.5 rounded font-medium text-[11px]">${sPKS}</span><div class="text-[10px] text-gray-500 font-mono mt-0.5">${nPKS}</div></td>
+                <td class="py-3 px-3"><span class="inline-block ${getBadgeClass(sInv)} border px-2 py-0.5 rounded font-medium text-[11px]">${sInv}</span></td>
+                <td class="py-3 px-3"><span class="inline-block ${getBadgeClass(sKB)} border px-2 py-0.5 rounded font-medium text-[11px]">${sKB}</span><div class="text-[10px] text-gray-500 font-mono mt-0.5">${nKB}</div></td>
+                <td class="py-3 px-3"><span class="inline-block ${getBadgeClass(sLive)} border px-2 py-0.5 rounded font-medium text-[11px]">${sLive}</span><div class="text-[10px] text-gray-500 mt-0.5">${pLive}</div></td>
+                <td class="py-3 px-3"><span class="inline-block ${getBadgeClass(sBAP)} border px-2 py-0.5 rounded font-medium text-[11px]">${sBAP}</span></td>
+                <td class="py-3 px-3"><span class="inline-block ${getBadgeClass(sBAPS)} border px-2 py-0.5 rounded font-medium text-[11px]">${sBAPS}</span></td>
+                <td class="py-3 px-3 text-center">
+                    <button onclick="openModal('edit')" class="bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 px-2.5 py-1 rounded text-[11px] font-medium flex items-center gap-1 mx-auto">
+                        <i class="fa-solid fa-pen-to-square"></i> Edit
+                    </button>
+                </td>
+            `;
+
+            tbody.prepend(newRow);
+            closeModal();
+        }
+        
     </script>
 </body>
 </html>
