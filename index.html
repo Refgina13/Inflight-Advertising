@@ -124,11 +124,11 @@
           <span>Update Report Data</span>
         </button>
         <div class="h-6 w-px bg-gray-300 mx-1"></div>
-        <button class="flex items-center gap-2 text-sm text-gray-700 hover:text-citilink font-semibold">
+        <div class="flex items-center gap-2 text-sm text-gray-700 font-semibold">
           <div class="w-8 h-8 rounded-full bg-citilink text-white flex items-center justify-center font-bold text-xs">QG</div>
           <span>Hi Refgina!</span>
           <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
-        </button>
+        </div>
       </div>
     </header>
 
@@ -485,7 +485,6 @@
       </div>
 
       <div class="p-6 overflow-y-auto custom-scrollbar flex-1 space-y-4">
-        <!-- Input nomor referensi -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3 p-3 bg-gray-50 rounded-xl border border-gray-200">
           <div>
             <label class="block text-[11px] font-bold text-gray-700 uppercase mb-1">No. Media Order (MO)</label>
@@ -514,7 +513,7 @@
 
   <!-- JAVASCRIPT LOGIC -->
   <script>
-    // 1. REPORT DATA
+    // 1. DATA STATE & CONFIGURATIONS
     let reportData = [
       { id: '2023', name: '2023', agency: 9789370000, direct: 9382218000 },
       { id: '2024', name: '2024', agency: 5000000000, direct: 11110000000 },
@@ -542,215 +541,187 @@
         { period: 'Q4 2025', agency: 0, direct: 2200000000 }
       ],
       '2026_q3': [
-        { period: 'Q1 2026', agency: 400000000, direct: 800000000 },
-        { period: 'Q2 2026', agency: 400000000, direct: 800000000 },
-        { period: 'Q3 2026', agency: 393844295, direct: 815095200 }
+        { period: 'Q1 2026', agency: 393844295, direct: 805031733 },
+        { period: 'Q2 2026', agency: 400000000, direct: 805031733 },
+        { period: 'Q3 2026', agency: 400000000, direct: 805031734 }
       ]
     };
 
-    // 2. MEDIA PLACEMENT DATA
-    const mediaCategories = [
-      { id: 'overhead_bins', name: 'Overhead Bins', icon: 'fa-box-archive' },
-      { id: 'head_cover_seat', name: 'Head Cover Seat', icon: 'fa-chair' },
-      { id: 'inflight_magazine', name: 'Inflight Megazine', icon: 'fa-book-open' },
-      { id: 'e_boarding_pass', name: 'E-Boarding Pass', icon: 'fa-ticket' },
-      { id: 'aircraft_livery', name: 'AirCraft Livery', icon: 'fa-plane-up' },
-      { id: 'sampling_product', name: 'Sampling Product', icon: 'fa-box-open' },
-      { id: 'meal_tray', name: 'Meal Tray', icon: 'fa-utensils' },
-      { id: 'cabin_announcement', name: 'Cabin Annoucement', icon: 'fa-bullhorn' },
-      { id: 'fb_catalogue', name: 'F&B Catalogue', icon: 'fa-utensils-slash' }
-    ];
-
+    let mediaPlacements = ['Overhead Bin', 'Headrest Cover', 'Meal Tray', 'Wi-Fi Portal Banner', 'Inflight Magazine'];
     let fleetData = [
-      { tailNumber: 'PK-GLY', model: 'Airbus A320', placements: {} },
-      {
-        tailNumber: 'PK-G01',
-        model: 'ATR 72-600',
-        placements: {
-          'head_cover_seat': { brand: 'Bank BCA', date: '01 Jun 26 - 31 Des 26' },
-          'inflight_magazine': { brand: 'Telkomsel', date: '15 Mei 26 - 15 Agu 26' }
-        }
-      },
-      { tailNumber: 'PK-G02', model: 'Airbus A320', placements: { 'meal_tray': { brand: 'Traveloka', date: '01 Jul 26 - 01 Okt 26' } } },
-      { tailNumber: 'PK-G03', model: 'ATR 72-600', placements: { 'overhead_bins': { brand: 'Bank BCA', date: '01 Jun 26 - 31 Des 26' } } },
-      { tailNumber: 'PK-G04', model: 'Airbus A320', placements: { 'head_cover_seat': { brand: 'Telkomsel', date: '15 Mei 26 - 15 Agu 26' } } }
+      { tail: 'PK-GQA', model: 'Airbus A320', placements: { 'Overhead Bin': 'AQUA', 'Headrest Cover': 'BCA', 'Meal Tray': 'AQUA', 'Wi-Fi Portal Banner': 'Available', 'Inflight Magazine': 'Available' } },
+      { tail: 'PK-GQC', model: 'Airbus A320', placements: { 'Overhead Bin': 'Teh Botol Sosro', 'Headrest Cover': 'Available', 'Meal Tray': 'Teh Botol Sosro', 'Wi-Fi Portal Banner': 'Samsung', 'Inflight Magazine': 'Available' } },
+      { tail: 'PK-GQD', model: 'Airbus A320', placements: { 'Overhead Bin': 'Available', 'Headrest Cover': 'Available', 'Meal Tray': 'Available', 'Wi-Fi Portal Banner': 'Available', 'Inflight Magazine': 'Available' } },
+      { tail: 'PK-GGE', model: 'ATR 72-600', placements: { 'Overhead Bin': 'Traveloka', 'Headrest Cover': 'Traveloka', 'Meal Tray': 'Available', 'Wi-Fi Portal Banner': 'N/A', 'Inflight Magazine': 'Available' } },
+      { tail: 'PK-GGF', model: 'ATR 72-600', placements: { 'Overhead Bin': 'Available', 'Headrest Cover': 'Available', 'Meal Tray': 'Available', 'Wi-Fi Portal Banner': 'N/A', 'Inflight Magazine': 'Available' } }
     ];
 
-    // 3. CAMPAIGN DATA
     let campaignList = [
-      { pt: 'PT Bank Central Asia Tbk', type: 'Direct', brand: 'Bank BCA', pic: 'Budi Santoso', email: 'budi@bca.co.id', phone: '081234567890', address: 'Jl. MH Thamrin No. 1, Jakarta' },
-      { pt: 'PT Telekomunikasi Selular', type: 'Agency', brand: 'Telkomsel', pic: 'Siti Rahma', email: 'siti@telkomsel.co.id', phone: '081198765432', address: 'Telkomsel Smart Office, Jakarta' }
+      { pt: 'PT Tirta Investama', type: 'Direct', brand: 'AQUA', pic: 'Aditia Santoso', email: 'aditia@danone.com', phone: '08119876543', address: 'Cyber 2 Tower, Kuningan, Jakarta' },
+      { pt: 'PT Bintang Toedjoe', type: 'Agency', brand: 'Extra Joss', pic: 'Rina Wijaya', email: 'rina@bintang7.com', phone: '08123456789', address: 'Pulo Gadung, Jakarta Timur' }
     ];
 
-    // 4. ADMIN DATA (8 Documents, 3 States)
-    const adminDocTypes = [
-      { id: 'quotation', name: 'Quotation' },
-      { id: 'media_order', name: 'Media Order' },
-      { id: 'agreement', name: 'Agreement (PKS)' },
-      { id: 'req_invoice', name: 'Request Invoice' },
-      { id: 'kajian_bisnis', name: 'Kajian Bisnis' },
-      { id: 'live', name: 'Live' },
-      { id: 'bap', name: 'Berita Acara Penayangan' },
-      { id: 'baps', name: 'Berita Acara Penyelesaian' }
-    ];
-
-    let adminList = [
+    const adminDocs = ['Quotation', 'Media Order (MO)', 'Agreement (PKS)', 'Request Invoice', 'Kajian Bisnis', 'Live', 'BAP', 'BAPS'];
+    let adminRecords = [
       {
-        pt: 'PT Bank Central Asia Tbk',
-        brand: 'Bank BCA',
-        noMO: 'MO/2026/BCA/001',
-        noPKS: 'PKS/QG/2026/012',
-        noKB: 'KB/CITILINK/2026/05',
-        docs: {
-          quotation: 'Approval',
-          media_order: 'Approval',
-          agreement: 'Approval',
-          req_invoice: 'Versioning',
-          kajian_bisnis: 'Approval',
-          live: 'Draft',
-          bap: 'Draft',
-          baps: 'Draft'
+        pt: 'PT Tirta Investama',
+        brand: 'AQUA',
+        noMO: 'MO/QG/2026/012',
+        noPKS: 'PKS/QG/2026/005',
+        noKB: 'KB/QG/2026/003',
+        statuses: {
+          'Quotation': 'Approval',
+          'Media Order (MO)': 'Approval',
+          'Agreement (PKS)': 'Approval',
+          'Request Invoice': 'Versioning',
+          'Kajian Bisnis': 'Approval',
+          'Live': 'Approval',
+          'BAP': 'Draft',
+          'BAPS': 'Draft'
         }
       },
       {
-        pt: 'PT Telekomunikasi Selular',
-        brand: 'Telkomsel',
-        noMO: 'MO/2026/TSEL/004',
-        noPKS: 'PKS/QG/2026/045',
-        noKB: 'KB/CITILINK/2026/09',
-        docs: {
-          quotation: 'Approval',
-          media_order: 'Approval',
-          agreement: 'Versioning',
-          req_invoice: 'Draft',
-          kajian_bisnis: 'Approval',
-          live: 'Draft',
-          bap: 'Draft',
-          baps: 'Draft'
+        pt: 'PT Bintang Toedjoe',
+        brand: 'Extra Joss',
+        noMO: 'MO/QG/2026/015',
+        noPKS: 'PKS/QG/2026/009',
+        noKB: 'KB/QG/2026/007',
+        statuses: {
+          'Quotation': 'Approval',
+          'Media Order (MO)': 'Approval',
+          'Agreement (PKS)': 'Versioning',
+          'Request Invoice': 'Draft',
+          'Kajian Bisnis': 'Approval',
+          'Live': 'Draft',
+          'BAP': 'Draft',
+          'BAPS': 'Draft'
         }
       }
     ];
 
+    let expandedRows = {};
     let barChartInstance = null;
     let pieChartInstance = null;
-    let activeExpandedRows = new Set();
-    let currentEditingAdminIdx = null;
+    let selectedAdminIndex = null;
 
-    function formatIDR(num) {
-      return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(num);
+    // 2. HELPER FUNCTIONS
+    function formatIDR(val) {
+      return 'Rp ' + Number(val || 0).toLocaleString('id-ID');
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      renderDashboard();
-      renderMediaMarketTracker();
-      renderCampaignTable();
-      renderAdminTable();
-    });
-
+    // 3. NAVIGATION & TAB SWITCHING
     function switchTab(tabId) {
-      const tabs = ['report-dashboard', 'media-market', 'new-campaign', 'administrasi', 'revenue-streams', 'billing-payment', 'visual-charts', 'summary-data'];
-      tabs.forEach(t => {
-        const el = document.getElementById(`tab-${t}`);
-        const navEl = document.getElementById(`nav-${t}`);
+      const allNavBtns = document.querySelectorAll('nav button');
+      allNavBtns.forEach(btn => {
+        btn.classList.remove('bg-citilink', 'text-white', 'shadow-md');
+        btn.classList.add('text-gray-300', 'hover:bg-green-800/40', 'hover:text-white');
+      });
+
+      const activeNavBtn = document.getElementById(`nav-${tabId}`);
+      if (activeNavBtn) {
+        activeNavBtn.classList.remove('text-gray-300', 'hover:bg-green-800/40');
+        activeNavBtn.classList.add('bg-citilink', 'text-white', 'shadow-md');
+      }
+
+      const tabs = ['report-dashboard', 'media-market', 'new-campaign', 'administrasi'];
+      tabs.forEach(id => {
+        const el = document.getElementById(`tab-${id}`);
         if (el) el.classList.add('hidden');
-        if (navEl) {
-          navEl.classList.remove('bg-citilink', 'text-white', 'shadow-md');
-          navEl.classList.add('text-gray-300', 'hover:bg-green-800/40', 'hover:text-white');
-        }
       });
 
       const placeholder = document.getElementById('tab-generic-placeholder');
-      const targetTab = document.getElementById(`tab-${tabId}`);
+      placeholder.classList.add('hidden');
 
-      if (targetTab) {
-        targetTab.classList.remove('hidden');
-        if (placeholder) placeholder.classList.add('hidden');
-      } else if (placeholder) {
+      const pageTitle = document.getElementById('page-title');
+
+      if (tabs.includes(tabId)) {
+        document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+        if (tabId === 'report-dashboard') pageTitle.innerText = 'Inflight Advertising Report';
+        if (tabId === 'media-market') pageTitle.innerText = 'Media Placement Tracker';
+        if (tabId === 'new-campaign') pageTitle.innerText = 'New Campaign Registration';
+        if (tabId === 'administrasi') pageTitle.innerText = 'Pelacakan Status Administrasi';
+      } else {
         placeholder.classList.remove('hidden');
         document.getElementById('placeholder-title').innerText = tabId.replace('-', ' ').toUpperCase();
-      }
-
-      const activeNav = document.getElementById(`nav-${tabId}`);
-      if (activeNav) {
-        activeNav.classList.add('bg-citilink', 'text-white', 'shadow-md');
-        activeNav.classList.remove('text-gray-300', 'hover:bg-green-800/40', 'hover:text-white');
+        pageTitle.innerText = tabId.replace('-', ' ').toUpperCase();
       }
     }
 
-    // DASHBOARD & CHARTS LOGIC
-    function renderDashboard() {
-      let totalRev = 0, totalAgency = 0, totalDirect = 0;
+    // 4. REPORT DASHBOARD RENDER LOGIC
+    function renderReportDashboard() {
+      let totalAgency = 0;
+      let totalDirect = 0;
+
       reportData.forEach(item => {
-        totalRev += (item.agency + item.direct);
-        totalAgency += item.agency;
-        totalDirect += item.direct;
+        totalAgency += Number(item.agency);
+        totalDirect += Number(item.direct);
       });
 
-      document.getElementById('card-total-revenue').innerText = formatIDR(totalRev);
+      const totalRevenue = totalAgency + totalDirect;
+      const agencyPct = totalRevenue ? ((totalAgency / totalRevenue) * 100).toFixed(1) : 0;
+      const directPct = totalRevenue ? ((totalDirect / totalRevenue) * 100).toFixed(1) : 0;
+
+      document.getElementById('card-total-revenue').innerText = formatIDR(totalRevenue);
       document.getElementById('card-agency-revenue').innerText = formatIDR(totalAgency);
-      document.getElementById('card-direct-revenue').innerText = formatIDR(totalDirect);
-
-      const agencyPct = totalRev > 0 ? ((totalAgency / totalRev) * 100).toFixed(1) : 0;
-      const directPct = totalRev > 0 ? ((totalDirect / totalRev) * 100).toFixed(1) : 0;
-
       document.getElementById('card-agency-percentage').innerText = `${agencyPct}% of total revenue`;
+      document.getElementById('card-direct-revenue').innerText = formatIDR(totalDirect);
       document.getElementById('card-direct-percentage').innerText = `${directPct}% of total revenue`;
 
       const latestItem = reportData[reportData.length - 1];
-      if (latestItem) {
-        document.getElementById('card-latest-revenue').innerText = formatIDR(latestItem.agency + latestItem.direct);
-      }
+      const latestVal = latestItem ? (Number(latestItem.agency) + Number(latestItem.direct)) : 0;
+      document.getElementById('card-latest-revenue').innerText = formatIDR(latestVal);
 
       renderSummaryTable();
-      renderCharts();
+      renderCharts(totalAgency, totalDirect);
     }
 
     function renderSummaryTable() {
       const tbody = document.getElementById('summaryTableBody');
       tbody.innerHTML = '';
 
-      reportData.forEach(item => {
-        const rowTotal = item.agency + item.direct;
-        const agencyPct = rowTotal > 0 ? ((item.agency / rowTotal) * 100).toFixed(1) : 0;
-        const isExpanded = activeExpandedRows.has(item.id);
+      reportData.forEach((item) => {
+        const agency = Number(item.agency);
+        const direct = Number(item.direct);
+        const total = agency + direct;
+        const agencyShare = total ? ((agency / total) * 100).toFixed(1) : 0;
+        const isExpanded = !!expandedRows[item.id];
+        const subItems = quarterlyBreakdownData[item.id] || [];
 
         const tr = document.createElement('tr');
-        tr.className = "hover:bg-green-50/50 transition-colors bg-white font-medium";
+        tr.className = 'hover:bg-gray-50 transition-colors border-b border-gray-100';
         tr.innerHTML = `
           <td class="py-3.5 px-4 text-center">
-            <button onclick="toggleExpandRow('${item.id}')" class="w-6 h-6 rounded border border-gray-300 flex items-center justify-center hover:bg-citilink hover:text-white hover:border-citilink text-gray-500 transition-all text-xs">
-              <i class="fa-solid ${isExpanded ? 'fa-chevron-down' : 'fa-chevron-right'}"></i>
-            </button>
+            ${subItems.length > 0 ? `
+              <button onclick="toggleExpandRow('${item.id}')" class="text-gray-400 hover:text-citilink p-1">
+                <i class="fa-solid fa-chevron-${isExpanded ? 'down' : 'right'}"></i>
+              </button>
+            ` : ''}
           </td>
           <td class="py-3.5 px-4 font-bold text-gray-800">${item.name}</td>
-          <td class="py-3.5 px-4 text-right text-emerald-700 font-semibold">${formatIDR(item.agency)}</td>
-          <td class="py-3.5 px-4 text-right text-citilink font-semibold">${formatIDR(item.direct)}</td>
-          <td class="py-3.5 px-4 text-right font-extrabold text-gray-900">${formatIDR(rowTotal)}</td>
+          <td class="py-3.5 px-4 text-right font-medium">${formatIDR(agency)}</td>
+          <td class="py-3.5 px-4 text-right font-medium">${formatIDR(direct)}</td>
+          <td class="py-3.5 px-4 text-right font-bold text-citilink">${formatIDR(total)}</td>
           <td class="py-3.5 px-4 text-center">
-            <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold ${agencyPct > 50 ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-100 text-gray-700'}">
-              ${agencyPct}%
+            <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-green-50 text-citilink border border-green-200">
+              ${agencyShare}%
             </span>
           </td>
         `;
         tbody.appendChild(tr);
 
-        if (isExpanded) {
-          const breakdown = quarterlyBreakdownData[item.id] || [];
-          breakdown.forEach(sub => {
-            const subTotal = sub.agency + sub.direct;
-            const subAgencyPct = subTotal > 0 ? ((sub.agency / subTotal) * 100).toFixed(1) : 0;
+        if (isExpanded && subItems.length > 0) {
+          subItems.forEach(sub => {
+            const subTotal = Number(sub.agency) + Number(sub.direct);
+            const subShare = subTotal ? ((Number(sub.agency) / subTotal) * 100).toFixed(1) : 0;
             const subTr = document.createElement('tr');
-            subTr.className = "bg-green-50/30 text-xs text-gray-600 border-l-4 border-citilink";
+            subTr.className = 'bg-gray-50/80 text-xs italic text-gray-600 border-b border-gray-100';
             subTr.innerHTML = `
               <td></td>
-              <td class="py-2.5 px-4 pl-8 font-medium italic flex items-center gap-2">
-                <i class="fa-solid fa-turn-up rotate-90 text-citilink text-[10px]"></i>
-                <span>${sub.period}</span>
-              </td>
+              <td class="py-2.5 px-4 pl-8 font-medium text-gray-600"><i class="fa-solid fa-angle-right mr-2 text-citilink"></i>${sub.period}</td>
               <td class="py-2.5 px-4 text-right">${formatIDR(sub.agency)}</td>
               <td class="py-2.5 px-4 text-right">${formatIDR(sub.direct)}</td>
-              <td class="py-2.5 px-4 text-right font-semibold text-gray-800">${formatIDR(subTotal)}</td>
-              <td class="py-2.5 px-4 text-center text-gray-500">${subAgencyPct}%</td>
+              <td class="py-2.5 px-4 text-right font-semibold text-gray-700">${formatIDR(subTotal)}</td>
+              <td class="py-2.5 px-4 text-center">${subShare}%</td>
             `;
             tbody.appendChild(subTr);
           });
@@ -759,134 +730,233 @@
     }
 
     function toggleExpandRow(id) {
-      if (activeExpandedRows.has(id)) activeExpandedRows.delete(id);
-      else activeExpandedRows.add(id);
+      expandedRows[id] = !expandedRows[id];
       renderSummaryTable();
     }
 
-    function renderCharts() {
+    function renderCharts(totalAgency, totalDirect) {
       const labels = reportData.map(d => d.name);
-      const agencyValues = reportData.map(d => d.agency);
-      const directValues = reportData.map(d => d.direct);
+      const agencyData = reportData.map(d => Number(d.agency));
+      const directData = reportData.map(d => Number(d.direct));
 
-      const ctxBar = document.getElementById('revenueBarChart').getContext('2d');
       if (barChartInstance) barChartInstance.destroy();
+      const ctxBar = document.getElementById('revenueBarChart').getContext('2d');
       barChartInstance = new Chart(ctxBar, {
         type: 'bar',
         data: {
           labels: labels,
           datasets: [
-            { label: 'Agency Value (IDR)', data: agencyValues, backgroundColor: '#008752', borderRadius: 6 },
-            { label: 'Direct Value (IDR)', data: directValues, backgroundColor: '#82c341', borderRadius: 6 }
+            { label: 'Agency Value', data: agencyData, backgroundColor: '#008752', borderRadius: 4 },
+            { label: 'Direct Value', data: directData, backgroundColor: '#82c341', borderRadius: 4 }
           ]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
           plugins: { legend: { position: 'top' } },
-          scales: { y: { beginAtZero: true, ticks: { callback: (val) => 'Rp ' + (val / 1e9).toFixed(1) + ' B' } } }
+          scales: {
+            y: { ticks: { callback: (value) => 'Rp ' + (value / 1e9).toFixed(1) + 'B' } }
+          }
         }
       });
 
-      const totalAgencyAll = agencyValues.reduce((a, b) => a + b, 0);
-      const totalDirectAll = directValues.reduce((a, b) => a + b, 0);
-
-      const ctxPie = document.getElementById('revenuePieChart').getContext('2d');
       if (pieChartInstance) pieChartInstance.destroy();
+      const ctxPie = document.getElementById('revenuePieChart').getContext('2d');
       pieChartInstance = new Chart(ctxPie, {
         type: 'doughnut',
         data: {
-          labels: ['Agency Value', 'Direct Value'],
-          datasets: [{ data: [totalAgencyAll, totalDirectAll], backgroundColor: ['#008752', '#82c341'], hoverOffset: 6 }]
+          labels: ['Agency', 'Direct'],
+          datasets: [{
+            data: [totalAgency, totalDirect],
+            backgroundColor: ['#008752', '#82c341'],
+            borderWidth: 2
+          }]
         },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { position: 'bottom' } }
+        }
       });
     }
 
-    // MEDIA MARKET TRACKER LOGIC
-    function renderMediaMarketTracker() {
+    // 5. UPDATE REPORT DATA MODAL FUNCTIONS
+    function openModal() {
+      const container = document.getElementById('modal-period-rows');
+      container.innerHTML = '';
+      reportData.forEach((item, index) => {
+        container.appendChild(createPeriodRowElement(item, index));
+      });
+      document.getElementById('reportDataModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('reportDataModal').classList.add('hidden');
+    }
+
+    function createPeriodRowElement(item, index) {
+      const div = document.createElement('div');
+      div.className = 'grid grid-cols-12 gap-3 items-center period-row-item';
+      div.innerHTML = `
+        <div class="col-span-3">
+          <input type="text" value="${item.name}" class="period-name-input w-full px-3 py-2 text-xs rounded-lg border border-gray-300 focus:ring-2 focus:ring-citilink focus:outline-none">
+        </div>
+        <div class="col-span-4">
+          <input type="number" value="${item.agency}" class="period-agency-input w-full px-3 py-2 text-xs rounded-lg border border-gray-300 focus:ring-2 focus:ring-citilink focus:outline-none">
+        </div>
+        <div class="col-span-4">
+          <input type="number" value="${item.direct}" class="period-direct-input w-full px-3 py-2 text-xs rounded-lg border border-gray-300 focus:ring-2 focus:ring-citilink focus:outline-none">
+        </div>
+        <div class="col-span-1 text-center">
+          <button onclick="this.closest('.period-row-item').remove()" class="text-red-500 hover:text-red-700 p-1"><i class="fa-solid fa-trash-can"></i></button>
+        </div>
+      `;
+      return div;
+    }
+
+    function addNewPeriodInputRow() {
+      const container = document.getElementById('modal-period-rows');
+      const newObj = { id: 'custom_' + Date.now(), name: '2026 Baru', agency: 0, direct: 0 };
+      container.appendChild(createPeriodRowElement(newObj, container.children.length));
+    }
+
+    function saveUpdatedReportData() {
+      const rows = document.querySelectorAll('.period-row-item');
+      const newReportData = [];
+
+      rows.forEach((row, idx) => {
+        const name = row.querySelector('.period-name-input').value.trim() || `Period ${idx + 1}`;
+        const agency = Number(row.querySelector('.period-agency-input').value) || 0;
+        const direct = Number(row.querySelector('.period-direct-input').value) || 0;
+        newReportData.push({ id: 'period_' + idx, name, agency, direct });
+      });
+
+      reportData = newReportData;
+      renderReportDashboard();
+      closeModal();
+    }
+
+    // 6. MEDIA PLACEMENT TRACKER LOGIC
+    function renderMediaTracker() {
       document.getElementById('armada-count-badge').innerText = `Armada: ${fleetData.length} Pesawat`;
+
+      // Render Cards Summary
       const cardsContainer = document.getElementById('placement-category-cards');
       cardsContainer.innerHTML = '';
-
-      mediaCategories.forEach(cat => {
-        let terisi = 0;
-        fleetData.forEach(plane => {
-          if (plane.placements && plane.placements[cat.id]) terisi++;
+      mediaPlacements.forEach(placement => {
+        let occupied = 0;
+        fleetData.forEach(f => {
+          if (f.placements[placement] && f.placements[placement] !== 'Available' && f.placements[placement] !== 'N/A') {
+            occupied++;
+          }
         });
-        const sisa = fleetData.length - terisi;
 
         const card = document.createElement('div');
-        card.className = "bg-white p-3.5 rounded-xl border border-gray-200 shadow-sm flex flex-col justify-between";
+        card.className = 'bg-white p-3.5 rounded-xl border border-gray-200 shadow-sm';
         card.innerHTML = `
-          <div class="flex items-center gap-2 mb-2 text-gray-700">
-            <i class="fa-solid ${cat.icon} text-citilink text-sm"></i>
-            <span class="font-bold text-xs truncate" title="${cat.name}">${cat.name}</span>
-          </div>
-          <div class="flex items-center justify-between text-xs">
-            <div>
-              <span class="text-gray-400 text-[10px] block">Sisa</span>
-              <span class="font-extrabold text-citilink text-lg">${sisa}</span>
-            </div>
-            <div class="text-right">
-              <span class="text-gray-400 text-[10px] block">Terisi</span>
-              <span class="font-bold text-gray-700 text-base">${terisi}</span>
-            </div>
+          <p class="text-[11px] font-bold text-gray-500 truncate uppercase tracking-wider">${placement}</p>
+          <div class="mt-2 flex items-baseline justify-between">
+            <span class="text-lg font-extrabold text-gray-900">${occupied}/${fleetData.length}</span>
+            <span class="text-[10px] font-semibold px-2 py-0.5 rounded ${occupied > 0 ? 'bg-green-100 text-citilink' : 'bg-gray-100 text-gray-500'}">
+              ${Math.round((occupied / fleetData.length) * 100)}% Terisi
+            </span>
           </div>
         `;
         cardsContainer.appendChild(card);
       });
 
+      // Render Header Row
       const headerRow = document.getElementById('matrix-header-row');
-      headerRow.innerHTML = `<th class="py-3.5 px-4 min-w-[150px] sticky left-0 bg-gray-50 z-10 border-r">PESAWAT</th>`;
-      
-      mediaCategories.forEach(cat => {
+      headerRow.innerHTML = `<th class="py-3.5 px-4 min-w-[140px] sticky left-0 bg-gray-50 z-10 border-r">PESAWAT</th>`;
+      mediaPlacements.forEach(p => {
         const th = document.createElement('th');
-        th.className = "py-3.5 px-3 min-w-[160px] text-center border-r";
-        th.innerText = cat.name.toUpperCase();
+        th.className = 'py-3.5 px-3 min-w-[140px] text-center border-r';
+        th.innerText = p;
         headerRow.appendChild(th);
       });
 
+      // Render Matrix Table
       const tbody = document.getElementById('matrixTableBody');
       tbody.innerHTML = '';
-
-      fleetData.forEach((plane, pIdx) => {
+      fleetData.forEach((fleet, fIdx) => {
         const tr = document.createElement('tr');
-        tr.className = "hover:bg-gray-50 transition-colors";
+        tr.className = 'border-b border-gray-100 hover:bg-gray-50';
 
-        let html = `
+        let rowHtml = `
           <td class="py-3 px-4 font-bold text-gray-800 sticky left-0 bg-white z-10 border-r shadow-sm">
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="text-sm font-extrabold text-citilink">${plane.tailNumber}</p>
-                <p class="text-[10px] text-gray-400">${plane.model}</p>
-              </div>
-            </div>
+            <div>${fleet.tail}</div>
+            <div class="text-[10px] text-gray-400 font-normal">${fleet.model}</div>
           </td>
         `;
 
-        mediaCategories.forEach(cat => {
-          const slot = plane.placements ? plane.placements[cat.id] : null;
-          if (slot) {
-            html += `
-              <td class="py-2.5 px-2 text-center border-r bg-green-50/40">
-                <div class="bg-emerald-100 border border-emerald-300 text-emerald-900 rounded-lg p-2 text-xs">
-                  <p class="font-bold truncate">${slot.brand}</p>
-                  <p class="text-[10px] text-emerald-700 mt-0.5">${slot.date}</p>
-                </div>
-              </td>
-            `;
-          } else {
-            html += `<td class="py-2.5 px-2 text-center border-r text-gray-300 italic">- Kosong -</td>`;
-          }
+        mediaPlacements.forEach(p => {
+          const val = fleet.placements[p] || 'Available';
+          let badgeClass = 'bg-green-100 text-citilink hover:bg-green-200 border-green-200';
+          if (val === 'N/A') badgeClass = 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed';
+          else if (val !== 'Available') badgeClass = 'bg-amber-100 text-amber-800 border-amber-300';
+
+          rowHtml += `
+            <td class="py-3 px-3 text-center border-r">
+              <button onclick="togglePlacementStatus(${fIdx}, '${p}')" ${val === 'N/A' ? 'disabled' : ''} class="w-full px-2.5 py-1.5 rounded-lg border text-xs font-semibold transition-all ${badgeClass}">
+                ${val}
+              </button>
+            </td>
+          `;
         });
 
-        tr.innerHTML = html;
+        tr.innerHTML = rowHtml;
         tbody.appendChild(tr);
       });
     }
 
-    // NEW CAMPAIGN LOGIC
+    function togglePlacementStatus(fIdx, placement) {
+      const current = fleetData[fIdx].placements[placement];
+      if (current === 'Available') {
+        const brand = prompt('Masukkan Nama Brand / Klien untuk Iklan ini:', 'Brand Partner');
+        if (brand && brand.trim()) {
+          fleetData[fIdx].placements[placement] = brand.trim();
+        }
+      } else if (current !== 'N/A') {
+        if (confirm(`Hapus kampanye iklan (${current}) dan ubah status menjadi Available?`)) {
+          fleetData[fIdx].placements[placement] = 'Available';
+        }
+      }
+      renderMediaTracker();
+    }
+
+    function openAddPlaneModal() {
+      document.getElementById('input-tail-number').value = '';
+      document.getElementById('addPlaneModal').classList.remove('hidden');
+    }
+
+    function closeAddPlaneModal() {
+      document.getElementById('addPlaneModal').classList.add('hidden');
+    }
+
+    function saveNewPlane() {
+      const tail = document.getElementById('input-tail-number').value.trim().toUpperCase();
+      const model = document.getElementById('input-plane-model').value;
+
+      if (!tail) {
+        alert('Nomor Ekor (Tail Number) wajib diisi!');
+        return;
+      }
+
+      const newPlacements = {};
+      mediaPlacements.forEach(p => {
+        if (model === 'ATR 72-600' && p === 'Wi-Fi Portal Banner') {
+          newPlacements[p] = 'N/A';
+        } else {
+          newPlacements[p] = 'Available';
+        }
+      });
+
+      fleetData.push({ tail, model, placements: newPlacements });
+      renderMediaTracker();
+      closeAddPlaneModal();
+    }
+
+    // 7. NEW CAMPAIGN FORM LOGIC
     function handleCampaignSubmit(e) {
       e.preventDefault();
       const pt = document.getElementById('campaign-nama-pt').value.trim();
@@ -897,23 +967,23 @@
       const phone = document.getElementById('campaign-no-hp').value.trim();
       const address = document.getElementById('campaign-alamat').value.trim();
 
-      campaignList.unshift({ pt, type, brand, pic, email, phone, address });
-      
-      // Auto register to Administrasi Module too
-      adminList.unshift({
+      campaignList.push({ pt, type, brand, pic, email, phone, address });
+
+      // Otomatis tambahkan entri ke tabel Administrasi
+      const newAdminRecord = {
         pt,
         brand,
-        noMO: '-',
-        noPKS: '-',
-        noKB: '-',
-        docs: {
-          quotation: 'Draft', media_order: 'Draft', agreement: 'Draft', req_invoice: 'Draft',
-          kajian_bisnis: 'Draft', live: 'Draft', bap: 'Draft', baps: 'Draft'
-        }
-      });
+        noMO: 'MO/QG/2026/' + Math.floor(100 + Math.random() * 900),
+        noPKS: 'PKS/QG/2026/' + Math.floor(100 + Math.random() * 900),
+        noKB: 'KB/QG/2026/' + Math.floor(100 + Math.random() * 900),
+        statuses: {}
+      };
+      adminDocs.forEach(doc => newAdminRecord.statuses[doc] = 'Draft');
+      adminRecords.push(newAdminRecord);
 
       renderCampaignTable();
       renderAdminTable();
+
       document.getElementById('newCampaignForm').reset();
       alert('Campaign baru berhasil ditambahkan dan disinkronkan ke Administrasi!');
     }
@@ -921,106 +991,95 @@
     function renderCampaignTable() {
       const tbody = document.getElementById('campaignTableBody');
       tbody.innerHTML = '';
-
-      campaignList.forEach(c => {
+      campaignList.forEach(item => {
         const tr = document.createElement('tr');
-        tr.className = "hover:bg-gray-50 transition-colors";
+        tr.className = 'border-b border-gray-100 hover:bg-gray-50';
         tr.innerHTML = `
-          <td class="py-3 px-4 font-bold text-gray-800">${c.pt}</td>
+          <td class="py-3 px-4 font-bold text-gray-800">${item.pt}</td>
           <td class="py-3 px-4">
-            <span class="px-2 py-0.5 text-[10px] font-bold rounded ${c.type === 'Agency' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'}">
-              ${c.type}
+            <span class="px-2 py-0.5 rounded text-[11px] font-bold ${item.type === 'Agency' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-citilink'}">
+              ${item.type}
             </span>
           </td>
-          <td class="py-3 px-4 font-semibold text-citilink">${c.brand}</td>
-          <td class="py-3 px-4">${c.pic}</td>
-          <td class="py-3 px-4 text-gray-500">${c.email}</td>
-          <td class="py-3 px-4">${c.phone}</td>
-          <td class="py-3 px-4 text-gray-500 truncate max-w-[150px]">${c.address}</td>
+          <td class="py-3 px-4 font-semibold text-gray-700">${item.brand}</td>
+          <td class="py-3 px-4">${item.pic}</td>
+          <td class="py-3 px-4 text-gray-500">${item.email}</td>
+          <td class="py-3 px-4 text-gray-500">${item.phone}</td>
+          <td class="py-3 px-4 text-gray-500 truncate max-w-xs">${item.address}</td>
         `;
         tbody.appendChild(tr);
       });
     }
 
-    // ADMINISTRASI LOGIC
-    function getStatusBadgeClass(status) {
-      if (status === 'Approval') return 'bg-emerald-100 text-emerald-800 border-emerald-300';
-      if (status === 'Versioning') return 'bg-blue-100 text-blue-800 border-blue-300';
-      return 'bg-amber-100 text-amber-800 border-amber-300'; // Draft
-    }
-
+    // 8. ADMINISTRASI TAB LOGIC
     function renderAdminTable() {
       const tbody = document.getElementById('adminTableBody');
       tbody.innerHTML = '';
 
-      adminList.forEach((item, aIdx) => {
+      adminRecords.forEach((record, rIdx) => {
         const tr = document.createElement('tr');
-        tr.className = "hover:bg-gray-50 transition-colors";
+        tr.className = 'border-b border-gray-100 hover:bg-gray-50';
 
-        let html = `
+        let rowHtml = `
           <td class="py-3 px-4 font-bold text-gray-800 sticky left-0 bg-white z-10 border-r shadow-sm">
-            <p class="text-xs font-extrabold text-gray-900">${item.pt}</p>
-            <p class="text-[11px] font-semibold text-citilink mt-0.5">${item.brand}</p>
+            <div>${record.pt}</div>
+            <div class="text-[10px] text-citilink font-semibold">${record.brand}</div>
           </td>
         `;
 
-        adminDocTypes.forEach(doc => {
-          const status = item.docs[doc.id] || 'Draft';
-          const badgeStyle = getStatusBadgeClass(status);
+        adminDocs.forEach(doc => {
+          const status = record.statuses[doc] || 'Draft';
+          let statusStyle = 'bg-gray-100 text-gray-600 border-gray-200';
+          if (status === 'Versioning') statusStyle = 'bg-amber-100 text-amber-800 border-amber-300';
+          if (status === 'Approval') statusStyle = 'bg-emerald-100 text-emerald-800 border-emerald-300';
 
-          let extraNo = '';
-          if (doc.id === 'media_order' && item.noMO !== '-') extraNo = `<p class="text-[9px] text-gray-500 mt-0.5 truncate">${item.noMO}</p>`;
-          if (doc.id === 'agreement' && item.noPKS !== '-') extraNo = `<p class="text-[9px] text-gray-500 mt-0.5 truncate">${item.noPKS}</p>`;
-          if (doc.id === 'kajian_bisnis' && item.noKB !== '-') extraNo = `<p class="text-[9px] text-gray-500 mt-0.5 truncate">${item.noKB}</p>`;
-
-          html += `
-            <td class="py-3 px-2 text-center border-r">
-              <span class="inline-block px-2.5 py-1 text-[10px] font-extrabold rounded-full border ${badgeStyle}">
+          rowHtml += `
+            <td class="py-3 px-3 text-center border-r">
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-bold border block w-full truncate ${statusStyle}">
                 ${status}
               </span>
-              ${extraNo}
             </td>
           `;
         });
 
-        html += `
+        rowHtml += `
           <td class="py-3 px-4 text-center">
-            <button onclick="openAdminModal(${aIdx})" class="bg-citilink-light text-citilink hover:bg-green-100 border border-green-300 font-bold px-3 py-1.5 rounded-lg transition-all text-xs">
-              <i class="fa-solid fa-pen-to-square mr-1"></i> Edit
+            <button onclick="openAdminModal(${rIdx})" class="bg-citilink-light text-citilink hover:bg-green-100 font-bold px-3 py-1.5 rounded-lg border border-green-300 text-xs transition-all">
+              <i class="fa-solid fa-pen"></i> Edit
             </button>
           </td>
         `;
 
-        tr.innerHTML = html;
+        tr.innerHTML = rowHtml;
         tbody.appendChild(tr);
       });
     }
 
-    function openAdminModal(idx) {
-      currentEditingAdminIdx = idx;
-      const item = adminList[idx];
+    function openAdminModal(rIdx) {
+      selectedAdminIndex = rIdx;
+      const record = adminRecords[rIdx];
 
-      document.getElementById('admin-modal-subtitle').innerText = `${item.pt} - Brand: ${item.brand}`;
-      document.getElementById('admin-no-mo').value = item.noMO !== '-' ? item.noMO : '';
-      document.getElementById('admin-no-pks').value = item.noPKS !== '-' ? item.noPKS : '';
-      document.getElementById('admin-no-kb').value = item.noKB !== '-' ? item.noKB : '';
+      document.getElementById('admin-modal-subtitle').innerText = `${record.pt} - ${record.brand}`;
+      document.getElementById('admin-no-mo').value = record.noMO || '';
+      document.getElementById('admin-no-pks').value = record.noPKS || '';
+      document.getElementById('admin-no-kb').value = record.noKB || '';
 
-      const container = document.getElementById('admin-status-grid');
-      container.innerHTML = '';
+      const grid = document.getElementById('admin-status-grid');
+      grid.innerHTML = '';
 
-      adminDocTypes.forEach(doc => {
-        const currentStatus = item.docs[doc.id] || 'Draft';
+      adminDocs.forEach(doc => {
+        const currentStatus = record.statuses[doc] || 'Draft';
         const div = document.createElement('div');
-        div.className = "p-2.5 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-between";
+        div.className = 'p-3 bg-white rounded-xl border border-gray-200 shadow-sm flex items-center justify-between';
         div.innerHTML = `
-          <span class="text-xs font-semibold text-gray-700">${doc.name}</span>
-          <select data-docid="${doc.id}" class="admin-doc-select px-2 py-1 rounded border border-gray-300 text-xs font-bold text-gray-800 bg-white focus:outline-none">
+          <span class="text-xs font-bold text-gray-700">${doc}</span>
+          <select data-doc="${doc}" class="admin-doc-select px-2.5 py-1 rounded-lg border border-gray-300 text-xs font-semibold focus:ring-2 focus:ring-citilink focus:outline-none bg-white">
             <option value="Draft" ${currentStatus === 'Draft' ? 'selected' : ''}>Draft</option>
             <option value="Versioning" ${currentStatus === 'Versioning' ? 'selected' : ''}>Versioning</option>
             <option value="Approval" ${currentStatus === 'Approval' ? 'selected' : ''}>Approval</option>
           </select>
         `;
-        container.appendChild(div);
+        grid.appendChild(div);
       });
 
       document.getElementById('updateAdminModal').classList.remove('hidden');
@@ -1028,89 +1087,34 @@
 
     function closeAdminModal() {
       document.getElementById('updateAdminModal').classList.add('hidden');
-      currentEditingAdminIdx = null;
+      selectedAdminIndex = null;
     }
 
     function saveAdminStatus() {
-      if (currentEditingAdminIdx === null) return;
-      const item = adminList[currentEditingAdminIdx];
+      if (selectedAdminIndex === null) return;
 
-      item.noMO = document.getElementById('admin-no-mo').value.trim() || '-';
-      item.noPKS = document.getElementById('admin-no-pks').value.trim() || '-';
-      item.noKB = document.getElementById('admin-no-kb').value.trim() || '-';
+      const record = adminRecords[selectedAdminIndex];
+      record.noMO = document.getElementById('admin-no-mo').value.trim();
+      record.noPKS = document.getElementById('admin-no-pks').value.trim();
+      record.noKB = document.getElementById('admin-no-kb').value.trim();
 
       const selects = document.querySelectorAll('.admin-doc-select');
-      selects.forEach(s => {
-        const docId = s.getAttribute('data-docid');
-        item.docs[docId] = s.value;
+      selects.forEach(select => {
+        const doc = select.getAttribute('data-doc');
+        record.statuses[doc] = select.value;
       });
 
       renderAdminTable();
       closeAdminModal();
     }
 
-    // REPORT DATA MODAL CONTROLS
-    function openModal() {
-      renderModalRows();
-      document.getElementById('reportDataModal').classList.remove('hidden');
-    }
-    function closeModal() {
-      document.getElementById('reportDataModal').classList.add('hidden');
-    }
-    function renderModalRows() {
-      const container = document.getElementById('modal-period-rows');
-      container.innerHTML = '';
-      reportData.forEach((item, index) => {
-        const row = document.createElement('div');
-        row.className = "grid grid-cols-12 gap-3 items-center bg-gray-50 p-2.5 rounded-xl border border-gray-200";
-        row.innerHTML = `
-          <div class="col-span-3"><input type="text" value="${item.name}" data-idx="${index}" data-field="name" class="modal-input-field w-full px-3 py-2 rounded-lg border border-gray-300 text-xs font-semibold"></div>
-          <div class="col-span-4"><input type="number" value="${item.agency}" data-idx="${index}" data-field="agency" class="modal-input-field w-full px-3 py-2 rounded-lg border border-gray-300 text-xs font-semibold"></div>
-          <div class="col-span-4"><input type="number" value="${item.direct}" data-idx="${index}" data-field="direct" class="modal-input-field w-full px-3 py-2 rounded-lg border border-gray-300 text-xs font-semibold"></div>
-          <div class="col-span-1 text-center"><button onclick="removePeriodInputRow(${index})" class="text-gray-400 hover:text-red-500 p-1"><i class="fa-solid fa-trash-can"></i></button></div>
-        `;
-        container.appendChild(row);
-      });
-    }
-    function addNewPeriodInputRow() {
-      reportData.push({ id: `year_${Date.now()}`, name: '2027', agency: 0, direct: 0 });
-      renderModalRows();
-    }
-    function removePeriodInputRow(index) {
-      reportData.splice(index, 1);
-      renderModalRows();
-    }
-    function saveUpdatedReportData() {
-      const inputs = document.querySelectorAll('.modal-input-field');
-      inputs.forEach(input => {
-        const idx = parseInt(input.getAttribute('data-idx'));
-        const field = input.getAttribute('data-field');
-        if (reportData[idx]) {
-          if (field === 'name') reportData[idx].name = input.value;
-          else if (field === 'agency') reportData[idx].agency = parseFloat(input.value) || 0;
-          else if (field === 'direct') reportData[idx].direct = parseFloat(input.value) || 0;
-        }
-      });
-      renderDashboard();
-      closeModal();
-    }
-
-    // PLANE MODAL CONTROLS
-    function openAddPlaneModal() {
-      document.getElementById('input-tail-number').value = '';
-      document.getElementById('addPlaneModal').classList.remove('hidden');
-    }
-    function closeAddPlaneModal() {
-      document.getElementById('addPlaneModal').classList.add('hidden');
-    }
-    function saveNewPlane() {
-      const tailNumber = document.getElementById('input-tail-number').value.trim();
-      const model = document.getElementById('input-plane-model').value;
-      if (!tailNumber) return alert('Silakan masukkan Tail Number.');
-      fleetData.push({ tailNumber: tailNumber.toUpperCase(), model: model, placements: {} });
-      renderMediaMarketTracker();
-      closeAddPlaneModal();
-    }
+    // 9. INITIALIZATION
+    document.addEventListener('DOMContentLoaded', () => {
+      renderReportDashboard();
+      renderMediaTracker();
+      renderCampaignTable();
+      renderAdminTable();
+    });
   </script>
 </body>
 </html>
