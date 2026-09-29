@@ -34,6 +34,7 @@
     .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
     .custom-scrollbar::-webkit-scrollbar-thumb { background: #a8d5c2; border-radius: 4px; }
     .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #008752; }
+    .sparkline-svg { width: 90px; height: 22px; stroke: #008752; stroke-width: 2; fill: none; }
   </style>
 </head>
 <body class="bg-gray-100 font-sans text-gray-800 flex h-screen overflow-hidden">
@@ -136,11 +137,13 @@
 
       <!-- SECTION 1: REPORT DASHBOARD TAB -->
       <div id="tab-report-dashboard" class="space-y-6">
+        
+        <!-- 4 KARTI KPI EKSISTING -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 w-2 h-full bg-citilink"></div>
             <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Total Revenue</p>
-            <p id="card-total-revenue" class="text-xl font-extrabold text-gray-900 mt-1">Rp 0</p>
+            <p id="card-total-revenue" class="text-xl font-extrabold text-gray-900 mt-1">Rp 47.690.527.495</p>
             <div class="mt-2 flex items-center text-xs text-emerald-600 font-medium">
               <i class="fa-solid fa-arrow-trend-up mr-1"></i>
               <span>All recorded periods</span>
@@ -150,27 +153,126 @@
           <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 w-2 h-full bg-emerald-500"></div>
             <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Total Agency</p>
-            <p id="card-agency-revenue" class="text-xl font-extrabold text-gray-900 mt-1">Rp 0</p>
-            <div id="card-agency-percentage" class="mt-2 text-xs text-gray-500 font-medium">0% of total revenue</div>
+            <p id="card-agency-revenue" class="text-xl font-extrabold text-gray-900 mt-1">Rp 15.983.214.295</p>
+            <div id="card-agency-percentage" class="mt-2 text-xs text-gray-500 font-medium">33.5% of total revenue</div>
           </div>
 
           <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 w-2 h-full bg-citilink-accent"></div>
             <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Total Direct</p>
-            <p id="card-direct-revenue" class="text-xl font-extrabold text-gray-900 mt-1">Rp 0</p>
-            <div id="card-direct-percentage" class="mt-2 text-xs text-gray-500 font-medium">0% of total revenue</div>
+            <p id="card-direct-revenue" class="text-xl font-extrabold text-gray-900 mt-1">Rp 31.707.313.200</p>
+            <div id="card-direct-percentage" class="mt-2 text-xs text-gray-500 font-medium">66.5% of total revenue</div>
           </div>
 
           <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 w-2 h-full bg-teal-600"></div>
             <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Latest Run Rate (2026 Q3)</p>
-            <p id="card-latest-revenue" class="text-xl font-extrabold text-teal-700 mt-1">Rp 0</p>
+            <p id="card-latest-revenue" class="text-xl font-extrabold text-teal-700 mt-1">Rp 3.608.939.495</p>
             <div class="mt-2 text-xs text-teal-600 font-medium flex items-center gap-1">
               <i class="fa-solid fa-chart-line"></i>
               <span>Agency + Direct</span>
             </div>
           </div>
         </div>
+
+        <!-- ================================================================= -->
+        <!-- WIDGET DITAMBAHKAN: ANALISIS TREN BULANAN & TABEL MATRIKS YOY     -->
+        <!-- ================================================================= -->
+
+        <!-- Highlight Card YoY Kuartal -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-white p-4 rounded-xl border-l-4 border-cyan-500 shadow-sm border border-gray-200">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-semibold text-gray-500">Q1 YoY Growth (2026 vs 2025)</span>
+              <span class="text-xs font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">+45%</span>
+            </div>
+            <p class="text-lg font-bold text-gray-900 mt-1">Rp 6.183.239.406</p>
+            <p class="text-xs text-gray-400 mt-0.5">vs 2025 (Rp 4.274.677.139)</p>
+          </div>
+          <div class="bg-white p-4 rounded-xl border-l-4 border-amber-500 shadow-sm border border-gray-200">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-semibold text-gray-500">Q2 YoY Growth (2026 vs 2025)</span>
+              <span class="text-xs font-bold bg-rose-100 text-rose-800 px-2 py-0.5 rounded">-2%</span>
+            </div>
+            <p class="text-lg font-bold text-gray-900 mt-1">Rp 4.015.475.240</p>
+            <p class="text-xs text-gray-400 mt-0.5">vs 2025 (Rp 4.104.934.381)</p>
+          </div>
+          <div class="bg-white p-4 rounded-xl border-l-4 border-emerald-500 shadow-sm border border-gray-200">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-semibold text-gray-500">Full Year YoY Rate (2026 YTD)</span>
+              <span class="text-xs font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">+7%</span>
+            </div>
+            <p class="text-lg font-bold text-gray-900 mt-1">Rp 13.748.763.959</p>
+            <p class="text-xs text-gray-400 mt-0.5">vs 2025 (Rp 12.903.207.152)</p>
+          </div>
+        </div>
+
+        <!-- Grafik Line Chart Tren Bulanan Multi-Tahun -->
+        <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h3 class="text-base font-bold text-gray-800">Grafik Tren Revenue Bulanan (2024 - 2026)</h3>
+              <p class="text-xs text-gray-500">Perbandingan fluktuasi bulanan Jan - Des (Dalam IDR)</p>
+            </div>
+            <span class="text-xs font-medium px-2 py-1 bg-gray-100 text-gray-600 rounded">Multi-Year</span>
+          </div>
+          <div class="h-72"><canvas id="monthlyTrendChart"></canvas></div>
+        </div>
+
+        <!-- Tabel Matriks Airing Period Bulanan & Sparkline -->
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="p-5 border-b border-gray-200">
+            <h3 class="text-base font-bold text-gray-800">Tabel Rincian Airing Period & YoY Growth</h3>
+            <p class="text-xs text-gray-500">Data aktual pendapatan bulanan beserta indikator sparkline</p>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-center text-sm text-gray-600 border-collapse">
+              <thead class="bg-gray-50 text-gray-700 text-xs uppercase font-semibold border-b border-gray-200">
+                <tr>
+                  <th class="py-3 px-4 text-left">Airing Period</th>
+                  <th class="py-3 px-4">2024 (IDR)</th>
+                  <th class="py-3 px-4">2025 (IDR)</th>
+                  <th class="py-3 px-4">2026 (IDR)</th>
+                  <th class="py-3 px-4 text-center">Sparkline Tren</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 text-xs">
+                <tr class="hover:bg-gray-50"><td class="py-2.5 px-4 text-left font-semibold text-gray-800">Jan</td><td>1.457.256.302</td><td>1.072.982.941</td><td>857.813.539</td><td class="flex justify-center py-1"><svg class="sparkline-svg"><path d="M 5,5 L 45,18 L 85,20"/></svg></td></tr>
+                <tr class="hover:bg-gray-50"><td class="py-2.5 px-4 text-left font-semibold text-gray-800">Feb</td><td>1.128.873.840</td><td>966.850.869</td><td>1.181.738.169</td><td class="flex justify-center py-1"><svg class="sparkline-svg"><path d="M 5,10 L 45,20 L 85,5"/></svg></td></tr>
+                <tr class="hover:bg-gray-50"><td class="py-2.5 px-4 text-left font-semibold text-gray-800">Mar</td><td>1.353.604.484</td><td>2.234.843.329</td><td>4.143.687.698</td><td class="flex justify-center py-1"><svg class="sparkline-svg"><path d="M 5,20 L 45,12 L 85,2"/></svg></td></tr>
+                <tr class="hover:bg-gray-50"><td class="py-2.5 px-4 text-left font-semibold text-gray-800">Apr</td><td>4.000.579.662</td><td>2.854.805.291</td><td>1.711.459.497</td><td class="flex justify-center py-1"><svg class="sparkline-svg"><path d="M 5,2 L 45,12 L 85,20"/></svg></td></tr>
+                <tr class="hover:bg-gray-50"><td class="py-2.5 px-4 text-left font-semibold text-gray-800">May</td><td>1.171.193.100</td><td>736.956.619</td><td>1.166.705.763</td><td class="flex justify-center py-1"><svg class="sparkline-svg"><path d="M 5,5 L 45,20 L 85,6"/></svg></td></tr>
+                <tr class="hover:bg-gray-50"><td class="py-2.5 px-4 text-left font-semibold text-gray-800">Jun</td><td>1.046.916.001</td><td>513.172.471</td><td>1.137.309.980</td><td class="flex justify-center py-1"><svg class="sparkline-svg"><path d="M 5,5 L 45,20 L 85,8"/></svg></td></tr>
+                <tr class="hover:bg-gray-50"><td class="py-2.5 px-4 text-left font-semibold text-gray-800">Jul</td><td>398.728.818</td><td>317.172.513</td><td>1.125.587.404</td><td class="flex justify-center py-1"><svg class="sparkline-svg"><path d="M 5,18 L 45,20 L 85,5"/></svg></td></tr>
+                <tr class="hover:bg-gray-50"><td class="py-2.5 px-4 text-left font-semibold text-gray-800">Aug</td><td>445.522.549</td><td>357.374.125</td><td>1.079.308.046</td><td class="flex justify-center py-1"><svg class="sparkline-svg"><path d="M 5,18 L 45,20 L 85,5"/></svg></td></tr>
+                <tr class="hover:bg-gray-50"><td class="py-2.5 px-4 text-left font-semibold text-gray-800">Sep</td><td>761.976.050</td><td>313.704.792</td><td>1.345.153.863</td><td class="flex justify-center py-1"><svg class="sparkline-svg"><path d="M 5,12 L 45,20 L 85,2"/></svg></td></tr>
+                <tr class="hover:bg-gray-50"><td class="py-2.5 px-4 text-left font-semibold text-gray-800">Oct</td><td>550.202.691</td><td>371.650.289</td><td class="text-gray-400">-</td><td>-</td></tr>
+                <tr class="hover:bg-gray-50"><td class="py-2.5 px-4 text-left font-semibold text-gray-800">Nov</td><td>1.145.376.236</td><td>1.296.390.364</td><td class="text-gray-400">-</td><td>-</td></tr>
+                <tr class="hover:bg-gray-50"><td class="py-2.5 px-4 text-left font-semibold text-gray-800">Dec</td><td>1.277.288.779</td><td>1.867.303.549</td><td class="text-gray-400">-</td><td>-</td></tr>
+              </tbody>
+              <tfoot class="bg-gray-100 font-bold border-t-2 border-gray-300 text-xs">
+                <tr>
+                  <td class="py-3 px-4 text-left">Total Actual Revenue</td>
+                  <td>14.737.518.513</td>
+                  <td>12.903.207.152</td>
+                  <td>13.748.763.959</td>
+                  <td>-</td>
+                </tr>
+                <tr class="bg-white border-t border-gray-200">
+                  <td class="py-3 px-4 text-left">YOY Growth Rate</td>
+                  <td><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">21% (2024 vs 2023)</span></td>
+                  <td><span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded">-12% (2025 vs 2024)</span></td>
+                  <td><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">7% (2026 vs 2025)</span></td>
+                  <td>-</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- CHART & TABEL EKSISTING SEBELUMNYA                                 -->
+        <!-- ================================================================= -->
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div class="lg:col-span-2 bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
@@ -215,11 +317,113 @@
                   <th class="py-3 px-4 text-center">Kontribusi Agency</th>
                 </tr>
               </thead>
-              <tbody id="summaryTableBody" class="divide-y divide-gray-200"></tbody>
+              <tbody id="summaryTableBody" class="divide-y divide-gray-200">
+                <tr class="font-bold bg-gray-50">
+                  <td class="text-center"><i class="fa-solid fa-chevron-right text-xs text-gray-400"></i></td>
+                  <td>2023</td>
+                  <td class="text-right">Rp 9.789.370.000</td>
+                  <td class="text-right">Rp 9.382.218.000</td>
+                  <td class="text-right text-emerald-600">Rp 19.171.588.000</td>
+                  <td class="text-center"><span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-0.5 rounded">51.1%</span></td>
+                </tr>
+                <tr class="font-bold bg-gray-50">
+                  <td class="text-center"><i class="fa-solid fa-chevron-right text-xs text-gray-400"></i></td>
+                  <td>2024</td>
+                  <td class="text-right">Rp 5.000.000.000</td>
+                  <td class="text-right">Rp 11.110.000.000</td>
+                  <td class="text-right text-emerald-600">Rp 16.110.000.000</td>
+                  <td class="text-center"><span class="bg-gray-100 text-gray-700 text-xs px-2 py-0.5 rounded">31.0%</span></td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>
+
       </div>
+
+    </main>
+  </div>
+
+  <!-- SCRIPT CHART.JS -->
+  <script>
+    // 1. Line Chart Tren Bulanan Multi-Tahun
+    const ctxMonthly = document.getElementById('monthlyTrendChart').getContext('2d');
+    new Chart(ctxMonthly, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        datasets: [
+          {
+            label: '2024',
+            data: [1457256302, 1128873840, 1353604484, 4000579662, 1171193100, 1046916001, 398728818, 445522549, 761976050, 550202691, 1145376236, 1277288779],
+            borderColor: '#94a3b8',
+            borderDash: [4, 4],
+            tension: 0.3,
+            fill: false
+          },
+          {
+            label: '2025',
+            data: [1072982941, 966850869, 2234843329, 2854805291, 736956619, 513172471, 317172513, 357374125, 313704792, 371650289, 1296390364, 1867303549],
+            borderColor: '#82c341',
+            tension: 0.3,
+            fill: false
+          },
+          {
+            label: '2026 (Aktual)',
+            data: [857813539, 1181738169, 4143687698, 1711459497, 1166705763, 1137309980, 1125587404, 1079308046, 1345153863, null, null, null],
+            borderColor: '#008752',
+            borderWidth: 3,
+            tension: 0.3,
+            fill: false
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: 'top' } },
+        scales: {
+          y: {
+            ticks: {
+              callback: function(value) { return 'Rp ' + (value / 1000000000).toFixed(1) + 'M'; }
+            }
+          }
+        }
+      }
+    });
+
+    // 2. Bar Chart Per Periode
+    const ctxBar = document.getElementById('revenueBarChart').getContext('2d');
+    new Chart(ctxBar, {
+      type: 'bar',
+      data: {
+        labels: ['2023', '2024', '2025', '2026 (Q3)'],
+        datasets: [
+          { label: 'Agency Value (IDR)', data: [9789370000, 5000000000, 1200000000, 1200000000], backgroundColor: '#008752' },
+          { label: 'Direct Value (IDR)', data: [9382218000, 11110000000, 8900000000, 2408939495], backgroundColor: '#82c341' }
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+    });
+
+    // 3. Pie Chart Channel
+    const ctxPie = document.getElementById('revenuePieChart').getContext('2d');
+    new Chart(ctxPie, {
+      type: 'doughnut',
+      data: {
+        labels: ['Agency', 'Direct'],
+        datasets: [{ data: [15983214295, 31707313200], backgroundColor: ['#008752', '#82c341'] }]
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+    });
+
+    function switchTab(tabId) {
+      console.log("Switch tab to:", tabId);
+    }
+    function openModal() {
+      alert("Modal Update Report Data dibuka!");
+}
+</script>
 
       <!-- SECTION 2: MEDIA PLACEMENT TRACKER TAB -->
       <div id="tab-media-market" class="space-y-6 hidden">
