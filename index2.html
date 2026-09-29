@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inflight Advertising Dashboard - Citilink</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        citilink: {
+                            DEFAULT: '#005335',
+                            dark: '#003823',
+                            light: '#007A4D',
+                            accent: '#82C341'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased flex h-screen overflow-hidden">
+
+    <!-- SIDEBAR -->
+    <aside class="w-64 bg-citilink-dark text-white flex flex-col justify-between shadow-xl z-20">
+        <div>
+            <!-- Logo Area -->
+            <div class="h-16 flex items-center px-6 bg-citilink border-b border-citilink-light/30">
+                <div class="flex items-center space-x-2">
+                    <span class="text-white font-black text-2xl tracking-wider italic">Citilink</span>
+                    <span class="bg-citilink-accent text-citilink-dark text-xs font-bold px-2 py-0.5 rounded">ADS</span>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="px-4 py-6 space-y-6 overflow-y-auto max-h-[calc(100vh-130px)]">
+                <div>
+                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 mb-2">Core Module</p>
+                    <nav class="space-y-1">
+                        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg bg-citilink text-white font-medium transition shadow-sm">
+                            <i class="fa-solid fa-chart-pie w-5"></i>
+                            <span>Report Dashboard</span>
+                        </button>
+                    </nav>
+                </div>
+
+                <div>
+                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 mb-2">Management</p>
+                    <nav class="space-y-1">
+                        <button onclick="switchTab('media')" id="nav-media" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-300 hover:bg-citilink/40 hover:text-white transition">
+                            <i class="fa-solid fa-plane-departure w-5"></i>
+                            <span>Media Placement</span>
+                        </button>
+                        <button onclick="switchTab('campaign')" id="nav-campaign" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-300 hover:bg-citilink/40 hover:text-white transition">
+                            <i class="fa-solid fa-file-circle-plus w-5"></i>
+                            <span>New Campaign</span>
+                        </button>
+                        <button onclick="switchTab('administrasi')" id="nav-administrasi" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-300 hover:bg-citilink/40 hover:text-white transition">
+                            <i class="fa-solid fa-folder-open w-5"></i>
+                            <span>Administrasi</span>
+                        </button>
+                        <button onclick="switchTab('revenue')" id="nav-revenue" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-300 hover:bg-citilink/40 hover:text-white transition">
+                            <i class="fa-solid fa-coins w-5"></i>
+                            <span>Revenue Streams</span>
+                        </button>
+                        <button onclick="switchTab('billing')" id="nav-billing" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-300 hover:bg-citilink/40 hover:text-white transition">
+                            <i class="fa-solid fa-receipt w-5"></i>
+                            <span>Billing & Payment</span>
+                        </button>
+                    </nav>
+                </div>
+
+                <div>
+                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 mb-2">Analytics</p>
+                    <nav class="space-y-1">
+                        <a href="#visual-charts" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-300 hover:bg-citilink/40 hover:text-white transition">
+                            <i class="fa-solid fa-chart-column w-5"></i>
+                            <span>Visual Charts</span>
+                        </a>
+                        <a href="#summary-data" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-300 hover:bg-citilink/40 hover:text-white transition">
+                            <i class="fa-solid fa-table-cells w-5"></i>
+                            <span>Summary Data</span>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Profile Footer -->
+        <div class="p-4 bg-citilink-dark/80 border-t border-citilink-light/20 flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-full bg-citilink-accent text-citilink-dark font-bold flex items-center justify-center text-sm shadow">
+                QG
+            </div>
+            <div class="overflow-hidden">
+                <p class="text-sm font-semibold text-white truncate">Hi Refgina![cite: 8]</p>
+                <p class="text-xs text-gray-300 truncate">refgina@citilink.co.id[cite: 8]</p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <div class="flex-1 flex flex-col h-screen overflow-y-auto">
+        
+        <!-- TOP HEADER -->
+        <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 sticky top-0 z-10 shadow-sm">
+            <div class="flex items-center space-x-4">
+                <h1 class="text-xl font-bold text-gray-800 flex items-center space-x-2" id="header-title">
+                    <span>Inflight Advertising Report</span>
+                    <span class="text-xs bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-semibold border border-emerald-200">Data Live</span>
+                </h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button onclick="refreshData()" class="bg-citilink hover:bg-citilink-light text-white px-4 py-2 rounded-lg text-sm font-semibold transition flex items-center space-x-2 shadow-sm">
+                    <i class="fa-solid fa-rotate"></i>
+                    <span>Update Report Data</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- TAB 1: REPORT DASHBOARD -->
+        <div id="tab-dashboard" class="p-6 space-y-6 max-w-7xl mx-auto w-full">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1.5 h-full bg-citilink"></div>
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Total Revenue</p>
+                    <h3 class="text-2xl font-black text-gray-900 mt-1" id="card-total-revenue">Rp44.800.000.000</h3>
+                    <p class="text-xs text-emerald-600 font-semibold mt-2"><i class="fa-solid fa-arrow-trend-up"></i> All recorded periods</p>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1.5 h-full bg-citilink-light"></div>
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Total Agency</p>
+                    <h3 class="text-2xl font-black text-gray-900 mt-1" id="card-total-agency">Rp29.300.000.000</h3>
+                    <p class="text-xs text-gray-500 font-medium mt-2" id="card-agency-pct">65.4% of total revenue</p>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1.5 h-full bg-citilink-accent"></div>
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Total Direct</p>
+                    <h3 class="text-2xl font-black text-gray-900 mt-1" id="card-total-direct">Rp15.500.000.000</h3>
+                    <p class="text-xs text-gray-500 font-medium mt-2" id="card-direct-pct">34.6% of total revenue</p>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1.5 h-full bg-emerald-600"></div>
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">YoY Growth (Latest Year)</p>
+                    <h3 class="text-2xl font-black text-citilink mt-1">32.5%</h3>
+                    <p class="text-xs text-emerald-600 font-semibold mt-2"><i class="fa-solid fa-arrow-trend-up"></i> vs Previous Period</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm lg:col-span-2">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h2 class="text-lg font-bold text-gray-900">Pendapatan Revenue per Periode</h2>
+                            <p class="text-xs text-gray-500">Perbandingan Agency Value vs Direct Value (IDR)</p>
+                        </div>
+                    </div>
+                    <div class="h-72 relative"><canvas id="revenueBarChart"></canvas></div>
+                </div>
+                <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                    <div class="mb-4">
+                        <h2 class="text-lg font-bold text-gray-900">Proporsi Channel</h2>
+                        <p class="text-xs text-gray-500">Agensi vs Langsung (Keseluruhan)</p>
+                    </div>
+                    <div class="h-60 relative flex items-center justify-center"><canvas id="channelDonutChart"></canvas></div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden mb-12">
+                <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                    <div>
+                        <h2 class="text-lg font-bold text-gray-900">Tabel Ringkasan Laporan Revenue & YoY Growth</h2>
+                        <p class="text-xs text-gray-500">Kalkulasi otomatis estimasi pertumbuhan YoY tahunan</p>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-50 text-gray-500 text-xs uppercase tracking-wider border-b border-gray-200">
+                                <th class="py-3 px-6 font-semibold">#</th>
+                                <th class="py-3 px-6 font-semibold">Periode</th>
+                                <th class="py-3 px-6 font-semibold">Agency Value (IDR)</th>
+                                <th class="py-3 px-6 font-semibold">Direct Value (IDR)</th>
+                                <th class="py-3 px-6 font-semibold">Total Revenue (IDR)</th>
+                                <th class="py-3 px-6 font-semibold">Kontribusi Agency</th>
+                                <th class="py-3 px-6 font-semibold">YoY Growth (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 text-sm font-medium text-gray-700" id="tableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: MEDIA PLACEMENT TRACKER -->
+        <div id="tab-media" class="p-6 space-y-6 max-w-7xl mx-auto w-full hidden">
+            <div class="flex items-center justify-between bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex-wrap gap-4">
+                <div>
+                    <h2 class="text-lg font-bold text-gray-900">Media Placement Tracker</h2>
+                    <p class="text-xs text-gray-500">Kelola 9 Media Inflight & Status Armada Pesawat</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <span class="bg-citilink/10 text-citilink text-xs font-bold px-3 py-1.5 rounded-lg border border-citilink/20" id="fleet-count-badge">Armada: 5 Pesawat</span>
+                    <button onclick="openAddFleetModal()" class="bg-citilink hover:bg-citilink-light text-white px-4 py-2 rounded-lg text-xs font-semibold transition flex items-center space-x-2 shadow-sm">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Tambah Pesawat</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 9 MEDIA STAT CARDS WITH ICONS -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4" id="media-summary-cards"></div>
+
+            <!-- FLEET & MEDIA MATRIX TABLE -->
+            <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden mb-12">
+                <div class="p-4 border-b border-gray-200 bg-gray-50 flex items-center justify-between">
+                    <h3 class="font-bold text-gray-800 text-sm">Matriks Penempatan Media per Registrasi Pesawat</h3>
+                    <span class="text-xs text-gray-500 font-medium">*Klik "+ Isi Media" untuk assign brand atau klik status MTC/Online</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-gray-100 text-gray-600 uppercase tracking-wider border-b border-gray-200">
+                                <th class="py-3 px-4 font-semibold">Pesawat & Status</th>
+                                <th class="py-3 px-4 font-semibold"><i class="fa-solid fa-box text-citilink mr-1"></i>Over Head Bins</th>
+                                <th class="py-3 px-4 font-semibold"><i class="fa-solid fa-chair text-citilink mr-1"></i>Head Cover Seat</th>
+                                <th class="py-3 px-4 font-semibold"><i class="fa-solid fa-link text-citilink mr-1"></i>Linkers</th>
+                                <th class="py-3 px-4 font-semibold"><i class="fa-solid fa-bullhorn text-citilink mr-1"></i>Cabin Announcement</th>
+                                <th class="py-3 px-4 font-semibold"><i class="fa-solid fa-utensils text-citilink mr-1"></i>Meal Try</th>
+                                <th class="py-3 px-4 font-semibold"><i class="fa-solid fa-gift text-citilink mr-1"></i>Sampling Product</th>
+                                <th class="py-3 px-4 font-semibold"><i class="fa-solid fa-book-open text-citilink mr-1"></i>F&B Catalogue</th>
+                                <th class="py-3 px-4 font-semibold"><i class="fa-solid fa-plane text-citilink mr-1"></i>Livery Aircraft</th>
+                                <th class="py-3 px-4 font-semibold"><i class="fa-solid fa-ticket text-citilink mr-1"></i>E-Boarding Pass</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200" id="fleet-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: NEW CAMPAIGN REGISTRATION -->
+        <div id="tab-campaign" class="p-6 space-y-6 max-w-7xl mx-auto w-full hidden">
+            <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 space-y-6">
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-0.5 rounded font-bold">Ad</span>
+                        <h2 class="text-lg font-bold text-gray-900">Registrasi New Campaign</h2>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-0.5">Masukkan detail data klien dan kampanye iklan baru</p>
+                </div>
+
+                <form onsubmit="handleCampaignSubmit(event)" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1.5">NAMA PT / PERUSAHAAN *</label>
+                        <input type="text" id="campPt" required placeholder="Contoh: PT Bank Central Asia Tbk" class="w-full border border-gray-300 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-citilink">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1.5">TIPE KEMITRAAN (AGENCY / DIRECT) *</label>
+                        <select id="campType" required class="w-full border border-gray-300 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-citilink bg-white">
+                            <option value="" disabled selected>-- Pilih Tipe --</option>
+                            <option value="Agency">Agency</option>
+                            <option value="Direct">Direct</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1.5">NAMA BRAND *</label>
+                        <input type="text" id="campBrand" required placeholder="Contoh: Tahapan BCA" class="w-full border border-gray-300 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-citilink">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1.5">PIC (PERSON IN CHARGE) *</label>
+                        <input type="text" id="campPic" required placeholder="Contoh: Budi Santoso" class="w-full border border-gray-300 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-citilink">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1.5">EMAIL PIC *</label>
+                        <input type="email" id="campEmail" required placeholder="budi@bca.co.id" class="w-full border border-gray-300 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-citilink">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1.5">NO HP / WHATSAPP PIC *</label>
+                        <input type="text" id="campPhone" required placeholder="081234567890" class="w-full border border-gray-300 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-citilink">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1.5">ALAMAT PERUSAHAAN *</label>
+                        <textarea id="campAddress" rows="3" required placeholder="Jl. M.H. Thamrin No. 1, Jakarta Pusat" class="w-full border border-gray-300 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-citilink"></textarea>
+                    </div>
+                    <div class="md:col-span-2 flex justify-end">
+                        <button type="submit" class="bg-citilink hover:bg-citilink-light text-white px-6 py-2.5 rounded-lg text-sm font-bold transition flex items-center space-x-2 shadow-sm">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>Simpan Campaign</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- DAFTAR CAMPAIGN TERREGISTRASI & PENCARIAN BRAND -->
+            <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden mb-12">
+                <div class="p-6 border-b border-gray-200 flex items-center justify-between flex-wrap gap-4">
+                    <div>
+                        <h3 class="font-bold text-gray-900 text-base">Daftar Campaign Terregistrasi</h3>
+                        <p class="text-xs text-gray-500">Semua riwayat pengajuan kampanye klien</p>
+                    </div>
+                    <!-- FITUR SEARCHING NAMA BRAND -->
+                    <div class="w-full md:w-72 relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400"><i class="fa-solid fa-magnifying-glass"></i></span>
+                        <input type="text" id="searchBrandInput" oninput="filterCampaigns()" placeholder="Cari berdasarkan Nama Brand..." class="w-full pl-9 pr-4 py-2 border border-gray-300 rounded-lg text-xs focus:outline-none focus:border-citilink">
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-gray-50 text-gray-500 uppercase tracking-wider border-b border-gray-200">
+                                <th class="py-3 px-6 font-semibold">Nama PT</th>
+                                <th class="py-3 px-6 font-semibold">Tipe</th>
+                                <th class="py-3 px-6 font-semibold">Nama Brand</th>
+                                <th class="py-3 px-6 font-semibold">PIC</th>
+                                <th class="py-3 px-6 font-semibold">Email PIC</th>
+                                <th class="py-3 px-6 font-semibold">No HP</th>
+                                <th class="py-3 px-6 font-semibold">Alamat</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 text-gray-700" id="campaignTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: ADMINISTRASI (NEWLY INTEGRATED) -->
+        <div id="tab-administrasi" class="p-6 space-y-6 max-w-7xl mx-auto w-full hidden">
+            <div class="flex items-center justify-between bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex-wrap gap-4">
+                <div>
+                    <h2 class="text-lg font-bold text-gray-900">Manajemen Administrasi Kontrak & Dokumen</h2>
+                    <p class="text-xs text-gray-500">Kelola berkas administrasi, MOU, dan legalitas klien inflight advertising</p>
+                </div>
+                <button onclick="openAddAdminModal()" class="bg-citilink hover:bg-citilink-light text-white px-4 py-2 rounded-lg text-xs font-semibold transition flex items-center space-x-2 shadow-sm">
+                    <i class="fa-solid fa-file-arrow-up"></i>
+                    <span>Tambah Dokumen</span>
+                </button>
+            </div>
+
+            <!-- Admin Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Total Dokumen</p>
+                    <h3 class="text-2xl font-black text-gray-900 mt-1" id="stat-total-doc">0</h3>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Kontrak Aktif</p>
+                    <h3 class="text-2xl font-black text-emerald-600 mt-1" id="stat-active-doc">0</h3>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Pending / Review</p>
+                    <h3 class="text-2xl font-black text-amber-600 mt-1" id="stat-pending-doc">0</h3>
+                </div>
+            </div>
+
+            <!-- Admin Table -->
+            <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden mb-12">
+                <div class="p-4 border-b border-gray-200 bg-gray-50 flex items-center justify-between">
+                    <h3 class="font-bold text-gray-800 text-sm">Daftar Berkas Administrasi & Legalitas</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-gray-100 text-gray-600 uppercase tracking-wider border-b border-gray-200">
+                                <th class="py-3 px-4 font-semibold">No. Kontrak / Dokumen</th>
+                                <th class="py-3 px-4 font-semibold">Nama Klien / PT</th>
+                                <th class="py-3 px-4 font-semibold">Jenis Berkas</th>
+                                <th class="py-3 px-4 font-semibold">Periode Berlaku</th>
+                                <th class="py-3 px-4 font-semibold">Status</th>
+                                <th class="py-3 px-4 font-semibold text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200" id="admin-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: REVENUE STREAMS -->
+        <div id="tab-revenue" class="p-6 space-y-6 max-w-7xl mx-auto w-full hidden">
+            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-4">
+                <h2 class="text-lg font-bold text-gray-900">Revenue Streams Detail</h2>
+                <p class="text-xs text-gray-500">Analisis rinci alur pendapatan dari berbagai kategori penempatan media inflight.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
+                    <div class="p-4 border rounded-lg bg-gray-50">
+                        <h4 class="font-bold text-citilink text-sm">Over Head Bins & Headcover</h4>
+                        <p class="text-xl font-black text-gray-800 mt-2">Rp18.500.000.000</p>
+                        <p class="text-xs text-gray-500 mt-1">Kontribusi dominan visual kabin</p>
+                    </div>
+                    <div class="p-4 border rounded-lg bg-gray-50">
+                        <h4 class="font-bold text-citilink text-sm">Livery & E-Boarding Pass</h4>
+                        <p class="text-xl font-black text-gray-800 mt-2">Rp16.200.000.000</p>
+                        <p class="text-xs text-gray-500 mt-1">Media branding eksternal & digital</p>
+                    </div>
+                    <div class="p-4 border rounded-lg bg-gray-50">
+                        <h4 class="font-bold text-citilink text-sm">Inflight Catalogue & Lainnya</h4>
+                        <p class="text-xl font-black text-gray-800 mt-2">Rp10.100.000.000</p>
+                        <p class="text-xs text-gray-500 mt-1">Majalah, sampling, & pengumuman</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 6: BILLING & PAYMENT -->
+        <div id="tab-billing" class="p-6 space-y-6 max-w-7xl mx-auto w-full hidden">
+            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-4">
+                <h2 class="text-lg font-bold text-gray-900">Billing & Payment Status</h2>
+                <p class="text-xs text-gray-500">Monitoring status penagihan dan pelunasan invoice klien.</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-gray-100 text-gray-600 uppercase tracking-wider border-b border-gray-200">
+                                <th class="py-3 px-4 font-semibold">No. Invoice</th>
+                                <th class="py-3 px-4 font-semibold">Klien</th>
+                                <th class="py-3 px-4 font-semibold">Total Tagihan</th>
+                                <th class="py-3 px-4 font-semibold">Jatuh Tempo</th>
+                                <th class="py-3 px-4 font-semibold">Status Pembayaran</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 text-gray-700">
+                            <tr>
+                                <td class="py-3 px-4 font-bold">INV/2026/001</td>
+                                <td class="py-3 px-4">PT Bank Central Asia Tbk</td>
+                                <td class="py-3 px-4 font-semibold">Rp3.500.000.000</td>
+                                <td class="py-3 px-4">30 Sep 2026</td>
+                                <td class="py-3 px-4"><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold text-[10px]">Lunas (Paid)</span></td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-4 font-bold">INV/2026/002</td>
+                                <td class="py-3 px-4">PT Global Digital Niaga (Blibli)</td>
+                                <td class="py-3 px-4 font-semibold">Rp2.100.000.000</td>
+                                <td class="py-3 px-4">15 Okt 2026</td>
+                                <td class="py-3 px-4"><span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold text-[10px]">Menunggu (Pending)</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MODAL ASSIGN MEDIA -->
+    <div id="mediaModal" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl max-w-md w-full p-6 space-y-4">
+            <div class="flex items-center justify-between border-b pb-3">
+                <h3 class="text-lg font-bold text-gray-900" id="modal-title">Assign Media Placement</h3>
+                <button onclick="closeMediaModal()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form onsubmit="handleMediaSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Nama Brand / Klien</label>
+                    <input type="text" id="inputBrand" required placeholder="Contoh: Bank BCA, Telkomsel" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-citilink">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Tanggal Mulai</label>
+                        <input type="date" id="inputStart" required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-citilink">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Tanggal Selesai</label>
+                        <input type="date" id="inputEnd" required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-citilink">
+                    </div>
+                </div>
+                <div class="flex justify-end space-x-3 pt-2">
+                    <button type="button" onclick="closeMediaModal()" class="px-4 py-2 border rounded-lg text-sm text-gray-600 hover:bg-gray-100">Batal</button>
+                    <button type="submit" class="px-4 py-2 bg-citilink text-white rounded-lg text-sm font-semibold hover:bg-citilink-light">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL TAMBAH PESAWAT -->
+    <div id="fleetModal" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl max-w-md w-full p-6 space-y-4">
+            <div class="flex items-center justify-between border-b pb-3">
+                <h3 class="text-lg font-bold text-gray-900">Tambah Registrasi Pesawat Baru</h3>
+                <button onclick="closeAddFleetModal()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form onsubmit="handleFleetSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Nama Registrasi Pesawat</label>
+                    <input type="text" id="inputRegName" required placeholder="Contoh: PK-G06" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-citilink">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Tipe Armada</label>
+                    <select id="inputFleetType" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-citilink bg-white">
+                        <option value="Airbus A320">Airbus A320</option>
+                        <option value="ATR 72-600">ATR 72-600</option>
+                    </select>
+                </div>
+                <div class="flex justify-end space-x-3 pt-2">
+                    <button type="button" onclick="closeAddFleetModal()" class="px-4 py-2 border rounded-lg text-sm text-gray-600 hover:bg-gray-100">Batal</button>
+                    <button type="submit" class="px-4 py-2 bg-citilink text-white rounded-lg text-sm font-semibold hover:bg-citilink-light">Tambah Pesawat</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL TAMBAH ADMINISTRASI -->
+    <div id="adminModal" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl max-w-md w-full p-6 space-y-4">
+            <div class="flex items-center justify-between border-b pb-3">
+                <h3 class="text-lg font-bold text-gray-900">Tambah Berkas Administrasi</h3>
+                <button onclick="closeAddAdminModal()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form onsubmit="handleAdminSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">No. Kontrak / Dokumen</label>
+                    <input type="text" id="inputAdminNo" required placeholder="Contoh: PKS/090/QG-ADS/2026" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-citilink">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Nama Klien / PT</label>
+                    <input type="text" id="inputAdminClient" required placeholder="Contoh: PT Tirta Investama" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-citilink">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Jenis Berkas</label>
+                    <select id="inputAdminType" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-citilink bg-white">
+                        <option value="MOU / Perjanjian Kerjasama">MOU / Perjanjian Kerjasama</option>
+                        <option value="Media Order (MO)">Media Order (MO)</option>
+                        <option value="Berita Acara Serah Terima (BAST)">Berita Acara Serah Terima (BAST)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Periode Berlaku</label>
+                    <input type="text" id="inputAdminPeriod" required placeholder="Contoh: 01 Sep 2026 - 31 Des 2026" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-citilink">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Status Dokumen</label>
+                    <select id="inputAdminStatus" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-citilink bg-white">
+                        <option value="Aktif">Aktif</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Selesai">Selesai</option>
+                    </select>
+                </div>
+                <div class="flex justify-end space-x-3 pt-2">
+                    <button type="button" onclick="closeAddAdminModal()" class="px-4 py-2 border rounded-lg text-sm text-gray-600 hover:bg-gray-100">Batal</button>
+                    <button type="submit" class="px-4 py-2 bg-citilink text-white rounded-lg text-sm font-semibold hover:bg-citilink-light">Simpan Berkas</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        let revenueData = [
+            { period: "2022", agency: 4500000000, direct: 2100000000 },
+            { period: "2023", agency: 6200000000, direct: 3400000000 },
+            { period: "2024", agency: 8100000000, direct: 4200000000 },
+            { period: "2025", agency: 10500000000, direct: 5800000000 }
+        ];
+
+        const mediaTypes = [
+            { id: 'overhead', name: 'Over Head Bins', icon: 'fa-box' },
+            { id: 'headcover', name: 'Head Cover Seat', icon: 'fa-chair' },
+            { id: 'linkers', name: 'Linkers', icon: 'fa-link' },
+            { id: 'announcement', name: 'Cabin Announcement', icon: 'fa-bullhorn' },
+            { id: 'mealtry', name: 'Meal Try', icon: 'fa-utensils' },
+            { id: 'sampling', name: 'Sampling Product', icon: 'fa-gift' },
+            { id: 'catalogue', name: 'F&B Catalogue', icon: 'fa-book-open' },
+            { id: 'livery', name: 'Livery Aircraft', icon: 'fa-plane' },
+            { id: 'eboarding', name: 'E-Boarding Pass', icon: 'fa-ticket' }
+        ];
+
+        let fleetData = [
+            { reg: 'PK-G01', type: 'Airbus A320', status: 'Online', slots: { overhead: { brand: 'BCA', start: '28 Des 26', end: '31 Des 26' }, headcover: null, linkers: { brand: 'Indomie', start: '10 Jun 26', end: '10 Sep 26' }, announcement: null, mealtry: null, sampling: null, catalogue: null, livery: null, eboarding: null } },
+            { reg: 'PK-G02', type: 'Airbus A320', status: 'MTC', slots: { overhead: null, headcover: { brand: 'Telkomsel', start: '15 Mei 26', end: '15 Agu 26' }, linkers: null, announcement: null, mealtry: { brand: 'Traveloka', start: '01 Jul 26', end: '01 Okt 26' }, sampling: null, catalogue: null, livery: null, eboarding: null } },
+            { reg: 'PK-G03', type: 'ATR 72-600', status: 'Online', slots: { overhead: { brand: 'BCA', start: '28 Des 26', end: '31 Des 26' }, headcover: null, linkers: null, announcement: null, mealtry: null, sampling: null, catalogue: null, livery: null, eboarding: null } },
+            { reg: 'PK-G04', type: 'Airbus A320', status: 'Online', slots: { overhead: null, headcover: { brand: 'Telkomsel', start: '15 Mei 26', end: '15 Agu 26' }, linkers: null, announcement: null, mealtry: { brand: 'Traveloka', start: '01 Jul 26', end: '01 Okt 26' }, sampling: null, catalogue: null, livery: null, eboarding: null } },
+            { reg: 'PK-G05', type: 'ATR 72-600', status: 'Online', slots: { overhead: { brand: 'BCA', start: '28 Des 26', end: '31 Des 26' }, headcover: null, linkers: { brand: 'Indomie', start: '10 Jun 26', end: '10 Sep 26' }, announcement: null, mealtry: null, sampling: null, catalogue: null, livery: null, eboarding: null } }
+        ];
+
+        let campaignData = [
+            { pt: 'PT Bank Central Asia Tbk', type: 'Direct', brand: 'Tahapan BCA', pic: 'Budi Santoso', email: 'budi@bca.co.id', phone: '081234567890', address: 'Jakarta Pusat' },
+            { pt: 'PT Global Digital Niaga', type: 'Agency', brand: 'Blibli', pic: 'Siti Rahma', email: 'siti@blibli.com', phone: '081987654321', address: 'Jakarta Barat' }
+        ];
+
+        let adminData = [
+            { no: 'PKS/001/QG-ADS/2026', client: 'PT Bank Central Asia Tbk', type: 'MOU / Perjanjian Kerjasama', period: '01 Jan 2026 - 31 Des 2026', status: 'Aktif' },
+            { no: 'MO/045/QG-ADS/2026', client: 'PT Global Digital Niaga', type: 'Media Order (MO)', period: '15 Jun 2026 - 15 Sep 2026', status: 'Aktif' },
+            { no: 'BAST/012/QG-ADS/2026', client: 'PT Tirta Investama', type: 'Berita Acara Serah Terima (BAST)', period: '01 Sep 2026', status: 'Pending' }
+        ];
+
+        let activeModalCell = null;
+        let barChart, donutChart;
+
+        function switchTab(tab) {
+            const tabs = ['dashboard', 'media', 'campaign', 'administrasi', 'revenue', 'billing'];
+            tabs.forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                document.getElementById(`nav-${t}`).className = "w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-300 hover:bg-citilink/40 hover:text-white transition";
+            });
+
+            document.getElementById(`tab-${tab}`).classList.remove('hidden');
+            document.getElementById(`nav-${tab}`).className = "w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg bg-citilink text-white font-medium transition shadow-sm";
+
+            let titles = {
+                'dashboard': ['Inflight Advertising Report', 'Data Live'],
+                'media': ['Media Placement Tracker', 'Fleet Active'],
+                'campaign': ['New Campaign Registration', 'Data Live'],
+                'administrasi': ['Manajemen Administrasi Kontrak', 'Secure Data'],
+                'revenue': ['Revenue Streams Analysis', 'Financials'],
+                'billing': ['Billing & Payment Monitoring', 'Invoices']
+            };
+
+            document.getElementById('header-title').innerHTML = `<span>${titles[tab][0]}</span><span class="text-xs bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-semibold border border-emerald-200">${titles[tab][1]}</span>`;
+
+            if (tab === 'media') renderMediaTracker();
+            if (tab === 'campaign') renderCampaignTable();
+            if (tab === 'administrasi') renderAdminTable();
+        }
+
+        function formatIDR(num) {
+            return "Rp" + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        function calculateMetrics() {
+            let totalRev = 0, totalAgency = 0, totalDirect = 0;
+            revenueData.forEach(item => {
+                totalRev += (item.agency + item.direct);
+                totalAgency += item.agency;
+                totalDirect += item.direct;
+            });
+            document.getElementById('card-total-revenue').innerText = formatIDR(totalRev);
+            document.getElementById('card-total-agency').innerText = formatIDR(totalAgency);
+            document.getElementById('card-total-direct').innerText = formatIDR(totalDirect);
+            document.getElementById('card-agency-pct').innerText = ((totalAgency / totalRev) * 100).toFixed(1) + "% of total revenue";
+            document.getElementById('card-direct-pct').innerText = ((totalDirect / totalRev) * 100).toFixed(1) + "% of total revenue";
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            let prevTotal = null;
+            revenueData.forEach((item, index) => {
+                let total = item.agency + item.direct;
+                let agencyShare = ((item.agency / total) * 100).toFixed(1) + "%";
+                let yoy = prevTotal !== null ? (((total - prevTotal) / prevTotal) * 100).toFixed(1) + "%" : "-";
+                prevTotal = total;
+
+                let tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-50 transition border-b border-gray-100";
+                tr.innerHTML = `
+                    <td class="py-3 px-6 text-gray-400 font-normal">${index + 1}</td>
+                    <td class="py-3 px-6 font-bold text-gray-900">${item.period}</td>
+                    <td class="py-3 px-6">${formatIDR(item.agency)}</td>
+                    <td class="py-3 px-6">${formatIDR(item.direct)}</td>
+                    <td class="py-3 px-6 font-bold text-citilink">${formatIDR(total)}</td>
+                    <td class="py-3 px-6"><span class="bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full text-xs font-semibold">${agencyShare}</span></td>
+                    <td class="py-3 px-6 text-emerald-600 font-semibold">${yoy}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderCharts() {
+            const periods = revenueData.map(d => d.period);
+            const agencyValues = revenueData.map(d => d.agency);
+            const directValues = revenueData.map(d => d.direct);
+            let totalAgencySum = revenueData.reduce((acc, curr) => acc + curr.agency, 0);
+            let totalDirectSum = revenueData.reduce((acc, curr) => acc + curr.direct, 0);
+
+            const ctxBar = document.getElementById('revenueBarChart').getContext('2d');
+            if (barChart) barChart.destroy();
+            barChart = new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: periods,
+                    datasets: [
+                        { label: 'Agency Value', data: agencyValues, backgroundColor: '#005335', borderRadius: 4 },
+                        { label: 'Direct Value', data: directValues, backgroundColor: '#82C341', borderRadius: 4 }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true, ticks: { callback: v => 'Rp' + (v / 1000000000) + 'M' } } }
+                }
+            });
+
+            const ctxDonut = document.getElementById('channelDonutChart').getContext('2d');
+            if (donutChart) donutChart.destroy();
+            donutChart = new Chart(ctxDonut, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Agency', 'Direct'],
+                    datasets: [{ data: [totalAgencySum, totalDirectSum], backgroundColor: ['#005335', '#82C341'], borderWidth: 0 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { position: 'bottom' } } }
+            });
+        }
+
+        function renderMediaTracker() {
+            document.getElementById('fleet-count-badge').innerText = `Armada: ${fleetData.length} Pesawat`;
+            const summaryContainer = document.getElementById('media-summary-cards');
+            summaryContainer.innerHTML = '';
+            
+            mediaTypes.forEach(media => {
+                let totalSlots = fleetData.length;
+                let filled = fleetData.filter(f => f.slots[media.id] !== null).length;
+                let available = totalSlots - filled;
+
+                let div = document.createElement('div');
+                div.className = "bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col justify-between";
+                div.innerHTML = `
+                    <div class="flex items-center space-x-2 mb-2">
+                        <div class="w-7 h-7 rounded-lg bg-emerald-50 text-citilink flex items-center justify-center text-xs"><i class="fa-solid ${media.icon}"></i></div>
+                        <h4 class="font-bold text-gray-800 text-xs truncate">${media.name}</h4>
+                    </div>
+                    <div class="flex justify-between items-end text-xs pt-2 border-t border-gray-100">
+                        <div><span class="text-gray-400 block text-[10px]">Sisa</span><span class="font-bold text-emerald-600 text-sm">${available}</span></div>
+                        <div class="text-right"><span class="text-gray-400 block text-[10px]">Terisi</span><span class="font-bold text-gray-800 text-sm">${filled}</span></div>
+                    </div>
+                `;
+                summaryContainer.appendChild(div);
+            });
+
+            const tbody = document.getElementById('fleet-table-body');
+            tbody.innerHTML = '';
+
+            fleetData.forEach((fleet, fIndex) => {
+                let tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-50/80 transition border-b border-gray-100";
+                
+                let statusBadge = fleet.status === 'Online' 
+                    ? `<button onclick="toggleStatus(${fIndex})" class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded text-[10px] font-bold border border-emerald-300">Online</button>`
+                    : `<button onclick="toggleStatus(${fIndex})" class="bg-red-100 text-red-800 px-2 py-0.5 rounded text-[10px] font-bold border border-red-300">MTC</button>`;
+
+                let html = `
+                    <td class="py-3 px-4">
+                        <div class="font-bold text-gray-900">${fleet.reg}</div>
+                        <div class="text-[11px] text-gray-500">${fleet.type}</div>
+                        <div class="mt-1">${statusBadge}</div>
+                    </td>
+                `;
+
+                mediaTypes.forEach(media => {
+                    let slot = fleet.slots[media.id];
+                    if (slot) {
+                        html += `
+                            <td class="py-3 px-4">
+                                <div class="bg-emerald-50 border border-emerald-200 p-2 rounded-lg relative group">
+                                    <div class="font-bold text-citilink text-xs">${slot.brand}</div>
+                                    <div class="text-[10px] text-gray-500">${slot.start} - ${slot.end}</div>
+                                    <button onclick="removeMedia(${fIndex}, '${media.id}')" class="absolute top-1 right-1 text-gray-400 hover:text-red-500"><i class="fa-solid fa-xmark"></i></button>
+                                </div>
+                            </td>
+                        `;
+                    } else {
+                        html += `
+                            <td class="py-3 px-4">
+                                <button onclick="openMediaModal(${fIndex}, '${media.id}')" class="w-full py-2 px-3 border border-dashed border-gray-300 rounded-lg text-gray-400 hover:border-citilink hover:text-citilink text-[11px] font-semibold transition bg-gray-50/50">
+                                    + Isi Media
+                                </button>
+                            </td>
+                        `;
+                    }
+                });
+
+                tr.innerHTML = html;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderAdminTable() {
+            const tbody = document.getElementById('admin-table-body');
+            tbody.innerHTML = '';
+            
+            let totalDoc = adminData.length;
+            let activeDoc = adminData.filter(d => d.status === 'Aktif').length;
+            let pendingDoc = adminData.filter(d => d.status === 'Pending').length;
+
+            document.getElementById('stat-total-doc').innerText = totalDoc;
+            document.getElementById('stat-active-doc').innerText = activeDoc;
+            document.getElementById('stat-pending-doc').innerText = pendingDoc;
+
+            adminData.forEach((item, index) => {
+                let statusBadge = item.status === 'Aktif'
+                    ? `<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold text-[10px]">Aktif</span>`
+                    : item.status === 'Pending'
+                    ? `<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold text-[10px]">Pending</span>`
+                    : `<span class="bg-gray-100 text-gray-800 px-2 py-0.5 rounded font-bold text-[10px]">Selesai</span>`;
+
+                let tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-50 transition border-b border-gray-100";
+                tr.innerHTML = `
+                    <td class="py-3 px-4 font-bold text-gray-900">${item.no}</td>
+                    <td class="py-3 px-4">${item.client}</td>
+                    <td class="py-3 px-4 text-citilink font-semibold">${item.type}</td>
+                    <td class="py-3 px-4 text-gray-500">${item.period}</td>
+                    <td class="py-3 px-4">${statusBadge}</td>
+                    <td class="py-3 px-4 text-center">
+                        <button onclick="deleteAdmin(${index})" class="text-gray-400 hover:text-red-500 transition"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function toggleStatus(fIndex) {
+            fleetData[fIndex].status = fleetData[fIndex].status === 'Online' ? 'MTC' : 'Online';
+            renderMediaTracker();
+        }
+
+        function openMediaModal(fIndex, mediaId) {
+            activeModalCell = { fIndex, mediaId };
+            let mediaObj = mediaTypes.find(m => m.id === mediaId);
+            document.getElementById('modal-title').innerText = `Assign ${mediaObj.name} (${fleetData[fIndex].reg})`;
+            document.getElementById('mediaModal').classList.remove('hidden');
+        }
+
+        function closeMediaModal() {
+            document.getElementById('mediaModal').classList.add('hidden');
+            activeModalCell = null;
+        }
+
+        function handleMediaSubmit(e) {
+            e.preventDefault();
+            if (!activeModalCell) return;
+            let brand = document.getElementById('inputBrand').value;
+            let startVal = document.getElementById('inputStart').value;
+            let endVal = document.getElementById('inputEnd').value;
+
+            let formatDate = (dStr) => {
+                let parts = dStr.split('-');
+                let months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+                return `${parts[2]} ${months[parseInt(parts[1])-1]} ${parts[0].slice(2)}`;
+            };
+
+            fleetData[activeModalCell.fIndex].slots[activeModalCell.mediaId] = {
+                brand: brand,
+                start: formatDate(startVal),
+                end: formatDate(endVal)
+            };
+
+            closeMediaModal();
+            renderMediaTracker();
+            e.target.reset();
+        }
+
+        function removeMedia(fIndex, mediaId) {
+            fleetData[fIndex].slots[mediaId] = null;
+            renderMediaTracker();
+        }
+
+        function openAddFleetModal() {
+            document.getElementById('fleetModal').classList.remove('hidden');
+        }
+
+        function closeAddFleetModal() {
+            document.getElementById('fleetModal').classList.add('hidden');
+        }
+
+        function handleFleetSubmit(e) {
+            e.preventDefault();
+            let reg = document.getElementById('inputRegName').value;
+            let type = document.getElementById('inputFleetType').value;
+
+            fleetData.push({
+                reg: reg,
+                type: type,
+                status: 'Online',
+                slots: { overhead: null, headcover: null, linkers: null, announcement: null, mealtry: null, sampling: null, catalogue: null, livery: null, eboarding: null }
+            });
+
+            closeAddFleetModal();
+            renderMediaTracker();
+            e.target.reset();
+        }
+
+        function openAddAdminModal() {
+            document.getElementById('adminModal').classList.remove('hidden');
+        }
+
+        function closeAddAdminModal() {
+            document.getElementById('adminModal').classList.add('hidden');
+        }
+
+        function handleAdminSubmit(e) {
+            e.preventDefault();
+            let no = document.getElementById('inputAdminNo').value;
+            let client = document.getElementById('inputAdminClient').value;
+            let type = document.getElementById('inputAdminType').value;
+            let period = document.getElementById('inputAdminPeriod').value;
+            let status = document.getElementById('inputAdminStatus').value;
+
+            adminData.unshift({ no, client, type, period, status });
+            closeAddAdminModal();
+            renderAdminTable();
+            e.target.reset();
+            alert("Dokumen administrasi berhasil ditambahkan!");
+        }
+
+        function deleteAdmin(index) {
+            if (confirm("Apakah Anda yakin ingin menghapus berkas ini?")) {
+                adminData.splice(index, 1);
+                renderAdminTable();
+            }
+        }
+
+        function renderCampaignTable(filterText = "") {
+            const tbody = document.getElementById('campaignTableBody');
+            tbody.innerHTML = '';
+
+            let filtered = campaignData.filter(item => item.brand.toLowerCase().includes(filterText.toLowerCase()));
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-6 text-gray-400">Tidak ada campaign yang cocok dengan pencarian.</td></tr>`;
+                return;
+            }
+
+            filtered.forEach(item => {
+                let typeBadge = item.type === 'Agency' 
+                    ? `<span class="bg-purple-100 text-purple-700 px-2 py-0.5 rounded font-bold text-[10px]">Agency</span>`
+                    : `<span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded font-bold text-[10px]">Direct</span>`;
+
+                let tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-50 transition border-b border-gray-100";
+                tr.innerHTML = `
+                    <td class="py-3 px-6 font-bold text-gray-900">${item.pt}</td>
+                    <td class="py-3 px-6">${typeBadge}</td>
+                    <td class="py-3 px-6 font-semibold text-citilink">${item.brand}</td>
+                    <td class="py-3 px-6">${item.pic}</td>
+                    <td class="py-3 px-6 text-gray-500">${item.email}</td>
+                    <td class="py-3 px-6">${item.phone}</td>
+                    <td class="py-3 px-6 text-gray-500">${item.address}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterCampaigns() {
+            let query = document.getElementById('searchBrandInput').value;
+            renderCampaignTable(query);
+        }
+
+        function handleCampaignSubmit(e) {
+            e.preventDefault();
+            let pt = document.getElementById('campPt').value;
+            let type = document.getElementById('campType').value;
+            let brand = document.getElementById('campBrand').value;
+            let pic = document.getElementById('campPic').value;
+            let email = document.getElementById('campEmail').value;
+            let phone = document.getElementById('campPhone').value;
+            let address = document.getElementById('campAddress').value;
+
+            campaignData.unshift({ pt, type, brand, pic, email, phone, address });
+            renderCampaignTable();
+            e.target.reset();
+            alert("New Campaign berhasil didaftarkan!");
+        }
+
+        function refreshData() {
+            calculateMetrics();
+            renderTable();
+            renderCharts();
+            alert("Data report berhasil diperbarui!");
+        }
+
+        window.onload = function() {
+            calculateMetrics();
+            renderTable();
+            renderCharts();
+        };
+    </script>
+</body>
+</html>
