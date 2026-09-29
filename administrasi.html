@@ -1,807 +1,798 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Administrasi Inflight Advertising - Citilink</title>
-  <!-- Google Fonts & FontAwesome Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    :root {
-      --citilink-green: #006837;
-      --citilink-light-green: #008751;
-      --citilink-yellow: #f8ad1d;
-      --bg-dark-sidebar: #01381f;
-      --bg-light: #f4f6f8;
-      --text-dark: #2c3e50;
-      --text-muted: #6c757d;
-      --border-color: #e2e8f0;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter', sans-serif;
-    }
-
-    body {
-      background-color: var(--bg-light);
-      color: var(--text-dark);
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    /* --- SIDEBAR --- */
-    .sidebar {
-      width: 250px;
-      background-color: var(--bg-dark-sidebar);
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      flex-shrink: 0;
-    }
-
-    .sidebar-header {
-      padding: 18px 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .sidebar-brand {
-      font-size: 20px;
-      font-weight: 800;
-      font-style: italic;
-      color: #fff;
-    }
-
-    .badge-advertising {
-      background-color: var(--citilink-yellow);
-      color: #000;
-      font-size: 9px;
-      font-weight: 700;
-      padding: 2px 6px;
-      border-radius: 4px;
-    }
-
-    .sidebar-menu {
-      padding: 15px 0;
-      overflow-y: auto;
-      flex-grow: 1;
-    }
-
-    .menu-category {
-      font-size: 10px;
-      font-weight: 700;
-      color: rgba(255, 255, 255, 0.4);
-      padding: 12px 20px 6px;
-      letter-spacing: 0.8px;
-    }
-
-    .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 20px;
-      color: rgba(255, 255, 255, 0.75);
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 500;
-      transition: all 0.2s ease;
-    }
-
-    .nav-item:hover, .nav-item.active {
-      color: #fff;
-      background-color: var(--citilink-light-green);
-    }
-
-    .nav-item i {
-      width: 16px;
-      font-size: 14px;
-    }
-
-    .sidebar-footer {
-      padding: 15px 20px;
-      background-color: rgba(0, 0, 0, 0.2);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .user-avatar {
-      width: 32px;
-      height: 32px;
-      background-color: var(--citilink-yellow);
-      color: #000;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 12px;
-    }
-
-    .user-info {
-      line-height: 1.2;
-    }
-
-    .user-name {
-      font-size: 12px;
-      font-weight: 700;
-      color: #fff;
-    }
-
-    .user-email {
-      font-size: 10px;
-      color: rgba(255, 255, 255, 0.6);
-    }
-
-    /* --- MAIN CONTAINER --- */
-    .main-container {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    /* --- TOP HEADER --- */
-    .top-header {
-      background-color: #fff;
-      height: 60px;
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 25px;
-    }
-
-    .header-title-group {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .header-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text-dark);
-    }
-
-    .badge-live {
-      background-color: #e6f4ea;
-      color: #137333;
-      font-size: 11px;
-      font-weight: 600;
-      padding: 3px 8px;
-      border-radius: 12px;
-      border: 1px solid #ceead6;
-    }
-
-    .btn-action-primary {
-      background-color: var(--citilink-light-green);
-      color: #fff;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .btn-action-primary:hover {
-      background-color: var(--citilink-green);
-    }
-
-    /* --- CONTENT AREA --- */
-    .content-area {
-      flex-grow: 1;
-      overflow-y: auto;
-      padding: 20px 25px;
-    }
-
-    /* --- ADMINISTRASI STYLES --- */
-    .admin-toolbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-      background: #fff;
-      padding: 15px 20px;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-    }
-
-    .search-box {
-      display: flex;
-      align-items: center;
-      background: #f1f5f9;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 6px 12px;
-      width: 320px;
-    }
-
-    .search-box input {
-      border: none;
-      background: transparent;
-      outline: none;
-      font-size: 12px;
-      width: 100%;
-      margin-left: 8px;
-    }
-
-    .admin-table-wrapper {
-      background: #fff;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      overflow-x: auto;
-      max-width: 100%;
-    }
-
-    .admin-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 12px;
-      white-space: nowrap;
-    }
-
-    .admin-table th {
-      background: #f8fafc;
-      color: #334155;
-      font-weight: 700;
-      padding: 12px;
-      text-align: left;
-      border-bottom: 2px solid var(--border-color);
-      border-right: 1px solid #f1f5f9;
-      position: sticky;
-      top: 0;
-      z-index: 2;
-    }
-
-    .admin-table td {
-      padding: 10px 12px;
-      border-bottom: 1px solid var(--border-color);
-      border-right: 1px solid #f1f5f9;
-      vertical-align: top;
-    }
-
-    .sticky-col {
-      position: sticky;
-      left: 0;
-      background: #fff;
-      z-index: 1;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.03);
-    }
-
-    th.sticky-col {
-      z-index: 3;
-      background: #f8fafc;
-    }
-
-    .company-cell {
-      font-weight: 700;
-      color: var(--citilink-green);
-    }
-
-    .brand-cell {
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    .doc-number {
-      font-family: monospace;
-      font-weight: 600;
-      color: #1e293b;
-      margin-bottom: 3px;
-    }
-
-    .doc-date {
-      font-size: 10px;
-      color: #64748b;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    /* Badges Status Tahap */
-    .status-badge {
-      display: inline-block;
-      padding: 2px 8px;
-      border-radius: 12px;
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      margin-top: 4px;
-    }
-
-    .badge-draft { background-color: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
-    .badge-versioning { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
-    .badge-approval { background-color: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
-
-    /* Modal Form */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal-content {
-      background: #fff;
-      border-radius: 8px;
-      width: 720px;
-      max-height: 90vh;
-      overflow-y: auto;
-      padding: 24px;
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .form-group-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      margin-bottom: 15px;
-    }
-
-    .form-control {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .form-control label {
-      font-size: 11px;
-      font-weight: 700;
-      color: #334155;
-    }
-
-    .form-control input, .form-control select {
-      padding: 8px;
-      border: 1px solid var(--border-color);
-      border-radius: 4px;
-      font-size: 12px;
-    }
-
-    .modal-footer {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      margin-top: 20px;
-      padding-top: 15px;
-      border-top: 1px solid var(--border-color);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inflight Advertising Report - Administrasi Citilink</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f6f8;
+        }
+        .bg-citilink {
+            background-color: #008751;
+        }
+        .bg-citilink-dark {
+            background-color: #006838;
+        }
+        .text-citilink {
+            color: #008751;
+        }
+        .border-citilink {
+            border-color: #008751;
+        }
+        /* Custom Scrollbar for smooth UI */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
 </head>
-<body>
+<body class="text-slate-800 flex h-screen overflow-hidden">
 
-  <!-- SIDEBAR NAVIGATION -->
-  <aside class="sidebar">
-    <div>
-      <div class="sidebar-header">
-        <i class="fa-solid fa-plane-up" style="color: #25d366;"></i>
-        <span class="sidebar-brand">Citilink</span>
-        <span class="badge-advertising">ADVERTISING</span>
-      </div>
+    <!-- Sidebar Left -->
+    <aside class="w-64 bg-citilink-dark text-white flex flex-col justify-between hidden md:flex flex-shrink-0">
+        <div>
+            <!-- Logo Header -->
+            <div class="p-5 flex items-center justify-between border-b border-emerald-800/50">
+                <div class="flex items-center gap-2">
+                    <span class="font-bold text-2xl italic tracking-wider text-white">Citilink</span>
+                    <span class="bg-emerald-500 text-[10px] text-white px-2 py-0.5 rounded font-bold tracking-widest uppercase">ADVERTISING</span>
+                </div>
+            </div>
 
-      <div class="sidebar-menu">
-        <div class="menu-category">CORE MODULE</div>
-        <a href="index.html" class="nav-item">
-          <i class="fa-solid fa-chart-pie"></i> Report Dashboard
-        </a>
+            <!-- Navigation Links -->
+            <nav class="p-4 space-y-6 text-sm">
+                <div>
+                    <div class="text-xs uppercase font-semibold text-emerald-300/70 tracking-wider mb-2 px-3">Core Module</div>
+                    <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-emerald-100 hover:bg-emerald-700/50 transition">
+                        <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Report Dashboard
+                    </a>
+                </div>
 
-        <div class="menu-category">MANAGEMENT</div>
-        <a href="media-placement.html" class="nav-item">
-          <i class="fa-solid fa-plane"></i> Media Placement
-        </a>
-        <a href="new-campaign.html" class="nav-item">
-          <i class="fa-rectangle-ad"></i> New Campaign
-        </a>
-        <!-- Halaman Aktif -->
-        <a href="administrasi.html" class="nav-item active">
-          <i class="fa-solid fa-folder-open"></i> Administrasi
-        </a>
-        <a href="revenue-streams.html" class="nav-item">
-          <i class="fa-solid fa-sack-dollar"></i> Revenue Streams
-        </a>
-        <a href="billing-payment.html" class="nav-item">
-          <i class="fa-solid fa-file-invoice-dollar"></i> Billing & Payment
-        </a>
-      </div>
+                <div>
+                    <div class="text-xs uppercase font-semibold text-emerald-300/70 tracking-wider mb-2 px-3">Management</div>
+                    <div class="space-y-1">
+                        <a href="#" class="flex items-center gap-3 px-3 py-2 text-emerald-100 hover:bg-emerald-700/50 rounded-lg transition">
+                            <i data-lucide="plane" class="w-4 h-4"></i> Media Placement
+                        </a>
+                        <a href="#" class="flex items-center gap-3 px-3 py-2 text-emerald-100 hover:bg-emerald-700/50 rounded-lg transition">
+                            <i data-lucide="megaphone" class="w-4 h-4"></i> New Campaign
+                        </a>
+                        <a href="#" class="flex items-center gap-3 px-3 py-2.5 bg-citilink text-white rounded-lg font-medium shadow-sm transition">
+                            <i data-lucide="folder-open" class="w-4 h-4"></i> Administrasi
+                        </a>
+                        <a href="#" class="flex items-center gap-3 px-3 py-2 text-emerald-100 hover:bg-emerald-700/50 rounded-lg transition">
+                            <i data-lucide="dollar-sign" class="w-4 h-4"></i> Revenue Streams
+                        </a>
+                        <a href="#" class="flex items-center gap-3 px-3 py-2 text-emerald-100 hover:bg-emerald-700/50 rounded-lg transition">
+                            <i data-lucide="credit-card" class="w-4 h-4"></i> Billing & Payment
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="text-xs uppercase font-semibold text-emerald-300/70 tracking-wider mb-2 px-3">Analytics</div>
+                    <div class="space-y-1">
+                        <a href="#" class="flex items-center gap-3 px-3 py-2 text-emerald-100 hover:bg-emerald-700/50 rounded-lg transition">
+                            <i data-lucide="bar-chart-2" class="w-4 h-4"></i> Visual Charts
+                        </a>
+                        <a href="#" class="flex items-center gap-3 px-3 py-2 text-emerald-100 hover:bg-emerald-700/50 rounded-lg transition">
+                            <i data-lucide="table" class="w-4 h-4"></i> Summary Data
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <!-- User Profile Footer -->
+        <div class="p-4 border-t border-emerald-800/50 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-emerald-500 flex items-center justify-center font-bold text-white text-sm shadow">
+                    QG
+                </div>
+                <div class="text-xs">
+                    <p class="font-semibold text-white">Hi Refgina!</p>
+                    <p class="text-emerald-300 text-[11px]">refgina@citilink.co.id</p>
+                </div>
+            </div>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-emerald-300 cursor-pointer"></i>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col h-screen overflow-hidden">
+        
+        <!-- Top Navbar -->
+        <header class="bg-white border-b border-slate-200 py-3 px-6 flex items-center justify-between flex-shrink-0">
+            <div class="flex items-center gap-3">
+                <button class="md:hidden text-slate-600 hover:text-slate-900">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+                <h1 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                    Inflight Advertising Report
+                    <span class="bg-emerald-100 text-citilink text-xs font-semibold px-2.5 py-0.5 rounded-full border border-emerald-200">
+                        Data Live
+                    </span>
+                </h1>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <button onclick="openModal()" class="bg-citilink hover:bg-citilink-dark text-white text-sm font-medium px-4 py-2 rounded-lg flex items-center gap-2 shadow-sm transition">
+                    <i data-lucide="plus-circle" class="w-4 h-4"></i> Tambah Data Administrasi
+                </button>
+                <div class="h-6 w-[1px] bg-slate-200"></div>
+                <div class="flex items-center gap-2 text-sm text-slate-700 font-medium">
+                    <div class="w-8 h-8 rounded-full bg-citilink text-white flex items-center justify-center font-bold text-xs">
+                        QG
+                    </div>
+                    <span>Hi Refgina!</span>
+                    <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Scrollable Dashboard Content -->
+        <main class="flex-1 overflow-y-auto p-6 space-y-6">
+            
+            <!-- Page Title & Overview Stats -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900 tracking-tight">Pipeline Administrasi Advertising</h2>
+                    <p class="text-sm text-slate-5-00 text-slate-500">Kelola dan pantau 8 modul status dokumen legalitas & penayangan periklanan secara real-time.</p>
+                </div>
+                <!-- Stat Badges -->
+                <div class="flex items-center gap-2">
+                    <div class="bg-white px-3 py-2 rounded-lg border border-slate-200 shadow-sm flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-slate-400"></span>
+                        <span class="text-xs text-slate-600 font-medium">Draft: <strong id="count-draft">0</strong></span>
+                    </div>
+                    <div class="bg-white px-3 py-2 rounded-lg border border-slate-200 shadow-sm flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                        <span class="text-xs text-slate-600 font-medium">Versioning: <strong id="count-versioning">0</strong></span>
+                    </div>
+                    <div class="bg-white px-3 py-2 rounded-lg border border-slate-200 shadow-sm flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                        <span class="text-xs text-slate-600 font-medium">Approval: <strong id="count-approval">0</strong></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search & Filter Bar -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="relative w-full md:w-96">
+                    <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+                    <input type="text" id="searchInput" onkeyup="renderPipeline()" placeholder="Cari Nama PT, Brand, atau Nomor Dokumen..." class="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition">
+                </div>
+                <div class="flex items-center gap-3 w-full md:w-auto justify-end">
+                    <select id="filterStatus" onchange="renderPipeline()" class="text-sm border border-slate-200 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <option value="ALL">Semua Status Progress</option>
+                        <option value="Draft">Draft</option>
+                        <option value="Versioning">Versioning</option>
+                        <option value="Approval">Approval</option>
+                    </select>
+                    <button onclick="resetFilters()" class="text-xs text-slate-500 hover:text-citilink underline px-2">
+                        Reset Filter
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pipeline Cards Container -->
+            <div id="pipelineList" class="space-y-6">
+                <!-- Dynamic Content Rendered Here via JS -->
+            </div>
+
+        </main>
     </div>
 
-    <div class="sidebar-footer">
-      <div class="user-avatar">QG</div>
-      <div class="user-info">
-        <div class="user-name">Hi Refgina!</div>
-        <div class="user-email">refgina@citilink.co.id</div>
-      </div>
+    <!-- Modal Add/Edit Administrasi -->
+    <div id="adminModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center hidden z-50 p-4">
+        <div class="bg-white w-full max-w-4xl rounded-2xl shadow-xl border border-slate-200 overflow-hidden flex flex-col max-h-[90vh]">
+            
+            <!-- Modal Header -->
+            <div class="bg-citilink text-white px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="file-check" class="w-5 h-5"></i>
+                    <h3 id="modalTitle" class="font-bold text-lg">Input Pipeline Administrasi Baru</h3>
+                </div>
+                <button onclick="closeModal()" class="text-white/80 hover:text-white transition">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Modal Form Scrollable Body -->
+            <form id="adminForm" onsubmit="saveData(event)" class="p-6 overflow-y-auto space-y-6 text-sm">
+                <input type="hidden" id="editId">
+
+                <!-- Section 1: Identitas Perusahaan & Brand -->
+                <div class="bg-emerald-50/50 p-4 rounded-xl border border-emerald-100 space-y-4">
+                    <h4 class="font-semibold text-emerald-900 flex items-center gap-2">
+                        <i data-lucide="building" class="w-4 h-4 text-citilink"></i> Identitas Perusahaan / Brand
+                    </h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Perusahaan / PT *</label>
+                            <input type="text" id="ptName" required placeholder="Contoh: PT Telekomunikasi Selular" class="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Brand / Campaign *</label>
+                            <input type="text" id="brandName" required placeholder="Contoh: Telkomsel 5G Inflight" class="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: 8 Modul Pipeline Administrasi -->
+                <div class="space-y-4">
+                    <h4 class="font-semibold text-slate-800 flex items-center gap-2 border-b border-slate-200 pb-2">
+                        <i data-lucide="layers" class="w-4 h-4 text-citilink"></i> Isian Modul Pipeline Administrasi
+                    </h4>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        
+                        <!-- 1. Quotation -->
+                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+                            <div class="font-semibold text-slate-800 text-xs">Quotation</div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="text-[11px] text-slate-500 block mb-0.5">Tanggal</label>
+                                    <input type="date" id="quotation_date" class="w-full text-xs px-2 py-1.5 border border-slate-200 rounded">
+                                </div>
+                                <div>
+                                    <label class="text-[11px] text-slate-500 block mb-0.5">Status</label>
+                                    <select id="quotation_status" class="w-full text-xs px-2 py-1.5 border border-slate-200 rounded">
+                                        <option value="Draft">Draft</option>
+                                        <option value="Versioning">Versioning</option>
+                                        <option value="Approval">Approval</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. Media Order -->
+                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+                            <div class="font-semibold text-slate-800 text-xs">Media Order</div>
+                            <div>
+                                <input type="text" id="mo_number" placeholder="Nomor Media Order (e.g. MO/CTL/2026/089)" class="w-full text-xs px-2 py-1.5 border border-slate-200 rounded mb-2">
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="text-[11px] text-slate-500 block mb-0.5">Tanggal</label>
+                                    <input type="date" id="mo_date" class="w-full text-xs px-2 py-1.5 border border-slate-200 rounded">
+                                </div>
+                                <div>
+                                    <label class="text-[11px] text-slate-500 block mb-0.5">Status</label>
+                                    <select id="mo_status" class="w-full text-xs px-2 py-1.5 border border-slate-200 rounded">
+                                        <option value="Draft">Draft</option>
+                                        <option value="Versioning">Versioning</option>
+                                        <option value="Approval">Approval</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. Agreement -->
+                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+                            <div class="font-semibold text-slate-800 text-xs">Agreement</div>
+                            <div>
+                                <input type="text" id="pks_number" placeholder="Nomor PKS (e.g. PKS/CTL/X/2026/012)" class="w-full text-xs px-2 py-1.5 border border-slate-200 rounded mb-2">
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="text-[11px] text-slate-500 block mb-0.5">Tanggal</label>
+                                    <input type="date" id="agreement_date" class="w-full text-xs px-2 py-1.5 border border-slate-200 rounded">
+                                </div>
+                                <div>
+                                    <label class="text-[11px] text-slate-500 block mb-0.5">Status</label>
+                                    <select id="agreement_status" class="w-full text-xs px-2 py-1.5 border border-slate-200 rounded">
+                                        <option value="Draft">Draft</option>
+                                        <option value="Versioning">Versioning</option>
+                                        <option value="Approval">Approval</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4. Request Invoice -->
+                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+                            <div class="font-semibold text-slate-800 text-xs">Request Invoice</div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="text-[11px] text-slate-500 block mb-0.5">Tanggal</label>
+                                    <input type="date" id="invoice_date" class="w-full text-xs px-2 py-1.5 border border-slate-200 rounded">
+                                </div>
+                                <div>
+                                    <label class="text-[11px] text-slate-500 block mb-0.5">Status</label>
+                                    <select id="invoice_status" class="w-full text-xs px-2 py-1.5 border border-slate-200 rounded">
+                                        <option value="Draft">Draft</option>
+                                        <option value="Versioning">Versioning</option>
+                                        <option value="Approval">Approval</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 5. Kajian Bisnis -->
+                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+                            <div class="font-semibold text-slate-800 text-xs">Kajian Bisnis</div>
+                            <div>
+                                <input type="text" id="kb_number" placeholder="Nomor Kajian Bisnis (e.g. KB/CITILINK/2026/004)" class="w-full text-xs px-2 py-1.5 border border-slate-200 rounded mb-2">
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="text-[11px] text-slate-500 block mb-0.5">Tanggal</label>
+                                    <input type="date" id="kb_date" class="w-full text-xs px-2 py-1.5 border border-slate-200 rounded">
+                                </div>
+                                <div>
+                                    <label class="text-[11px] text-slate-500 block mb-0.5">Status</label>
+                                    <select id="kb_status" class="w-full text-xs px-2 py-1.5 border border-slate-200 rounded">
+                                        <option value="Draft">Draft</option>
+                                        <option value="Versioning">Versioning</option>
+                                        <option value="Approval">Approval</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 6. Penayangan -->
+                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2 col-span-1 md:col-span-2">
+                            <div class="font-semibold text-slate-800 text-xs">Penayangan</div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+                                <div>
+                                    <label class="text-[11px] text-slate-500 block mb-0.5">Tanggal Mulai</label>
+                                    <input type="date" id="airing_start" class="w-full text-xs px-2 py-1.5 border border-slate-200 rounded">
+                                </div>
+                                <div>
+                                    <label class="text-[11px] text-slate-500 block mb-0.5">Tanggal Selesai</label>
+                                    <input type="date" id="airing_end" class="w-full text-xs px-2 py-1.5 border border-slate-200 rounded">
+                                </div>
+                                <div>
+                                    <label class="text-[11px] text-slate-500 block mb-0.5">Status</label>
+                                    <select id="airing_status" class="w-full text-xs px-2 py-1.5 border border-slate-200 rounded">
+                                        <option value="Draft">Draft</option>
+                                        <option value="Versioning">Versioning</option>
+                                        <option value="Approval">Approval</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 7. Berita Acara Penayangan -->
+                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+                            <div class="font-semibold text-slate-800 text-xs">Berita Acara Penayangan</div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="text-[11px] text-slate-500 block mb-0.5">Tanggal</label>
+                                    <input type="date" id="bap_date" class="w-full text-xs px-2 py-1.5 border border-slate-200 rounded">
+                                </div>
+                                <div>
+                                    <label class="text-[11px] text-slate-500 block mb-0.5">Status</label>
+                                    <select id="bap_status" class="w-full text-xs px-2 py-1.5 border border-slate-200 rounded">
+                                        <option value="Draft">Draft</option>
+                                        <option value="Versioning">Versioning</option>
+                                        <option value="Approval">Approval</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 8. Berita Acara Penyelesaian -->
+                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+                            <div class="font-semibold text-slate-800 text-xs">Berita Acara Penyelesaian</div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="text-[11px] text-slate-500 block mb-0.5">Tanggal</label>
+                                    <input type="date" id="baper_date" class="w-full text-xs px-2 py-1.5 border border-slate-200 rounded">
+                                </div>
+                                <div>
+                                    <label class="text-[11px] text-slate-500 block mb-0.5">Status</label>
+                                    <select id="baper_status" class="w-full text-xs px-2 py-1.5 border border-slate-200 rounded">
+                                        <option value="Draft">Draft</option>
+                                        <option value="Versioning">Versioning</option>
+                                        <option value="Approval">Approval</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Modal Footer Actions -->
+                <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 border border-slate-200 text-slate-600 rounded-lg hover:bg-slate-100 transition font-medium">Batal</button>
+                    <button type="submit" class="px-5 py-2 bg-citilink hover:bg-citilink-dark text-white rounded-lg shadow transition font-medium">Simpan Data Administrasi</button>
+                </div>
+            </form>
+        </div>
     </div>
-  </aside>
 
-  <!-- MAIN CONTAINER -->
-  <main class="main-container">
-    <!-- TOP HEADER -->
-    <header class="top-header">
-      <div class="header-title-group">
-        <i class="fa-solid fa-bars" style="color: var(--text-muted);"></i>
-        <h1 class="header-title">Pipeline Administrasi Advertising</h1>
-        <span class="badge-live">Live System</span>
-      </div>
-      <div style="font-weight: 700; font-size: 12px; display: flex; align-items: center; gap: 6px;">
-        <div class="user-avatar" style="width:26px; height:26px; font-size:10px;">QG</div>
-        Hi Refgina!
-      </div>
-    </header>
+    <script>
+        // Initial Dummy Data
+        let initialData = [
+            {
+                id: "ADM-101",
+                ptName: "PT Bank Central Asia Tbk",
+                brandName: "BCA Solitaire Inflight Experience",
+                quotation: { date: "2026-08-10", status: "Approval" },
+                mediaOrder: { number: "MO/BCA/CTL/2026/045", date: "2026-08-15", status: "Approval" },
+                agreement: { number: "PKS/CTL/X/2026/088", date: "2026-08-20", status: "Approval" },
+                requestInvoice: { date: "2026-08-22", status: "Approval" },
+                kajianBisnis: { number: "KB/CITILINK/2026/102", date: "2026-08-12", status: "Approval" },
+                penayangan: { start: "2026-09-01", end: "2026-11-30", status: "Approval" },
+                baPenayangan: { date: "2026-09-05", status: "Versioning" },
+                baPenyelesaian: { date: "", status: "Draft" }
+            },
+            {
+                id: "ADM-102",
+                ptName: "PT Unicharm Indonesia Tbk",
+                brandName: "MamyPoko Flight Care Campaign",
+                quotation: { date: "2026-09-01", status: "Approval" },
+                mediaOrder: { number: "MO/UNI/CTL/2026/099", date: "2026-09-05", status: "Versioning" },
+                agreement: { number: "PKS/CTL/IX/2026/120", date: "", status: "Draft" },
+                requestInvoice: { date: "", status: "Draft" },
+                kajianBisnis: { number: "KB/CITILINK/2026/144", date: "2026-09-02", status: "Approval" },
+                penayangan: { start: "2026-10-01", end: "2026-12-31", status: "Draft" },
+                baPenayangan: { date: "", status: "Draft" },
+                baPenyelesaian: { date: "", status: "Draft" }
+            }
+        ];
 
-    <!-- CONTENT AREA -->
-    <div class="content-area">
+        // Load Data from LocalStorage or Fallback
+        function getData() {
+            const stored = localStorage.getItem('citilink_admin_pipeline');
+            if (stored) {
+                return JSON.parse(stored);
+            } else {
+                localStorage.setItem('citilink_admin_pipeline', JSON.stringify(initialData));
+                return initialData;
+            }
+        }
 
-      <!-- TOOLBAR BARU: SEARCH & BUTTON ADD -->
-      <div class="admin-toolbar">
-        <div class="search-box">
-          <i class="fa-solid fa-magnifying-glass" style="color: #94a3b8;"></i>
-          <input type="text" id="adminSearchInput" onkeyup="filterAdminTable()" placeholder="Cari Perusahaan, Brand, No. MO, PKS...">
-        </div>
-        <button class="btn-action-primary" onclick="openAddModal()">
-          <i class="fa-solid fa-plus"></i> Tambah Data Administrasi
-        </button>
-      </div>
+        function saveDataToStorage(data) {
+            localStorage.setItem('citilink_admin_pipeline', JSON.stringify(data));
+        }
 
-      <!-- TABEL PIPELINE ADMINISTRASI -->
-      <div class="admin-table-wrapper">
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th class="sticky-col" style="min-width: 200px;">Nama Perusahaan & Brand</th>
-              <th style="min-width: 150px;">Quotation</th>
-              <th style="min-width: 170px;">Media Order</th>
-              <th style="min-width: 170px;">Agreement</th>
-              <th style="min-width: 150px;">Request Invoice</th>
-              <th style="min-width: 170px;">Kajian Bisnis</th>
-              <th style="min-width: 200px;">Penayangan</th>
-              <th style="min-width: 160px;">BA Penayangan</th>
-              <th style="min-width: 160px;">BA Penyelesaian</th>
-            </tr>
-          </thead>
-          <tbody id="adminTableBody">
-            <!-- Row 1 -->
-            <tr>
-              <td class="sticky-col">
-                <div class="company-cell">PT Telekomunikasi Seluler</div>
-                <div class="brand-cell">Brand: MyTelkomsel</div>
-              </td>
-              <td>
-                <div class="doc-date"><i class="fa-regular fa-calendar"></i> 10 Sep 2026</div>
-                <span class="status-badge badge-approval">Approval</span>
-              </td>
-              <td>
-                <div class="doc-number">MO/CIT/2026/09/088</div>
-                <div class="doc-date"><i class="fa-regular fa-calendar"></i> 12 Sep 2026</div>
-                <span class="status-badge badge-approval">Approval</span>
-              </td>
-              <td>
-                <div class="doc-number">PKS/TKL-CIT/0926</div>
-                <div class="doc-date"><i class="fa-regular fa-calendar"></i> 15 Sep 2026</div>
-                <span class="status-badge badge-versioning">Versioning</span>
-              </td>
-              <td>
-                <div class="doc-date"><i class="fa-regular fa-calendar"></i> 18 Sep 2026</div>
-                <span class="status-badge badge-draft">Draft</span>
-              </td>
-              <td>
-                <div class="doc-number">KB/ADV/2026/102</div>
-                <div class="doc-date"><i class="fa-regular fa-calendar"></i> 08 Sep 2026</div>
-                <span class="status-badge badge-approval">Approval</span>
-              </td>
-              <td>
-                <div class="doc-date"><i class="fa-regular fa-calendar"></i> 01 Oct 2026 s/d 31 Oct 2026</div>
-                <span class="status-badge badge-versioning">Versioning</span>
-              </td>
-              <td>
-                <div class="doc-date"><i class="fa-regular fa-calendar"></i> -</div>
-                <span class="status-badge badge-draft">Draft</span>
-              </td>
-              <td>
-                <div class="doc-date"><i class="fa-regular fa-calendar"></i> -</div>
-                <span class="status-badge badge-draft">Draft</span>
-              </td>
-            </tr>
+        // Initialize Lucide Icons
+        document.addEventListener("DOMContentLoaded", () => {
+            lucide.createIcons();
+            renderPipeline();
+        });
 
-            <!-- Row 2 -->
-            <tr>
-              <td class="sticky-col">
-                <div class="company-cell">PT Bank Central Asia Tbk</div>
-                <div class="brand-cell">Brand: BCA Mobile</div>
-              </td>
-              <td>
-                <div class="doc-date"><i class="fa-regular fa-calendar"></i> 01 Aug 2026</div>
-                <span class="status-badge badge-approval">Approval</span>
-              </td>
-              <td>
-                <div class="doc-number">MO/CIT/2026/08/041</div>
-                <div class="doc-date"><i class="fa-regular fa-calendar"></i> 05 Aug 2026</div>
-                <span class="status-badge badge-approval">Approval</span>
-              </td>
-              <td>
-                <div class="doc-number">PKS/BCA-CIT/0826</div>
-                <div class="doc-date"><i class="fa-regular fa-calendar"></i> 10 Aug 2026</div>
-                <span class="status-badge badge-approval">Approval</span>
-              </td>
-              <td>
-                <div class="doc-date"><i class="fa-regular fa-calendar"></i> 12 Aug 2026</div>
-                <span class="status-badge badge-approval">Approval</span>
-              </td>
-              <td>
-                <div class="doc-number">KB/ADV/2026/077</div>
-                <div class="doc-date"><i class="fa-regular fa-calendar"></i> 02 Aug 2026</div>
-                <span class="status-badge badge-approval">Approval</span>
-              </td>
-              <td>
-                <div class="doc-date"><i class="fa-regular fa-calendar"></i> 15 Aug 2026 s/d 15 Sep 2026</div>
-                <span class="status-badge badge-approval">Approval</span>
-              </td>
-              <td>
-                <div class="doc-date"><i class="fa-regular fa-calendar"></i> 16 Sep 2026</div>
-                <span class="status-badge badge-approval">Approval</span>
-              </td>
-              <td>
-                <div class="doc-date"><i class="fa-regular fa-calendar"></i> 18 Sep 2026</div>
-                <span class="status-badge badge-approval">Approval</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        // Badge Render Helper
+        function getStatusBadge(status) {
+            if (status === 'Approval') {
+                return `<span class="inline-flex items-center gap-1 bg-emerald-100 text-emerald-800 text-[10px] font-semibold px-2 py-0.5 rounded-full"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Approval</span>`;
+            } else if (status === 'Versioning') {
+                return `<span class="inline-flex items-center gap-1 bg-amber-100 text-amber-800 text-[10px] font-semibold px-2 py-0.5 rounded-full"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Versioning</span>`;
+            } else {
+                return `<span class="inline-flex items-center gap-1 bg-slate-100 text-slate-600 text-[10px] font-semibold px-2 py-0.5 rounded-full"><span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> Draft</span>`;
+            }
+        }
 
-    </div>
-  </main>
+        // Render Main Pipeline List
+        function renderPipeline() {
+            const data = getData();
+            const container = document.getElementById('pipelineList');
+            const searchVal = document.getElementById('searchInput').value.toLowerCase();
+            const filterVal = document.getElementById('filterStatus').value;
 
-  <!-- MODAL FORM UNTUK TAMBAH DATA ADMINISTRASI BARU -->
-  <div class="modal" id="addModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 style="font-size: 16px;"><i class="fa-solid fa-file-pen" style="color: var(--citilink-green);"></i> Tambah Pipeline Administrasi</h3>
-        <i class="fa-solid fa-xmark" onclick="closeAddModal()" style="cursor: pointer; font-size: 18px;"></i>
-      </div>
+            container.innerHTML = '';
 
-      <form id="adminForm" onsubmit="saveNewAdminData(event)">
-        <div class="form-group-grid">
-          <div class="form-control">
-            <label>Nama Perusahaan / PT *</label>
-            <input type="text" id="inputCompany" placeholder="Contoh: PT Unilever Indonesia" required>
-          </div>
-          <div class="form-control">
-            <label>Nama Brand *</label>
-            <input type="text" id="inputBrand" placeholder="Contoh: Pepsodent" required>
-          </div>
-        </div>
+            let draftCount = 0;
+            let versioningCount = 0;
+            let approvalCount = 0;
 
-        <div class="form-group-grid">
-          <div class="form-control">
-            <label>Tgl Quotation</label>
-            <input type="date" id="inputQuoteDate">
-            <select id="inputQuoteStatus">
-              <option value="Draft">Draft</option>
-              <option value="Versioning">Versioning</option>
-              <option value="Approval">Approval</option>
-            </select>
-          </div>
-          <div class="form-control">
-            <label>Media Order (Nomor & Tgl)</label>
-            <input type="text" id="inputMONumber" placeholder="No. MO (e.g. MO/CIT/...)">
-            <input type="date" id="inputMODate" style="margin-top: 4px;">
-            <select id="inputMOStatus" style="margin-top: 4px;">
-              <option value="Draft">Draft</option>
-              <option value="Versioning">Versioning</option>
-              <option value="Approval">Approval</option>
-            </select>
-          </div>
-        </div>
+            const filtered = data.filter(item => {
+                const matchSearch = item.ptName.toLowerCase().includes(searchVal) ||
+                                    item.brandName.toLowerCase().includes(searchVal) ||
+                                    item.mediaOrder.number.toLowerCase().includes(searchVal) ||
+                                    item.agreement.number.toLowerCase().includes(searchVal);
+                
+                if (filterVal === 'ALL') return matchSearch;
 
-        <div class="form-group-grid">
-          <div class="form-control">
-            <label>Agreement / PKS (Nomor & Tgl)</label>
-            <input type="text" id="inputPKSNumber" placeholder="No. PKS (e.g. PKS/CIT/...)">
-            <input type="date" id="inputPKSDate" style="margin-top: 4px;">
-            <select id="inputPKSStatus" style="margin-top: 4px;">
-              <option value="Draft">Draft</option>
-              <option value="Versioning">Versioning</option>
-              <option value="Approval">Approval</option>
-            </select>
-          </div>
-          <div class="form-control">
-            <label>Request Invoice (Tgl & Status)</label>
-            <input type="date" id="inputInvDate">
-            <select id="inputInvStatus" style="margin-top: 4px;">
-              <option value="Draft">Draft</option>
-              <option value="Versioning">Versioning</option>
-              <option value="Approval">Approval</option>
-            </select>
-          </div>
-        </div>
+                // Check if any module matches filter status
+                const hasStatus = Object.keys(item).some(k => item[k] && item[k].status === filterVal);
+                return matchSearch && hasStatus;
+            });
 
-        <div class="form-group-grid">
-          <div class="form-control">
-            <label>Kajian Bisnis (Nomor & Tgl)</label>
-            <input type="text" id="inputKBNumber" placeholder="No. Kajian Bisnis">
-            <input type="date" id="inputKBDate" style="margin-top: 4px;">
-            <select id="inputKBStatus" style="margin-top: 4px;">
-              <option value="Draft">Draft</option>
-              <option value="Versioning">Versioning</option>
-              <option value="Approval">Approval</option>
-            </select>
-          </div>
-          <div class="form-control">
-            <label>Periode Penayangan (Mulai & Selesai)</label>
-            <input type="date" id="inputPenayanganStart">
-            <input type="date" id="inputPenayanganEnd" style="margin-top: 4px;">
-            <select id="inputPenayanganStatus" style="margin-top: 4px;">
-              <option value="Draft">Draft</option>
-              <option value="Versioning">Versioning</option>
-              <option value="Approval">Approval</option>
-            </select>
-          </div>
-        </div>
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white p-12 rounded-2xl border border-slate-200 text-center space-y-3">
+                        <i data-lucide="folder-search" class="w-12 h-12 text-slate-300 mx-auto"></i>
+                        <p class="text-slate-600 font-medium">Tidak ada data administrasi yang cocok dengan kriteria pencarian.</p>
+                        <button onclick="resetFilters()" class="text-citilink text-sm font-semibold hover:underline">Reset Pencarian</button>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
 
-        <div class="form-group-grid">
-          <div class="form-control">
-            <label>Berita Acara Penayangan</label>
-            <input type="date" id="inputBAPDate">
-            <select id="inputBAPStatus" style="margin-top: 4px;">
-              <option value="Draft">Draft</option>
-              <option value="Versioning">Versioning</option>
-              <option value="Approval">Approval</option>
-            </select>
-          </div>
-          <div class="form-control">
-            <label>Berita Acara Penyelesaian</label>
-            <input type="date" id="inputBAPenyelesaianDate">
-            <select id="inputBAPenyelesaianStatus" style="margin-top: 4px;">
-              <option value="Draft">Draft</option>
-              <option value="Versioning">Versioning</option>
-              <option value="Approval">Approval</option>
-            </select>
-          </div>
-        </div>
+            filtered.forEach(item => {
+                // Count overall statuses
+                const modules = [item.quotation, item.mediaOrder, item.agreement, item.requestInvoice, item.kajianBisnis, item.penayangan, item.baPenayangan, item.baPenyelesaian];
+                modules.forEach(m => {
+                    if (m.status === 'Draft') draftCount++;
+                    if (m.status === 'Versioning') versioningCount++;
+                    if (m.status === 'Approval') approvalCount++;
+                });
 
-        <div class="modal-footer">
-          <button type="button" style="padding: 8px 16px; border: 1px solid var(--border-color); background: #fff; border-radius: 4px; cursor: pointer;" onclick="closeAddModal()">Batal</button>
-          <button type="submit" class="btn-action-primary"><i class="fa-solid fa-floppy-disk"></i> Simpan Data</button>
-        </div>
-      </form>
-    </div>
-  </div>
+                const cardHtml = `
+                    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden transition hover:shadow-md">
+                        
+                        <!-- Header Card: Nama PT & Brand -->
+                        <div class="bg-slate-50 border-b border-slate-200 px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xs font-bold px-2 py-0.5 bg-emerald-100 text-citilink rounded">${item.id}</span>
+                                    <h3 class="text-base font-bold text-slate-900">${item.ptName}</h3>
+                                </div>
+                                <p class="text-xs text-slate-500 mt-0.5 flex items-center gap-1">
+                                    <i data-lucide="tag" class="w-3.5 h-3.5 text-citilink"></i> Brand / Campaign: <strong class="text-slate-700 font-semibold">${item.brandName}</strong>
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button onclick="editData('${item.id}')" class="px-3 py-1.5 text-xs font-medium bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 rounded-lg flex items-center gap-1.5 transition">
+                                    <i data-lucide="edit-3" class="w-3.5 h-3.5 text-slate-500"></i> Edit Administrasi
+                                </button>
+                                <button onclick="deleteData('${item.id}')" class="px-2 py-1.5 text-xs text-rose-600 hover:bg-rose-50 rounded-lg border border-transparent hover:border-rose-200 transition">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
 
-  <script>
-    // Functions Modal
-    function openAddModal() {
-      document.getElementById('addModal').style.display = 'flex';
-    }
-    function closeAddModal() {
-      document.getElementById('addModal').style.display = 'none';
-    }
+                        <!-- 8 Columns Administrasi Pipeline Grid (TANPA NOMOR 1,2,3) -->
+                        <div class="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            
+                            <!-- Quotation -->
+                            <div class="p-3 bg-slate-50/60 rounded-xl border border-slate-100 flex flex-col justify-between space-y-2">
+                                <div>
+                                    <div class="text-xs font-bold text-slate-700 mb-1 flex items-center justify-between">
+                                        <span>Quotation</span>
+                                        ${getStatusBadge(item.quotation.status)}
+                                    </div>
+                                    <p class="text-xs text-slate-500">Tgl: ${item.quotation.date || '-'}</p>
+                                </div>
+                            </div>
 
-    // Filter Search Real-time
-    function filterAdminTable() {
-      const input = document.getElementById('adminSearchInput').value.toLowerCase();
-      const rows = document.querySelectorAll('#adminTableBody tr');
+                            <!-- Media Order -->
+                            <div class="p-3 bg-slate-50/60 rounded-xl border border-slate-100 flex flex-col justify-between space-y-2">
+                                <div>
+                                    <div class="text-xs font-bold text-slate-700 mb-1 flex items-center justify-between">
+                                        <span>Media Order</span>
+                                        ${getStatusBadge(item.mediaOrder.status)}
+                                    </div>
+                                    <p class="text-xs font-mono font-medium text-citilink">${item.mediaOrder.number || 'No MO belum diisi'}</p>
+                                    <p class="text-xs text-slate-500">Tgl: ${item.mediaOrder.date || '-'}</p>
+                                </div>
+                            </div>
 
-      rows.forEach(row => {
-        const text = row.innerText.toLowerCase();
-        row.style.display = text.includes(input) ? '' : 'none';
-      });
-    }
+                            <!-- Agreement -->
+                            <div class="p-3 bg-slate-50/60 rounded-xl border border-slate-100 flex flex-col justify-between space-y-2">
+                                <div>
+                                    <div class="text-xs font-bold text-slate-700 mb-1 flex items-center justify-between">
+                                        <span>Agreement</span>
+                                        ${getStatusBadge(item.agreement.status)}
+                                    </div>
+                                    <p class="text-xs font-mono font-medium text-slate-800">${item.agreement.number || 'No PKS belum diisi'}</p>
+                                    <p class="text-xs text-slate-500">Tgl: ${item.agreement.date || '-'}</p>
+                                </div>
+                            </div>
 
-    // Helper Badge Style Class
-    function getBadgeClass(status) {
-      if (status === 'Approval') return 'badge-approval';
-      if (status === 'Versioning') return 'badge-versioning';
-      return 'badge-draft';
-    }
+                            <!-- Request Invoice -->
+                            <div class="p-3 bg-slate-50/60 rounded-xl border border-slate-100 flex flex-col justify-between space-y-2">
+                                <div>
+                                    <div class="text-xs font-bold text-slate-700 mb-1 flex items-center justify-between">
+                                        <span>Request Invoice</span>
+                                        ${getStatusBadge(item.requestInvoice.status)}
+                                    </div>
+                                    <p class="text-xs text-slate-500">Tgl: ${item.requestInvoice.date || '-'}</p>
+                                </div>
+                            </div>
 
-    // Dynamic Add Row to Table
-    function saveNewAdminData(e) {
-      e.preventDefault();
+                            <!-- Kajian Bisnis -->
+                            <div class="p-3 bg-slate-50/60 rounded-xl border border-slate-100 flex flex-col justify-between space-y-2">
+                                <div>
+                                    <div class="text-xs font-bold text-slate-700 mb-1 flex items-center justify-between">
+                                        <span>Kajian Bisnis</span>
+                                        ${getStatusBadge(item.kajianBisnis.status)}
+                                    </div>
+                                    <p class="text-xs font-mono font-medium text-slate-800">${item.kajianBisnis.number || 'No KB belum diisi'}</p>
+                                    <p class="text-xs text-slate-500">Tgl: ${item.kajianBisnis.date || '-'}</p>
+                                </div>
+                            </div>
 
-      const company = document.getElementById('inputCompany').value;
-      const brand = document.getElementById('inputBrand').value;
+                            <!-- Penayangan (2 Tanggal) -->
+                            <div class="p-3 bg-emerald-50/40 rounded-xl border border-emerald-100 flex flex-col justify-between space-y-2">
+                                <div>
+                                    <div class="text-xs font-bold text-emerald-900 mb-1 flex items-center justify-between">
+                                        <span>Penayangan</span>
+                                        ${getStatusBadge(item.penayangan.status)}
+                                    </div>
+                                    <div class="text-xs text-slate-600 space-y-0.5">
+                                        <p><span class="text-slate-400">Mulai:</span> ${item.penayangan.start || '-'}</p>
+                                        <p><span class="text-slate-400">Selesai:</span> ${item.penayangan.end || '-'}</p>
+                                    </div>
+                                </div>
+                            </div>
 
-      const quoteDate = document.getElementById('inputQuoteDate').value || '-';
-      const quoteStatus = document.getElementById('inputQuoteStatus').value;
+                            <!-- Berita Acara Penayangan -->
+                            <div class="p-3 bg-slate-50/60 rounded-xl border border-slate-100 flex flex-col justify-between space-y-2">
+                                <div>
+                                    <div class="text-xs font-bold text-slate-700 mb-1 flex items-center justify-between">
+                                        <span>Berita Acara Penayangan</span>
+                                        ${getStatusBadge(item.baPenayangan.status)}
+                                    </div>
+                                    <p class="text-xs text-slate-500">Tgl: ${item.baPenayangan.date || '-'}</p>
+                                </div>
+                            </div>
 
-      const moNum = document.getElementById('inputMONumber').value || '-';
-      const moDate = document.getElementById('inputMODate').value || '-';
-      const moStatus = document.getElementById('inputMOStatus').value;
+                            <!-- Berita Acara Penyelesaian -->
+                            <div class="p-3 bg-slate-50/60 rounded-xl border border-slate-100 flex flex-col justify-between space-y-2">
+                                <div>
+                                    <div class="text-xs font-bold text-slate-700 mb-1 flex items-center justify-between">
+                                        <span>Berita Acara Penyelesaian</span>
+                                        ${getStatusBadge(item.baPenyelesaian.status)}
+                                    </div>
+                                    <p class="text-xs text-slate-500">Tgl: ${item.baPenyelesaian.date || '-'}</p>
+                                </div>
+                            </div>
 
-      const pksNum = document.getElementById('inputPKSNumber').value || '-';
-      const pksDate = document.getElementById('inputPKSDate').value || '-';
-      const pksStatus = document.getElementById('inputPKSStatus').value;
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += cardHtml;
+            });
 
-      const invDate = document.getElementById('inputInvDate').value || '-';
-      const invStatus = document.getElementById('inputInvStatus').value;
+            // Update Stats Counts
+            document.getElementById('count-draft').innerText = draftCount;
+            document.getElementById('count-versioning').innerText = versioningCount;
+            document.getElementById('count-approval').innerText = approvalCount;
 
-      const kbNum = document.getElementById('inputKBNumber').value || '-';
-      const kbDate = document.getElementById('inputKBDate').value || '-';
-      const kbStatus = document.getElementById('inputKBStatus').value;
+            lucide.createIcons();
+        }
 
-      const pStart = document.getElementById('inputPenayanganStart').value || '-';
-      const pEnd = document.getElementById('inputPenayanganEnd').value || '-';
-      const pStatus = document.getElementById('inputPenayanganStatus').value;
+        // Modal Controls
+        function openModal() {
+            document.getElementById('adminForm').reset();
+            document.getElementById('editId').value = '';
+            document.getElementById('modalTitle').innerText = 'Input Pipeline Administrasi Baru';
+            document.getElementById('adminModal').classList.remove('hidden');
+        }
 
-      const bapDate = document.getElementById('inputBAPDate').value || '-';
-      const bapStatus = document.getElementById('inputBAPStatus').value;
+        function closeModal() {
+            document.getElementById('adminModal').classList.add('hidden');
+        }
 
-      const bapenyDate = document.getElementById('inputBAPenyelesaianDate').value || '-';
-      const bapenyStatus = document.getElementById('inputBAPenyelesaianStatus').value;
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('filterStatus').value = 'ALL';
+            renderPipeline();
+        }
 
-      const tbody = document.getElementById('adminTableBody');
-      const newRow = document.createElement('tr');
+        // Edit Data Pre-fill
+        function editData(id) {
+            const data = getData();
+            const item = data.find(d => d.id === id);
+            if (!item) return;
 
-      newRow.innerHTML = `
-        <td class="sticky-col">
-          <div class="company-cell">${company}</div>
-          <div class="brand-cell">Brand: ${brand}</div>
-        </td>
-        <td>
-          <div class="doc-date"><i class="fa-regular fa-calendar"></i> ${quoteDate}</div>
-          <span class="status-badge ${getBadgeClass(quoteStatus)}">${quoteStatus}</span>
-        </td>
-        <td>
-          <div class="doc-number">${moNum}</div>
-          <div class="doc-date"><i class="fa-regular fa-calendar"></i> ${moDate}</div>
-          <span class="status-badge ${getBadgeClass(moStatus)}">${moStatus}</span>
-        </td>
-        <td>
-          <div class="doc-number">${pksNum}</div>
-          <div class="doc-date"><i class="fa-regular fa-calendar"></i> ${pksDate}</div>
-          <span class="status-badge ${getBadgeClass(pksStatus)}">${pksStatus}</span>
-        </td>
-        <td>
-          <div class="doc-date"><i class="fa-regular fa-calendar"></i> ${invDate}</div>
-          <span class="status-badge ${getBadgeClass(invStatus)}">${invStatus}</span>
-        </td>
-        <td>
-          <div class="doc-number">${kbNum}</div>
-          <div class="doc-date"><i class="fa-regular fa-calendar"></i> ${kbDate}</div>
-          <span class="status-badge ${getBadgeClass(kbStatus)}">${kbStatus}</span>
-        </td>
-        <td>
-          <div class="doc-date"><i class="fa-regular fa-calendar"></i> ${pStart} s/d ${pEnd}</div>
-          <span class="status-badge ${getBadgeClass(pStatus)}">${pStatus}</span>
-        </td>
-        <td>
-          <div class="doc-date"><i class="fa-regular fa-calendar"></i> ${bapDate}</div>
-          <span class="status-badge ${getBadgeClass(bapStatus)}">${bapStatus}</span>
-        </td>
-        <td>
-          <div class="doc-date"><i class="fa-regular fa-calendar"></i> ${bapenyDate}</div>
-          <span class="status-badge ${getBadgeClass(bapenyStatus)}">${bapenyStatus}</span>
-        </td>
-      `;
+            document.getElementById('editId').value = item.id;
+            document.getElementById('modalTitle').innerText = `Edit Pipeline Administrasi (${item.ptName})`;
 
-      tbody.prepend(newRow);
-      document.getElementById('adminForm').reset();
-      closeAddModal();
-    }
-  </script>
+            document.getElementById('ptName').value = item.ptName;
+            document.getElementById('brandName').value = item.brandName;
+
+            document.getElementById('quotation_date').value = item.quotation.date;
+            document.getElementById('quotation_status').value = item.quotation.status;
+
+            document.getElementById('mo_number').value = item.mediaOrder.number;
+            document.getElementById('mo_date').value = item.mediaOrder.date;
+            document.getElementById('mo_status').value = item.mediaOrder.status;
+
+            document.getElementById('pks_number').value = item.agreement.number;
+            document.getElementById('agreement_date').value = item.agreement.date;
+            document.getElementById('agreement_status').value = item.agreement.status;
+
+            document.getElementById('invoice_date').value = item.requestInvoice.date;
+            document.getElementById('invoice_status').value = item.requestInvoice.status;
+
+            document.getElementById('kb_number').value = item.kajianBisnis.number;
+            document.getElementById('kb_date').value = item.kajianBisnis.date;
+            document.getElementById('kb_status').value = item.kajianBisnis.status;
+
+            document.getElementById('airing_start').value = item.penayangan.start;
+            document.getElementById('airing_end').value = item.penayangan.end;
+            document.getElementById('airing_status').value = item.penayangan.status;
+
+            document.getElementById('bap_date').value = item.baPenayangan.date;
+            document.getElementById('bap_status').value = item.baPenayangan.status;
+
+            document.getElementById('baper_date').value = item.baPenyelesaian.date;
+            document.getElementById('baper_status').value = item.baPenyelesaian.status;
+
+            document.getElementById('adminModal').classList.remove('hidden');
+        }
+
+        // Save Data (Add or Edit)
+        function saveData(e) {
+            e.preventDefault();
+            let data = getData();
+            const editId = document.getElementById('editId').value;
+
+            const newItem = {
+                id: editId ? editId : 'ADM-' + Math.floor(100 + Math.random() * 900),
+                ptName: document.getElementById('ptName').value,
+                brandName: document.getElementById('brandName').value,
+                quotation: {
+                    date: document.getElementById('quotation_date').value,
+                    status: document.getElementById('quotation_status').value
+                },
+                mediaOrder: {
+                    number: document.getElementById('mo_number').value,
+                    date: document.getElementById('mo_date').value,
+                    status: document.getElementById('mo_status').value
+                },
+                agreement: {
+                    number: document.getElementById('pks_number').value,
+                    date: document.getElementById('agreement_date').value,
+                    status: document.getElementById('agreement_status').value
+                },
+                requestInvoice: {
+                    date: document.getElementById('invoice_date').value,
+                    status: document.getElementById('invoice_status').value
+                },
+                kajianBisnis: {
+                    number: document.getElementById('kb_number').value,
+                    date: document.getElementById('kb_date').value,
+                    status: document.getElementById('kb_status').value
+                },
+                penayangan: {
+                    start: document.getElementById('airing_start').value,
+                    end: document.getElementById('airing_end').value,
+                    status: document.getElementById('airing_status').value
+                },
+                baPenayangan: {
+                    date: document.getElementById('bap_date').value,
+                    status: document.getElementById('bap_status').value
+                },
+                baPenyelesaian: {
+                    date: document.getElementById('baper_date').value,
+                    status: document.getElementById('baper_status').value
+                }
+            };
+
+            if (editId) {
+                data = data.map(d => d.id === editId ? newItem : d);
+            } else {
+                data.unshift(newItem);
+            }
+
+            saveDataToStorage(data);
+            closeModal();
+            renderPipeline();
+        }
+
+        // Delete Entry
+        function deleteData(id) {
+            let data = getData();
+            data = data.filter(d => d.id !== id);
+            saveDataToStorage(data);
+            renderPipeline();
+        }
+    </script>
 </body>
 </html>
