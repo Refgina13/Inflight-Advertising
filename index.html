@@ -826,13 +826,16 @@
 
     // 2. MEDIA PLACEMENT DATA
     const placementCategories = [
-      { id: 'overhead_bin', name: 'Overhead Bins', icon: 'fa-box-open' },
-      { id: 'headrest_cover', name: 'Headrest Covers', icon: 'fa-chair' },
-      { id: 'livery', name: 'Aircraft Livery', icon: 'fa-plane' },
-      { id: 'meal_tray', name: 'Meal Trays', icon: 'fa-utensils' },
-      { id: 'inflight_menu', name: 'Inflight Menus', icon: 'fa-book-open' },
-      { id: 'e_boarding', name: 'E-Boarding Pass', icon: 'fa-ticket' }
-    ];
+      { id: 'overhead_bins', name: 'Overhead Bins' },
+    { id: 'headrest_covers', name: 'Head Cover Seat' },
+    { id: 'aircraft_livery', name: 'Aircraft Livery' },
+    { id: 'meal_trays', name: 'Meal Tray' },
+    { id: 'sampling_product', name: 'Sampling Product' },
+    { id: 'linkers', name: 'Linkers' },
+    { id: 'air_bag_tag', name: 'Air Bag Tag' },
+    { id: 'e_boarding_pass', name: 'E-Boarding Pass' },
+    { id: 'cabin_announcement', name: 'Cabin Announcement' }
+];
 
     let planesData = [
       {
@@ -1032,7 +1035,7 @@
       }
 
       // Lazy render triggers
-      if (tabId === 'media-market') renderMediaPlacementTracker();
+      if (tabId === 'media-market') ();
       if (tabId === 'new-campaign') renderCampaignTable();
       if (tabId === 'administrasi') renderAdministrasiTable();
       if (tabId === 'revenue-streams') renderRevenueStreamChart();
@@ -1192,7 +1195,7 @@
     }
 
     // MODULE 2: MEDIA PLACEMENT TRACKER LOGIC
-    function renderMediaPlacementTracker() {
+    function () {
       // Armada Count Badge
       document.getElementById('armada-count-badge').innerText = `Armada: ${planesData.length} Pesawat`;
 
@@ -1254,25 +1257,44 @@
         `;
 
         placementCategories.forEach(cat => {
-          const placement = plane.placements[cat.id] || { status: 'Available', client: '-' };
-          const badgeStyle = getPlacementBadgeStyle(placement.status);
-
-          rowHTML += `
-            <td class="py-2.5 px-2 text-center border-r">
-              <div class="cursor-pointer group inline-block w-full" onclick="cyclePlacementStatus(${pIdx}, '${cat.id}')">
-                <span class="inline-block px-2 py-1 rounded-md text-[10px] font-bold ${badgeStyle} shadow-2xs w-full truncate transition-transform group-hover:scale-95">
-                  ${placement.status}
-                </span>
-                <p class="text-[9px] text-gray-400 truncate mt-0.5">${placement.client || '-'}</p>
-              </div>
-            </td>
-          `;
-        });
-
-        tr.innerHTML = rowHTML;
-        tbody.appendChild(tr);
-      });
+    const placement = plane.placements[cat.id] || { status: 'Available' };
+    
+    let cellContent = '';
+    
+    if (placement.status === 'Booked') {
+        cellContent = `
+            <div class="bg-emerald-50 border border-emerald-200 rounded-lg p-2 text-left shadow-xs">
+                <span class="inline-block bg-emerald-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded uppercase mb-1">Booked</span>
+                <p class="text-xs font-bold text-gray-800 truncate">${placement.brand || '-'}</p>
+                <p class="text-[10px] text-gray-500 truncate">${placement.ptName || '-'}</p>
+                <p class="text-[9px] text-emerald-700 font-medium mt-1"><i class="fa-regular fa-calendar mr-0.5"></i>${placement.startDate || ''} ~ ${placement.endDate || ''}</p>
+            </div>
+        `;
+    } else if (placement.status === 'Reserved') {
+        cellContent = `
+            <div class="bg-amber-50 border border-amber-200 rounded-lg p-2 text-left shadow-xs">
+                <span class="inline-block bg-amber-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded uppercase mb-1">Reserved</span>
+                <p class="text-xs font-bold text-gray-800 truncate">${placement.brand || '-'}</p>
+                <p class="text-[10px] text-gray-500 truncate">${placement.ptName || '-'}</p>
+                <p class="text-[9px] text-amber-700 font-medium mt-1"><i class="fa-regular fa-calendar mr-0.5"></i>${placement.startDate || ''} ~ ${placement.endDate || ''}</p>
+            </div>
+        `;
+    } else if (placement.status === 'In Maintenance') {
+        cellContent = `
+            <div class="bg-rose-50 border border-rose-200 rounded-lg p-1.5 text-center">
+                <span class="text-rose-600 text-xs font-bold">Maintenance</span>
+            </div>
+        `;
+    } else {
+        cellContent = `
+            <div class="bg-gray-50 border border-dashed border-gray-200 rounded-lg p-1.5 text-center">
+                <span class="text-gray-400 text-xs font-medium">Available</span>
+            </div>
+        `;
     }
+
+    rowHTML += `<td class="p-2 text-center border-r">${cellContent}</td>`;
+});
 
     function getPlacementBadgeStyle(status) {
       switch (status) {
@@ -1285,18 +1307,42 @@
     }
 
     function cyclePlacementStatus(planeIndex, catId) {
-      const statuses = ['Available', 'Reserved', 'Booked', 'In Maintenance'];
-      const current = planesData[planeIndex].placements[catId]?.status || 'Available';
-      const nextIdx = (statuses.indexOf(current) + 1) % statuses.length;
-      const nextStatus = statuses[nextIdx];
+    const statuses = ['Available', 'Reserved', 'Booked', 'In Maintenance'];
+    const current = planesData[planeIndex].placements[catId]?.status || 'Available';
+    const nextIdx = (statuses.indexOf(current) + 1) % statuses.length;
+    const nextStatus = statuses[nextIdx];
 
-      let client = '-';
-      if (nextStatus === 'Booked') client = 'Active Client';
-      else if (nextStatus === 'Reserved') client = 'Holding';
+    let client = '-';
+    let brand = '-';
+    let ptName = '-';
+    let startDate = '';
+    let endDate = '';
 
-      planesData[planeIndex].placements[catId] = { status: nextStatus, client: client };
-      renderMediaPlacementTracker();
+    if (nextStatus === 'Booked') {
+        client = 'Active Client';
+        brand = prompt('Masukkan Nama Brand:', 'OBIDA') || '-';
+        ptName = prompt('Masukkan Nama PT:', 'PT Idea Imaji Persada') || '-';
+        startDate = prompt('Tanggal Mulai (YYYY-MM-DD):', '2026-09-01') || '';
+        endDate = prompt('Tanggal Selesai (YYYY-MM-DD):', '2026-12-31') || '';
+    } else if (nextStatus === 'Reserved') {
+        client = 'Holding';
+        brand = prompt('Masukkan Nama Brand (Reserved):', 'Aqua') || '-';
+        ptName = prompt('Masukkan Nama PT:', 'PT Tirta Investama') || '-';
+        startDate = prompt('Tanggal Mulai (YYYY-MM-DD):', '2026-10-01') || '';
+        endDate = prompt('Tanggal Selesai (YYYY-MM-DD):', '2026-10-15') || '';
     }
+
+    planesData[planeIndex].placements[catId] = { 
+        status: nextStatus, 
+        client: client,
+        brand: brand,
+        ptName: ptName,
+        startDate: startDate,
+        endDate: endDate
+    };
+
+    ();
+}
 
     // MODULE 3: NEW CAMPAIGN REGISTRATION LOGIC
     function handleCampaignSubmit(e) {
@@ -1494,7 +1540,7 @@
       planesData.push(newPlane);
       document.getElementById('input-tail-number').value = '';
       closeAddPlaneModal();
-      renderMediaPlacementTracker();
+      ();
     }
 
     // Modal 3: Update Admin
