@@ -16,10 +16,10 @@
         extend: {
           colors: {
             citilink: {
-              DEFAULT: '#008752', // Official Citilink Green
+              DEFAULT: '#008752',
               dark: '#005a36',
               light: '#e6f4ed',
-              accent: '#82c341', // Lime accent
+              accent: '#82c341',
               sidebar: '#003822'
             }
           }
@@ -34,16 +34,15 @@
     .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
     .custom-scrollbar::-webkit-scrollbar-thumb { background: #a8d5c2; border-radius: 4px; }
     .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #008752; }
-    .sparkline-svg { width: 90px; height: 22px; stroke: #008752; stroke-width: 2; fill: none; }
   </style>
 </head>
 <body class="bg-gray-100 font-sans text-gray-800 flex h-screen overflow-hidden">
 
   <!-- SIDEBAR -->
   <aside class="w-64 bg-citilink-sidebar text-white flex flex-col justify-between shadow-xl z-20 shrink-0">
-    <div>
+    <div class="overflow-y-auto custom-scrollbar">
       <!-- Header / Logo Area -->
-      <div class="p-5 flex items-center justify-between border-b border-green-800/50">
+      <div class="p-5 flex items-center justify-between border-b border-green-800/50 sticky top-0 bg-citilink-sidebar z-10">
         <div class="flex items-center gap-2">
           <svg class="h-7 w-auto fill-current text-white" viewBox="0 0 160 38" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12.5 4.5C6 4.5 1 9.5 1 16c0 6.5 5 11.5 11.5 11.5 4.5 0 8.5-2.5 10.5-6.5h-5.5c-1.2 2.2-3.2 3.5-5 3.5-3.5 0-6.2-3-6.2-7s2.7-7 6.2-7c1.8 0 3.8 1.3 5 3.5h5.5C21 7 17 4.5 12.5 4.5zM27 1.5h5v25h-5v-25zm11 0h5v25h-5v-25zm11 0h5v25h-5v-25z" fill="#82c341"/>
@@ -55,28 +54,56 @@
         </div>
       </div>
 
-      <!-- Navigation Menu -->
+      <!-- Navigation Menu (LENGKAP SEMUA TAB) -->
       <nav class="mt-4 px-3 space-y-1">
+        <!-- CORE MODULE -->
         <div class="px-3 py-2 text-[11px] font-semibold text-green-300 tracking-wider uppercase">CORE MODULE</div>
-        <button onclick="switchTab('report-dashboard')" id="nav-report-dashboard" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors bg-citilink text-white shadow-md">
+        <button type="button" onclick="switchTab('report-dashboard')" id="nav-report-dashboard" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors bg-citilink text-white shadow-md">
           <i class="fa-solid fa-chart-pie w-5 text-center"></i>
           <span>Report Dashboard</span>
         </button>
 
+        <!-- MANAGEMENT -->
         <div class="px-3 py-2 mt-4 text-[11px] font-semibold text-green-300 tracking-wider uppercase">MANAGEMENT</div>
-        <button onclick="switchTab('media-market')" id="nav-media-market" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
+        <button type="button" onclick="switchTab('media-market')" id="nav-media-market" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
           <i class="fa-solid fa-plane w-5 text-center"></i>
           <span>Media Placement</span>
         </button>
-        <button onclick="switchTab('new-campaign')" id="nav-new-campaign" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
+        <button type="button" onclick="switchTab('new-campaign')" id="nav-new-campaign" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
           <i class="fa-solid fa-rectangle-ad w-5 text-center"></i>
           <span>New Campaign</span>
+        </button>
+        <button type="button" onclick="switchTab('administrasi')" id="nav-administrasi" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
+          <i class="fa-solid fa-folder-open w-5 text-center"></i>
+          <span>Administrasi</span>
+        </button>
+
+        <!-- FINANCE -->
+        <div class="px-3 py-2 mt-4 text-[11px] font-semibold text-green-300 tracking-wider uppercase">FINANCE</div>
+        <button type="button" onclick="switchTab('revenue-streams')" id="nav-revenue-streams" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
+          <i class="fa-solid fa-money-bill-trend-up w-5 text-center"></i>
+          <span>Revenue Streams</span>
+        </button>
+        <button type="button" onclick="switchTab('billing-payment')" id="nav-billing-payment" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
+          <i class="fa-solid fa-file-invoice-dollar w-5 text-center"></i>
+          <span>Billing & Payment</span>
+        </button>
+
+        <!-- ANALYTICS -->
+        <div class="px-3 py-2 mt-4 text-[11px] font-semibold text-green-300 tracking-wider uppercase">ANALYTICS</div>
+        <button type="button" onclick="switchTab('visual-charts')" id="nav-visual-charts" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
+          <i class="fa-solid fa-chart-column w-5 text-center"></i>
+          <span>Visual Charts</span>
+        </button>
+        <button type="button" onclick="switchTab('summary-data')" id="nav-summary-data" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
+          <i class="fa-solid fa-table-list w-5 text-center"></i>
+          <span>Summary Data</span>
         </button>
       </nav>
     </div>
 
     <!-- User Profile Footer -->
-    <div class="p-4 border-t border-green-800/50 flex items-center gap-3 bg-green-950/40">
+    <div class="p-4 border-t border-green-800/50 flex items-center gap-3 bg-green-950/40 shrink-0">
       <div class="w-9 h-9 rounded-full bg-citilink flex items-center justify-center font-bold text-white shadow-sm border border-green-400">
         QG
       </div>
@@ -93,17 +120,16 @@
     <!-- TOP HEADER NAVBAR -->
     <header class="bg-white border-b border-gray-200 py-3 px-6 flex items-center justify-between shadow-sm z-10">
       <div class="flex items-center gap-3">
-        <button class="text-gray-500 hover:text-citilink text-lg"><i class="fa-solid fa-bars"></i></button>
         <h2 id="page-title" class="text-lg font-bold text-gray-800">Inflight Advertising Report</h2>
         <span class="bg-citilink-light text-citilink font-semibold text-xs px-2.5 py-0.5 rounded-full border border-green-200">Data Live</span>
       </div>
       <div class="flex items-center gap-3">
-        <button onclick="openModal()" class="bg-citilink hover:bg-citilink-dark text-white font-medium text-xs px-3.5 py-2 rounded-lg shadow-sm flex items-center gap-2 transition-all">
+        <button onclick="alert('Fitur Update Data aktif')" class="bg-citilink hover:bg-citilink-dark text-white font-medium text-xs px-3.5 py-2 rounded-lg shadow-sm flex items-center gap-2 transition-all">
           <i class="fa-solid fa-pen-to-square"></i>
           <span>Update Report Data</span>
         </button>
         <div class="h-6 w-px bg-gray-300 mx-1"></div>
-        <div class="flex items-center gap-2 text-sm text-gray-700 font-semibold cursor-pointer">
+        <div class="flex items-center gap-2 text-sm text-gray-700 font-semibold">
           <div class="w-8 h-8 rounded-full bg-citilink text-white flex items-center justify-center font-bold text-xs">QG</div>
           <span>Hi Refgina!</span>
         </div>
@@ -113,14 +139,13 @@
     <!-- CONTENT BODY CONTAINER -->
     <main class="flex-1 overflow-y-auto p-6 custom-scrollbar bg-gray-50">
 
-      <!-- SECTION 1: REPORT DASHBOARD TAB -->
-      <div id="tab-report-dashboard" class="space-y-6">
-        
+      <!-- TAB 1: REPORT DASHBOARD -->
+      <div id="tab-report-dashboard" class="tab-content space-y-6">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 w-2 h-full bg-citilink"></div>
             <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Total Revenue</p>
-            <p id="card-total-revenue" class="text-xl font-extrabold text-gray-900 mt-1">Rp 47.690.527.495</p>
+            <p class="text-xl font-extrabold text-gray-900 mt-1">Rp 47.690.527.495</p>
             <div class="mt-2 flex items-center text-xs text-emerald-600 font-medium">
               <i class="fa-solid fa-arrow-trend-up mr-1"></i>
               <span>All recorded periods</span>
@@ -130,21 +155,21 @@
           <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 w-2 h-full bg-emerald-500"></div>
             <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Total Agency</p>
-            <p id="card-agency-revenue" class="text-xl font-extrabold text-gray-900 mt-1">Rp 15.983.214.295</p>
-            <div id="card-agency-percentage" class="mt-2 text-xs text-gray-500 font-medium">33.5% of total revenue</div>
+            <p class="text-xl font-extrabold text-gray-900 mt-1">Rp 15.983.214.295</p>
+            <div class="mt-2 text-xs text-gray-500 font-medium">33.5% of total revenue</div>
           </div>
 
           <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 w-2 h-full bg-citilink-accent"></div>
             <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Total Direct</p>
-            <p id="card-direct-revenue" class="text-xl font-extrabold text-gray-900 mt-1">Rp 31.707.313.200</p>
-            <div id="card-direct-percentage" class="mt-2 text-xs text-gray-500 font-medium">66.5% of total revenue</div>
+            <p class="text-xl font-extrabold text-gray-900 mt-1">Rp 31.707.313.200</p>
+            <div class="mt-2 text-xs text-gray-500 font-medium">66.5% of total revenue</div>
           </div>
 
           <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 w-2 h-full bg-teal-600"></div>
             <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Latest Run Rate (2026 Q3)</p>
-            <p id="card-latest-revenue" class="text-xl font-extrabold text-teal-700 mt-1">Rp 3.608.939.495</p>
+            <p class="text-xl font-extrabold text-teal-700 mt-1">Rp 3.608.939.495</p>
             <div class="mt-2 text-xs text-teal-600 font-medium flex items-center gap-1">
               <i class="fa-solid fa-chart-line"></i>
               <span>Agency + Direct</span>
@@ -152,35 +177,6 @@
           </div>
         </div>
 
-        <!-- Highlight Card YoY Kuartal -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="bg-white p-4 rounded-xl border-l-4 border-cyan-500 shadow-sm border border-gray-200">
-            <div class="flex justify-between items-center">
-              <span class="text-xs font-semibold text-gray-500">Q1 YoY Growth (2026 vs 2025)</span>
-              <span class="text-xs font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">+45%</span>
-            </div>
-            <p class="text-lg font-bold text-gray-900 mt-1">Rp 6.183.239.406</p>
-            <p class="text-xs text-gray-400 mt-0.5">vs 2025 (Rp 4.274.677.139)</p>
-          </div>
-          <div class="bg-white p-4 rounded-xl border-l-4 border-amber-500 shadow-sm border border-gray-200">
-            <div class="flex justify-between items-center">
-              <span class="text-xs font-semibold text-gray-500">Q2 YoY Growth (2026 vs 2025)</span>
-              <span class="text-xs font-bold bg-rose-100 text-rose-800 px-2 py-0.5 rounded">-2%</span>
-            </div>
-            <p class="text-lg font-bold text-gray-900 mt-1">Rp 4.015.475.240</p>
-            <p class="text-xs text-gray-400 mt-0.5">vs 2025 (Rp 4.104.934.381)</p>
-          </div>
-          <div class="bg-white p-4 rounded-xl border-l-4 border-emerald-500 shadow-sm border border-gray-200">
-            <div class="flex justify-between items-center">
-              <span class="text-xs font-semibold text-gray-500">Full Year YoY Rate (2026 YTD)</span>
-              <span class="text-xs font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">+7%</span>
-            </div>
-            <p class="text-lg font-bold text-gray-900 mt-1">Rp 13.748.763.959</p>
-            <p class="text-xs text-gray-400 mt-0.5">vs 2025 (Rp 12.903.207.152)</p>
-          </div>
-        </div>
-
-        <!-- Grafik Line Chart Tren Bulanan Multi-Tahun -->
         <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
           <div class="flex items-center justify-between mb-4">
             <div>
@@ -191,37 +187,14 @@
           </div>
           <div class="h-72"><canvas id="monthlyTrendChart"></canvas></div>
         </div>
-
-        <!-- Charts Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div class="lg:col-span-2 bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
-            <div class="flex items-center justify-between mb-4">
-              <div>
-                <h3 class="text-base font-bold text-gray-800">Pendapatan Revenue per Periode</h3>
-                <p class="text-xs text-gray-500">Perbandingan Agency Value vs Direct Value (IDR)</p>
-              </div>
-              <span class="text-xs font-semibold px-2 py-1 bg-green-50 text-citilink border border-green-200 rounded">Interactive</span>
-            </div>
-            <div class="h-72"><canvas id="revenueBarChart"></canvas></div>
-          </div>
-
-          <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
-            <div class="mb-4">
-              <h3 class="text-base font-bold text-gray-800">Proporsi Channel</h3>
-              <p class="text-xs text-gray-500">Agensi vs Langsung (Keseluruhan)</p>
-            </div>
-            <div class="h-72 flex items-center justify-center"><canvas id="revenuePieChart"></canvas></div>
-          </div>
-        </div>
-
       </div>
 
-      <!-- SECTION 2: MEDIA PLACEMENT TRACKER TAB -->
-      <div id="tab-media-market" class="space-y-6 hidden">
+      <!-- TAB 2: MEDIA PLACEMENT TRACKER -->
+      <div id="tab-media-market" class="tab-content space-y-6 hidden">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
           <div>
             <h3 class="text-xl font-bold text-gray-800">Media Placement Tracker</h3>
-            <p class="text-xs text-gray-500">Status pemasangan iklan per armada pesawat Citilink</p>
+            <p class="text-xs text-gray-500">Klik pada sel untuk mengubah status ketersediaan atau menambah brand</p>
           </div>
           <div class="flex items-center gap-3">
             <span id="armada-count-badge" class="text-xs font-bold text-citilink bg-green-50 px-3 py-1.5 rounded-lg border border-green-200">
@@ -229,12 +202,10 @@
             </span>
             <button onclick="addNewPlane()" class="bg-citilink hover:bg-citilink-dark text-white font-medium text-xs px-3.5 py-2 rounded-lg shadow-sm flex items-center gap-2">
               <i class="fa-solid fa-plus"></i>
-              <span>Registrasi Pesawat</span>
+              <span>Tambah Armada</span>
             </button>
           </div>
         </div>
-
-        <div id="placement-category-cards" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3"></div>
 
         <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
           <div class="overflow-x-auto custom-scrollbar">
@@ -250,8 +221,8 @@
         </div>
       </div>
 
-      <!-- SECTION 3: NEW CAMPAIGN TAB -->
-      <div id="tab-new-campaign" class="space-y-6 hidden">
+      <!-- TAB 3: NEW CAMPAIGN -->
+      <div id="tab-new-campaign" class="tab-content space-y-6 hidden">
         <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm max-w-4xl mx-auto">
           <div class="flex items-center gap-3 pb-4 mb-6 border-b border-gray-200">
             <div class="w-10 h-10 rounded-xl bg-green-100 text-citilink flex items-center justify-center font-bold text-lg">
@@ -263,15 +234,15 @@
             </div>
           </div>
 
-          <form id="newCampaignForm" onsubmit="handleCampaignSubmit(event)" class="space-y-4">
+          <form onsubmit="event.preventDefault(); alert('Campaign berhasil disimpan!');" class="space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nama PT / Perusahaan *</label>
-                <input type="text" id="campaign-nama-pt" required placeholder="Contoh: PT Tirta Investama" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none">
+                <input type="text" required placeholder="Contoh: PT Tirta Investama" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none">
               </div>
               <div>
-                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Tipe Kemitraan (Agency / Direct) *</label>
-                <select id="campaign-type" required class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none bg-white">
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Tipe Kemitraan *</label>
+                <select required class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none bg-white">
                   <option value="">-- Pilih Tipe --</option>
                   <option value="Agency">Agency</option>
                   <option value="Direct">Direct</option>
@@ -282,11 +253,11 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nama Brand *</label>
-                <input type="text" id="campaign-nama-brand" required placeholder="Contoh: Aqua" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none">
+                <input type="text" required placeholder="Contoh: Aqua" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none">
               </div>
               <div>
                 <label class="block text-xs font-bold text-gray-700 uppercase mb-1">PIC (Person in Charge) *</label>
-                <input type="text" id="campaign-pic" required placeholder="Contoh: Budi Santoso" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none">
+                <input type="text" required placeholder="Contoh: Budi Santoso" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none">
               </div>
             </div>
 
@@ -300,78 +271,195 @@
         </div>
       </div>
 
+      <!-- TAB 4: ADMINISTRASI -->
+      <div id="tab-administrasi" class="tab-content space-y-6 hidden">
+        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h3 class="text-lg font-bold text-gray-800">Administrasi & Legalitas Media Order</h3>
+              <p class="text-xs text-gray-500">Kelola status MO, BA (Berita Acara), dan dokumen legalitas client</p>
+            </div>
+            <button class="bg-citilink text-white font-medium text-xs px-3.5 py-2 rounded-lg flex items-center gap-2">
+              <i class="fa-solid fa-upload"></i> Upload Dokumen MO
+            </button>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-gray-100 uppercase text-gray-600 font-bold border-b">
+                <tr>
+                  <th class="p-3">No. Media Order</th>
+                  <th class="p-3">Perusahaan / Klien</th>
+                  <th class="p-3">Brand</th>
+                  <th class="p-3">Status Dokumen</th>
+                  <th class="p-3">Aksi</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200">
+                <tr>
+                  <td class="p-3 font-semibold">MO/2026/09/001</td>
+                  <td class="p-3">PT Sinar Sentral Media</td>
+                  <td class="p-3">Indosat</td>
+                  <td class="p-3"><span class="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">MO Verified</span></td>
+                  <td class="p-3"><button class="text-citilink font-bold hover:underline">Download BA</button></td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-semibold">MO/2026/09/002</td>
+                  <td class="p-3">PT Tirta Investama</td>
+                  <td class="p-3">Aqua</td>
+                  <td class="p-3"><span class="bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded">Pending Legal Review</span></td>
+                  <td class="p-3"><button class="text-citilink font-bold hover:underline">Detail MO</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: REVENUE STREAMS -->
+      <div id="tab-revenue-streams" class="tab-content space-y-6 hidden">
+        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+          <h3 class="text-lg font-bold text-gray-800 mb-2">Revenue Streams Breakdown</h3>
+          <p class="text-xs text-gray-500 mb-4">Distribusi pendapatan berdasarkan jenis placement iklan</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="p-4 bg-green-50 border border-green-200 rounded-xl">
+              <p class="text-xs text-gray-500 font-bold">OVERHEAD BINS</p>
+              <p class="text-xl font-extrabold text-citilink mt-1">Rp 18.450.000.000</p>
+            </div>
+            <div class="p-4 bg-green-50 border border-green-200 rounded-xl">
+              <p class="text-xs text-gray-500 font-bold">AIRCRAFT LIVERY</p>
+              <p class="text-xl font-extrabold text-citilink mt-1">Rp 15.200.000.000</p>
+            </div>
+            <div class="p-4 bg-green-50 border border-green-200 rounded-xl">
+              <p class="text-xs text-gray-500 font-bold">E-BOARDING PASS & OTHERS</p>
+              <p class="text-xl font-extrabold text-citilink mt-1">Rp 14.040.527.495</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 6: BILLING & PAYMENT -->
+      <div id="tab-billing-payment" class="tab-content space-y-6 hidden">
+        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+          <h3 class="text-lg font-bold text-gray-800 mb-2">Status Penagihan & Invoicing</h3>
+          <p class="text-xs text-gray-500 mb-4">Monitoring jadwal termin pembayaran dari kementerian & agensi</p>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-gray-100 uppercase text-gray-600 font-bold border-b">
+                <tr>
+                  <th class="p-3">No Invoice</th>
+                  <th class="p-3">Client</th>
+                  <th class="p-3">Jatuh Tempo</th>
+                  <th class="p-3">Nilai Tagihan</th>
+                  <th class="p-3">Status</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200">
+                <tr>
+                  <td class="p-3 font-semibold">INV-2026-081</td>
+                  <td class="p-3">PT Bintang Toedjoe</td>
+                  <td class="p-3">15 Okt 2026</td>
+                  <td class="p-3 font-bold">Rp 450.000.000</td>
+                  <td class="p-3"><span class="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">Lunas</span></td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-semibold">INV-2026-089</td>
+                  <td class="p-3">PT Sinar Sentral Media</td>
+                  <td class="p-3">30 Okt 2026</td>
+                  <td class="p-3 font-bold">Rp 320.000.000</td>
+                  <td class="p-3"><span class="bg-rose-100 text-rose-800 font-bold px-2 py-0.5 rounded">Unpaid</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 7: VISUAL CHARTS -->
+      <div id="tab-visual-charts" class="tab-content space-y-6 hidden">
+        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+          <h3 class="text-lg font-bold text-gray-800 mb-4">Visual Analytics Dashboard</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="h-64"><canvas id="analyticsBarChart"></canvas></div>
+            <div class="h-64 flex justify-center"><canvas id="analyticsPieChart"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 8: SUMMARY DATA -->
+      <div id="tab-summary-data" class="tab-content space-y-6 hidden">
+        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+          <h3 class="text-lg font-bold text-gray-800 mb-2">Ringkasan Data Eksekutif</h3>
+          <p class="text-xs text-gray-500 mb-4">Ringkasan statistik kinerja divisi Inflight Advertising</p>
+          <div class="p-4 bg-gray-50 rounded-lg text-xs leading-relaxed space-y-2 text-gray-700">
+            <p>• <strong>Pertumbuhan Q1 2026 vs 2025:</strong> Meningkat signifikan +45% didorong kampanye nasional awal tahun.</p>
+            <p>• <strong>Kinerja Direct Client:</strong> Berkontribusi terbesar mencapai 66.5% dari total keseluruhan revenue.</p>
+            <p>• <strong>Slot Terfavorit:</strong> Overhead Bins dan Aircraft Livery menempati okupansi terbanyak di armada A320.</p>
+          </div>
+        </div>
+      </div>
+
     </main>
   </div>
 
-  <!-- SCRIPT UTAMA & LOGIKA TABEL MATRIKS -->
+  <!-- JAVASCRIPT KONTROL LOGIKA NAVIGATION TAB -->
   <script>
-    // -------------------------------------------------------------
-    // DATA KATEGORI MEDIA (9 JENIS MEDIA INFLIGHT CITILINK)
-    // -------------------------------------------------------------
+    // LIST KATEGORI MEDIA PLACEMENT
     const placementCategories = [
       { id: 'overhead_bins', name: 'Overhead Bins' },
       { id: 'headrest_covers', name: 'Head Cover Seat' },
       { id: 'aircraft_livery', name: 'Aircraft Livery' },
       { id: 'meal_trays', name: 'Meal Tray' },
-      { id: 'sampling_product', name: 'Sampling Product' },
-      { id: 'linkers', name: 'Linkers' },
-      { id: 'air_bag_tag', name: 'Air Bag Tag' },
-      { id: 'e_boarding_pass', name: 'E-Boarding Pass' },
-      { id: 'cabin_announcement', name: 'Cabin Announcement' }
+      { id: 'e_boarding_pass', name: 'E-Boarding Pass' }
     ];
 
-    // DUMMY DATA PESAWAT & STATUS
     let planesData = [
-      {
-        tail: 'PK-Gly',
-        model: 'A320-200',
-        placements: {
-          overhead_bins: { status: 'Booked', brand: 'Indosat', ptName: 'PT Sinar Sentral Media', startDate: '2026-09-01', endDate: '2026-12-31' },
-          headrest_covers: { status: 'Reserved', brand: 'Aqua', ptName: 'PT Tirta Investama', startDate: '2026-10-01', endDate: '2026-10-31' },
-          meal_trays: { status: 'Available' }
-        }
-      },
-      {
-        tail: 'PK-Glm',
-        model: 'A320-200 Neo',
-        placements: {
-          aircraft_livery: { status: 'Booked', brand: 'Extra Joss', ptName: 'PT Bintang Toedjoe', startDate: '2026-08-01', endDate: '2026-11-30' },
-          e_boarding_pass: { status: 'Available' }
-        }
-      },
-      {
-        tail: 'PK-GQC',
-        model: 'A320-200',
-        placements: {
-          overhead_bins: { status: 'In Maintenance' }
-        }
-      }
+      { tail: 'PK-GQA', model: 'A320-200', placements: { overhead_bins: { status: 'Booked', brand: 'Indosat' } } },
+      { tail: 'PK-GQB', model: 'A320-200 Neo', placements: { aircraft_livery: { status: 'Booked', brand: 'Extra Joss' } } },
+      { tail: 'PK-GQC', model: 'A320-200', placements: {} }
     ];
 
-    // -------------------------------------------------------------
-    // LOGIKA TAB & NAVIGASI
-    // -------------------------------------------------------------
+    // FUNGSI UTAMA PINDAH HALAMAN / TAB SIDEBAR
     function switchTab(tabId) {
-      document.querySelectorAll('main > div').forEach(el => el.classList.add('hidden'));
-      document.getElementById('tab-' + tabId).classList.remove('hidden');
+      // 1. Sembunyikan semua section
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
 
+      // 2. Tampilkan section tab yang dipilih
+      const activeTab = document.getElementById('tab-' + tabId);
+      if (activeTab) {
+        activeTab.classList.remove('hidden');
+      }
+
+      // 3. Update warna tombol aktif di sidebar
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.className = 'nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white';
+      });
+
+      const currentBtn = document.getElementById('nav-' + tabId);
+      if (currentBtn) {
+        currentBtn.className = 'nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors bg-citilink text-white shadow-md';
+      }
+
+      // 4. Update Judul Header
       const titles = {
         'report-dashboard': 'Inflight Advertising Report',
         'media-market': 'Media Placement Tracker',
-        'new-campaign': 'Registrasi New Campaign'
+        'new-campaign': 'Registrasi New Campaign',
+        'administrasi': 'Administrasi & Legalitas MO',
+        'revenue-streams': 'Revenue Streams Breakdown',
+        'billing-payment': 'Billing & Payment Status',
+        'visual-charts': 'Visual Analytics Charts',
+        'summary-data': 'Executive Data Summary'
       };
       document.getElementById('page-title').innerText = titles[tabId] || 'Dashboard';
 
+      // 5. Trigger render khusus jika tab Media Placement dibuka
       if (tabId === 'media-market') {
         renderMediaPlacementTracker();
       }
     }
 
-    // -------------------------------------------------------------
-    // LOGIKA RENDER MATRIKS MEDIA PLACEMENT
-    // -------------------------------------------------------------
+    // RENDER MEDIA PLACEMENT TRACKER
     function renderMediaPlacementTracker() {
-      // 1. Header Tabel Matriks
       const headerRow = document.getElementById('matrix-header-row');
       headerRow.innerHTML = '<th class="py-3.5 px-4 min-w-[150px] sticky left-0 bg-gray-50 z-10 border-r">PESAWAT</th>';
       
@@ -382,7 +470,6 @@
         headerRow.appendChild(th);
       });
 
-      // 2. Body Tabel Matriks
       const tbody = document.getElementById('matrixTableBody');
       tbody.innerHTML = '';
 
@@ -390,192 +477,91 @@
         const tr = document.createElement('tr');
         tr.className = 'hover:bg-gray-50 transition-colors';
 
-        let rowHTML = `
-          <td class="py-3 px-4 font-bold text-gray-800 bg-white sticky left-0 z-10 border-r shadow-sm">
-            <div class="flex items-center gap-2">
-              <i class="fa-solid fa-plane-up text-citilink"></i>
-              <div>
-                <p class="text-xs font-bold text-gray-800">${plane.tail}</p>
-                <p class="text-[10px] text-gray-400 font-normal">${plane.model}</p>
-              </div>
+        const tdPlane = document.createElement('td');
+        tdPlane.className = 'py-3 px-4 font-bold text-gray-800 bg-white sticky left-0 z-10 border-r shadow-sm';
+        tdPlane.innerHTML = `
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-plane-up text-citilink"></i>
+            <div>
+              <p class="text-xs font-bold text-gray-800">${plane.tail}</p>
+              <p class="text-[10px] text-gray-400 font-normal">${plane.model}</p>
             </div>
-          </td>
+          </div>
         `;
+        tr.appendChild(tdPlane);
 
         placementCategories.forEach(cat => {
+          const td = document.createElement('td');
+          td.className = 'p-2 text-center border-r cursor-pointer hover:bg-green-50/50';
           const placement = plane.placements[cat.id] || { status: 'Available' };
-          let cellContent = '';
 
           if (placement.status === 'Booked') {
-            cellContent = `
-              <div class="bg-emerald-50 border border-emerald-200 rounded-lg p-2 text-left shadow-xs">
-                <span class="inline-block bg-emerald-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded uppercase mb-1">Booked</span>
-                <p class="text-xs font-bold text-gray-800 truncate" title="${placement.brand}">${placement.brand || '-'}</p>
-                <p class="text-[10px] text-gray-500 truncate" title="${placement.ptName}">${placement.ptName || '-'}</p>
-                ${placement.startDate ? `<p class="text-[9px] text-emerald-700 font-medium mt-1"><i class="fa-regular fa-calendar mr-1"></i>${placement.startDate} ~${placement.endDate}</p>` : ''}
-              </div>
-            `;
-          } else if (placement.status === 'Reserved') {
-            cellContent = `
-              <div class="bg-amber-50 border border-amber-200 rounded-lg p-2 text-left shadow-xs">
-                <span class="inline-block bg-amber-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded uppercase mb-1">Reserved</span>
-                <p class="text-xs font-bold text-gray-800 truncate" title="${placement.brand}">${placement.brand || '-'}</p>
-                <p class="text-[10px] text-gray-500 truncate" title="${placement.ptName}">${placement.ptName || '-'}</p>
-                ${placement.startDate ? `<p class="text-[9px] text-amber-700 font-medium mt-1"><i class="fa-regular fa-calendar mr-1"></i>${placement.startDate} ~${placement.endDate}</p>` : ''}
-              </div>
-            `;
-          } else if (placement.status === 'In Maintenance') {
-            cellContent = `
-              <div class="bg-rose-50 border border-rose-200 rounded-lg p-2 text-center">
-                <span class="text-rose-600 text-xs font-bold">Maintenance</span>
-              </div>
-            `;
+            td.innerHTML = `<span class="bg-emerald-100 text-emerald-800 font-bold px-2 py-1 rounded text-[11px] block">${placement.brand}</span>`;
           } else {
-            cellContent = `
-              <div class="bg-gray-50 border border-dashed border-gray-200 rounded-lg p-2 text-center">
-                <span class="text-gray-400 text-xs font-medium">Available</span>
-              </div>
-            `;
+            td.innerHTML = `<span class="text-gray-400 text-xs">+ Available</span>`;
           }
 
-          rowHTML += `<td class="p-2 text-center border-r cursor-pointer" onclick="cyclePlacementStatus(${pIdx}, '${cat.id}')">${cellContent}</td>`;
+          td.addEventListener('click', function() {
+            const newBrand = prompt('Masukkan Nama Brand untuk slot ini:', 'Indosat');
+            if (newBrand) {
+              planesData[pIdx].placements[cat.id] = { status: 'Booked', brand: newBrand };
+              renderMediaPlacementTracker();
+            }
+          });
+
+          tr.appendChild(td);
         });
 
-        tr.innerHTML = rowHTML;
         tbody.appendChild(tr);
       });
-
+      
       document.getElementById('armada-count-badge').innerText = `Armada: ${planesData.length} Pesawat`;
     }
 
-    // -------------------------------------------------------------
-    // FITUR INTERAKTIF: KLIK CELL UNTUK GANTI STATUS & DATA
-    // -------------------------------------------------------------
-    function cyclePlacementStatus(planeIndex, catId) {
-      const statuses = ['Available', 'Reserved', 'Booked', 'In Maintenance'];
-      const current = planesData[planeIndex].placements[catId]?.status || 'Available';
-      const nextIdx = (statuses.indexOf(current) + 1) % statuses.length;
-      const nextStatus = statuses[nextIdx];
-
-      let brand = '-';
-      let ptName = '-';
-      let startDate = '';
-      let endDate = '';
-
-      if (nextStatus === 'Booked') {
-        brand = prompt('Masukkan Nama Brand:', 'OBIDA') || '-';
-        ptName = prompt('Masukkan Nama PT:', 'PT Idea Imaji Persada') || '-';
-        startDate = prompt('Tanggal Mulai (YYYY-MM-DD):', '2026-09-01') || '';
-        endDate = prompt('Tanggal Selesai (YYYY-MM-DD):', '2026-12-31') || '';
-      } else if (nextStatus === 'Reserved') {
-        brand = prompt('Masukkan Nama Brand (Reserved):', 'Aqua') || '-';
-        ptName = prompt('Masukkan Nama PT:', 'PT Tirta Investama') || '-';
-        startDate = prompt('Tanggal Mulai (YYYY-MM-DD):', '2026-10-01') || '';
-        endDate = prompt('Tanggal Selesai (YYYY-MM-DD):', '2026-10-31') || '';
-      }
-
-      planesData[planeIndex].placements[catId] = { 
-        status: nextStatus, 
-        brand: brand,
-        ptName: ptName,
-        startDate: startDate,
-        endDate: endDate
-      };
-
-      renderMediaPlacementTracker();
-    }
-
     function addNewPlane() {
-      const tail = prompt("Masukkan Registrasi Pesawat (Contoh: PK-GLY):");
+      const tail = prompt("Masukkan Registrasi Armada Baru (Contoh: PK-GQD):");
       if (tail) {
-        planesData.push({ tail: tail, model: 'A320-200', placements: {} });
+        planesData.push({ tail: tail.toUpperCase(), model: 'A320-200', placements: {} });
         renderMediaPlacementTracker();
       }
     }
 
-    function openModal() {
-      alert("Modal Update Data dibuka!");
-    }
-
-    function handleCampaignSubmit(e) {
-      e.preventDefault();
-      alert("Data Campaign berhasil disimpan!");
-      e.target.reset();
-    }
-
-    // -------------------------------------------------------------
-    // INIT CHARTS ON LOAD
-    // -------------------------------------------------------------
+    // INIT CHARTS
     window.onload = function() {
-      // 1. Line Chart Tren Bulanan Multi-Tahun
+      // 1. Chart Main Trend
       const ctxMonthly = document.getElementById('monthlyTrendChart').getContext('2d');
       new Chart(ctxMonthly, {
         type: 'line',
         data: {
           labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
           datasets: [
-            {
-              label: '2024',
-              data: [1457256302, 1128873840, 1353604484, 4000579662, 1171193100, 1046916001, 398728818, 445522549, 761976050, 550202691, 1145376236, 1277288779],
-              borderColor: '#94a3b8',
-              borderDash: [4, 4],
-              tension: 0.3,
-              fill: false
-            },
-            {
-              label: '2025',
-              data: [1072982941, 966850869, 2234843329, 2854805291, 736956619, 513172471, 317172513, 357374125, 313704792, 371650289, 1296390364, 1867303549],
-              borderColor: '#82c341',
-              tension: 0.3,
-              fill: false
-            },
-            {
-              label: '2026 (Aktual)',
-              data: [857813539, 1181738169, 4143687698, 1711459497, 1166705763, 1137309980, 1125587404, 1079308046, 1345153863, null, null, null],
-              borderColor: '#008752',
-              borderWidth: 3,
-              tension: 0.3,
-              fill: false
-            }
+            { label: '2024', data: [1457256302, 1128873840, 1353604484, 4000579662, 1171193100, 1046916001, 398728818, 445522549, 761976050, 550202691, 1145376236, 1277288779], borderColor: '#94a3b8', borderDash: [4, 4] },
+            { label: '2025', data: [1072982941, 966850869, 2234843329, 2854805291, 736956619, 513172471, 317172513, 357374125, 313704792, 371650289, 1296390364, 1867303549], borderColor: '#82c341' },
+            { label: '2026', data: [857813539, 1181738169, 4143687698, 1711459497, 1166705763, 1137309980, 1125587404, 1079308046, 1345153863, null, null, null], borderColor: '#008752', borderWidth: 3 }
           ]
         },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { position: 'top' } },
-          scales: {
-            y: {
-              ticks: {
-                callback: function(value) { return 'Rp ' + (value / 1000000000).toFixed(1) + 'M'; }
-              }
-            }
-          }
-        }
+        options: { responsive: true, maintainAspectRatio: false }
       });
 
-      // 2. Bar Chart Per Periode
-      const ctxBar = document.getElementById('revenueBarChart').getContext('2d');
+      // 2. Chart Visual Tab
+      const ctxBar = document.getElementById('analyticsBarChart').getContext('2d');
       new Chart(ctxBar, {
         type: 'bar',
         data: {
-          labels: ['2023', '2024', '2025', '2026 (Q3)'],
-          datasets: [
-            { label: 'Agency Value (IDR)', data: [9789370000, 5000000000, 1200000000, 1200000000], backgroundColor: '#008752' },
-            { label: 'Direct Value (IDR)', data: [9382218000, 11110000000, 8900000000, 2408939495], backgroundColor: '#82c341' }
-          ]
+          labels: ['2023', '2024', '2025', '2026'],
+          datasets: [{ label: 'Agency', data: [9.7, 5.0, 1.2, 1.2], backgroundColor: '#008752' }, { label: 'Direct', data: [9.3, 11.1, 8.9, 2.4], backgroundColor: '#82c341' }]
         },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+        options: { responsive: true, maintainAspectRatio: false }
       });
 
-      // 3. Pie Chart Channel
-      const ctxPie = document.getElementById('revenuePieChart').getContext('2d');
+      const ctxPie = document.getElementById('analyticsPieChart').getContext('2d');
       new Chart(ctxPie, {
         type: 'doughnut',
         data: {
           labels: ['Agency', 'Direct'],
-          datasets: [{ data: [15983214295, 31707313200], backgroundColor: ['#008752', '#82c341'] }]
+          datasets: [{ data: [33.5, 66.5], backgroundColor: ['#008752', '#82c341'] }]
         },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+        options: { responsive: true, maintainAspectRatio: false }
       });
     };
   </script>
