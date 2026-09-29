@@ -72,28 +72,6 @@
           <i class="fa-solid fa-rectangle-ad w-5 text-center"></i>
           <span>New Campaign</span>
         </button>
-        <button onclick="switchTab('administrasi')" id="nav-administrasi" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
-          <i class="fa-solid fa-folder-open w-5 text-center"></i>
-          <span>Administrasi</span>
-        </button>
-        <button onclick="switchTab('revenue-streams')" id="nav-revenue-streams" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
-          <i class="fa-solid fa-sack-dollar w-5 text-center"></i>
-          <span>Revenue Streams</span>
-        </button>
-        <button onclick="switchTab('billing-payment')" id="nav-billing-payment" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
-          <i class="fa-solid fa-credit-card w-5 text-center"></i>
-          <span>Billing & Payment</span>
-        </button>
-
-        <div class="px-3 py-2 mt-4 text-[11px] font-semibold text-green-300 tracking-wider uppercase">ANALYTICS</div>
-        <button onclick="switchTab('visual-charts')" id="nav-visual-charts" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
-          <i class="fa-solid fa-chart-column w-5 text-center"></i>
-          <span>Visual Charts</span>
-        </button>
-        <button onclick="switchTab('summary-data')" id="nav-summary-data" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:bg-green-800/40 hover:text-white">
-          <i class="fa-solid fa-table w-5 text-center"></i>
-          <span>Summary Data</span>
-        </button>
       </nav>
     </div>
 
@@ -138,7 +116,6 @@
       <!-- SECTION 1: REPORT DASHBOARD TAB -->
       <div id="tab-report-dashboard" class="space-y-6">
         
-        <!-- 4 KARTI KPI EKSISTING -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 w-2 h-full bg-citilink"></div>
@@ -174,10 +151,6 @@
             </div>
           </div>
         </div>
-
-        <!-- ================================================================= -->
-        <!-- WIDGET DITAMBAHKAN: ANALISIS TREN BULANAN & TABEL MATRIKS YOY     -->
-        <!-- ================================================================= -->
 
         <!-- Highlight Card YoY Kuartal -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -219,61 +192,7 @@
           <div class="h-72"><canvas id="monthlyTrendChart"></canvas></div>
         </div>
 
-        <!-- Tabel Matriks Airing Period Bulanan & Sparkline -->
-        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-          <div class="p-5 border-b border-gray-200">
-            <h3 class="text-base font-bold text-gray-800">Tabel Rincian Airing Period & YoY Growth</h3>
-            <p class="text-xs text-gray-500">Data aktual pendapatan bulanan beserta indikator sparkline</p>
-          </div>
-          <div class="overflow-x-auto">
-            <table class="w-full text-center text-sm text-gray-600 border-collapse">
-              <thead class="bg-gray-50 text-gray-700 text-xs uppercase font-semibold border-b border-gray-200">
-                <tr>
-                  <th class="py-3 px-4 text-left">Airing Period</th>
-                  <th class="py-3 px-4">2024 (IDR)</th>
-                  <th class="py-3 px-4">2025 (IDR)</th>
-                  <th class="py-3 px-4">2026 (IDR)</th>
-                  <th class="py-3 px-4 text-center">Sparkline Tren</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-gray-200 text-xs">
-                <tr class="hover:bg-gray-50"><td class="py-2.5 px-4 text-left font-semibold text-gray-800">Jan</td><td>1.457.256.302</td><td>1.072.982.941</td><td>857.813.539</td><td class="flex justify-center py-1"><svg class="sparkline-svg"><path d="M 5,5 L 45,18 L 85,20"/></svg></td></tr>
-                <tr class="hover:bg-gray-50"><td class="py-2.5 px-4 text-left font-semibold text-gray-800">Feb</td><td>1.128.873.840</td><td>966.850.869</td><td>1.181.738.169</td><td class="flex justify-center py-1"><svg class="sparkline-svg"><path d="M 5,10 L 45,20 L 85,5"/></svg></td></tr>
-                <tr class="hover:bg-gray-50"><td class="py-2.5 px-4 text-left font-semibold text-gray-800">Mar</td><td>1.353.604.484</td><td>2.234.843.329</td><td>4.143.687.698</td><td class="flex justify-center py-1"><svg class="sparkline-svg"><path d="M 5,20 L 45,12 L 85,2"/></svg></td></tr>
-                <tr class="hover:bg-gray-50"><td class="py-2.5 px-4 text-left font-semibold text-gray-800">Apr</td><td>4.000.579.662</td><td>2.854.805.291</td><td>1.711.459.497</td><td class="flex justify-center py-1"><svg class="sparkline-svg"><path d="M 5,2 L 45,12 L 85,20"/></svg></td></tr>
-                <tr class="hover:bg-gray-50"><td class="py-2.5 px-4 text-left font-semibold text-gray-800">May</td><td>1.171.193.100</td><td>736.956.619</td><td>1.166.705.763</td><td class="flex justify-center py-1"><svg class="sparkline-svg"><path d="M 5,5 L 45,20 L 85,6"/></svg></td></tr>
-                <tr class="hover:bg-gray-50"><td class="py-2.5 px-4 text-left font-semibold text-gray-800">Jun</td><td>1.046.916.001</td><td>513.172.471</td><td>1.137.309.980</td><td class="flex justify-center py-1"><svg class="sparkline-svg"><path d="M 5,5 L 45,20 L 85,8"/></svg></td></tr>
-                <tr class="hover:bg-gray-50"><td class="py-2.5 px-4 text-left font-semibold text-gray-800">Jul</td><td>398.728.818</td><td>317.172.513</td><td>1.125.587.404</td><td class="flex justify-center py-1"><svg class="sparkline-svg"><path d="M 5,18 L 45,20 L 85,5"/></svg></td></tr>
-                <tr class="hover:bg-gray-50"><td class="py-2.5 px-4 text-left font-semibold text-gray-800">Aug</td><td>445.522.549</td><td>357.374.125</td><td>1.079.308.046</td><td class="flex justify-center py-1"><svg class="sparkline-svg"><path d="M 5,18 L 45,20 L 85,5"/></svg></td></tr>
-                <tr class="hover:bg-gray-50"><td class="py-2.5 px-4 text-left font-semibold text-gray-800">Sep</td><td>761.976.050</td><td>313.704.792</td><td>1.345.153.863</td><td class="flex justify-center py-1"><svg class="sparkline-svg"><path d="M 5,12 L 45,20 L 85,2"/></svg></td></tr>
-                <tr class="hover:bg-gray-50"><td class="py-2.5 px-4 text-left font-semibold text-gray-800">Oct</td><td>550.202.691</td><td>371.650.289</td><td class="text-gray-400">-</td><td>-</td></tr>
-                <tr class="hover:bg-gray-50"><td class="py-2.5 px-4 text-left font-semibold text-gray-800">Nov</td><td>1.145.376.236</td><td>1.296.390.364</td><td class="text-gray-400">-</td><td>-</td></tr>
-                <tr class="hover:bg-gray-50"><td class="py-2.5 px-4 text-left font-semibold text-gray-800">Dec</td><td>1.277.288.779</td><td>1.867.303.549</td><td class="text-gray-400">-</td><td>-</td></tr>
-              </tbody>
-              <tfoot class="bg-gray-100 font-bold border-t-2 border-gray-300 text-xs">
-                <tr>
-                  <td class="py-3 px-4 text-left">Total Actual Revenue</td>
-                  <td>14.737.518.513</td>
-                  <td>12.903.207.152</td>
-                  <td>13.748.763.959</td>
-                  <td>-</td>
-                </tr>
-                <tr class="bg-white border-t border-gray-200">
-                  <td class="py-3 px-4 text-left">YOY Growth Rate</td>
-                  <td><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">21% (2024 vs 2023)</span></td>
-                  <td><span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded">-12% (2025 vs 2024)</span></td>
-                  <td><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">7% (2026 vs 2025)</span></td>
-                  <td>-</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-        </div>
-
-        <!-- ================================================================= -->
-        <!-- CHART & TABEL EKSISTING SEBELUMNYA                                 -->
-        <!-- ================================================================= -->
-
+        <!-- Charts Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div class="lg:col-span-2 bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
             <div class="flex items-center justify-between mb-4">
@@ -295,135 +214,7 @@
           </div>
         </div>
 
-        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-          <div class="p-5 border-b border-gray-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              <h3 class="text-base font-bold text-gray-800">Tabel Ringkasan Laporan Revenue</h3>
-              <p class="text-xs text-gray-500">Klik ikon panah untuk melihat rincian kuartal</p>
-            </div>
-            <button onclick="openModal()" class="text-xs bg-citilink-light text-citilink hover:bg-green-100 font-semibold px-3 py-1.5 rounded-lg border border-green-300">
-              <i class="fa-solid fa-sliders mr-1"></i> Kelola Data Per Periode
-            </button>
-          </div>
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm text-gray-600">
-              <thead class="bg-gray-50 text-gray-700 text-xs uppercase font-semibold border-b border-gray-200">
-                <tr>
-                  <th class="py-3 px-4 w-12 text-center"></th>
-                  <th class="py-3 px-4">Periode</th>
-                  <th class="py-3 px-4 text-right">Agency Value (IDR)</th>
-                  <th class="py-3 px-4 text-right">Direct Value (IDR)</th>
-                  <th class="py-3 px-4 text-right">Total Revenue (IDR)</th>
-                  <th class="py-3 px-4 text-center">Kontribusi Agency</th>
-                </tr>
-              </thead>
-              <tbody id="summaryTableBody" class="divide-y divide-gray-200">
-                <tr class="font-bold bg-gray-50">
-                  <td class="text-center"><i class="fa-solid fa-chevron-right text-xs text-gray-400"></i></td>
-                  <td>2023</td>
-                  <td class="text-right">Rp 9.789.370.000</td>
-                  <td class="text-right">Rp 9.382.218.000</td>
-                  <td class="text-right text-emerald-600">Rp 19.171.588.000</td>
-                  <td class="text-center"><span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-0.5 rounded">51.1%</span></td>
-                </tr>
-                <tr class="font-bold bg-gray-50">
-                  <td class="text-center"><i class="fa-solid fa-chevron-right text-xs text-gray-400"></i></td>
-                  <td>2024</td>
-                  <td class="text-right">Rp 5.000.000.000</td>
-                  <td class="text-right">Rp 11.110.000.000</td>
-                  <td class="text-right text-emerald-600">Rp 16.110.000.000</td>
-                  <td class="text-center"><span class="bg-gray-100 text-gray-700 text-xs px-2 py-0.5 rounded">31.0%</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
       </div>
-
-    </main>
-  </div>
-
-  <!-- SCRIPT CHART.JS -->
-  <script>
-    // 1. Line Chart Tren Bulanan Multi-Tahun
-    const ctxMonthly = document.getElementById('monthlyTrendChart').getContext('2d');
-    new Chart(ctxMonthly, {
-      type: 'line',
-      data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        datasets: [
-          {
-            label: '2024',
-            data: [1457256302, 1128873840, 1353604484, 4000579662, 1171193100, 1046916001, 398728818, 445522549, 761976050, 550202691, 1145376236, 1277288779],
-            borderColor: '#94a3b8',
-            borderDash: [4, 4],
-            tension: 0.3,
-            fill: false
-          },
-          {
-            label: '2025',
-            data: [1072982941, 966850869, 2234843329, 2854805291, 736956619, 513172471, 317172513, 357374125, 313704792, 371650289, 1296390364, 1867303549],
-            borderColor: '#82c341',
-            tension: 0.3,
-            fill: false
-          },
-          {
-            label: '2026 (Aktual)',
-            data: [857813539, 1181738169, 4143687698, 1711459497, 1166705763, 1137309980, 1125587404, 1079308046, 1345153863, null, null, null],
-            borderColor: '#008752',
-            borderWidth: 3,
-            tension: 0.3,
-            fill: false
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { position: 'top' } },
-        scales: {
-          y: {
-            ticks: {
-              callback: function(value) { return 'Rp ' + (value / 1000000000).toFixed(1) + 'M'; }
-            }
-          }
-        }
-      }
-    });
-
-    // 2. Bar Chart Per Periode
-    const ctxBar = document.getElementById('revenueBarChart').getContext('2d');
-    new Chart(ctxBar, {
-      type: 'bar',
-      data: {
-        labels: ['2023', '2024', '2025', '2026 (Q3)'],
-        datasets: [
-          { label: 'Agency Value (IDR)', data: [9789370000, 5000000000, 1200000000, 1200000000], backgroundColor: '#008752' },
-          { label: 'Direct Value (IDR)', data: [9382218000, 11110000000, 8900000000, 2408939495], backgroundColor: '#82c341' }
-        ]
-      },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
-    });
-
-    // 3. Pie Chart Channel
-    const ctxPie = document.getElementById('revenuePieChart').getContext('2d');
-    new Chart(ctxPie, {
-      type: 'doughnut',
-      data: {
-        labels: ['Agency', 'Direct'],
-        datasets: [{ data: [15983214295, 31707313200], backgroundColor: ['#008752', '#82c341'] }]
-      },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
-    });
-
-    function switchTab(tabId) {
-      console.log("Switch tab to:", tabId);
-    }
-    function openModal() {
-      alert("Modal Update Report Data dibuka!");
-}
-</script>
 
       <!-- SECTION 2: MEDIA PLACEMENT TRACKER TAB -->
       <div id="tab-media-market" class="space-y-6 hidden">
@@ -434,23 +225,23 @@
           </div>
           <div class="flex items-center gap-3">
             <span id="armada-count-badge" class="text-xs font-bold text-citilink bg-green-50 px-3 py-1.5 rounded-lg border border-green-200">
-              Armada: 5 Pesawat
+              Armada: 3 Pesawat
             </span>
-            <button onclick="openAddPlaneModal()" class="bg-citilink hover:bg-citilink-dark text-white font-medium text-xs px-3.5 py-2 rounded-lg shadow-sm flex items-center gap-2">
+            <button onclick="addNewPlane()" class="bg-citilink hover:bg-citilink-dark text-white font-medium text-xs px-3.5 py-2 rounded-lg shadow-sm flex items-center gap-2">
               <i class="fa-solid fa-plus"></i>
               <span>Registrasi Pesawat</span>
             </button>
           </div>
         </div>
 
-        <div id="placement-category-cards" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3"></div>
+        <div id="placement-category-cards" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3"></div>
 
         <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
           <div class="overflow-x-auto custom-scrollbar">
             <table class="w-full text-left text-xs">
               <thead class="bg-gray-50 text-gray-700 uppercase font-bold border-b border-gray-200">
                 <tr id="matrix-header-row">
-                  <th class="py-3.5 px-4 min-w-[140px] sticky left-0 bg-gray-50 z-10 border-r">PESAWAT</th>
+                  <th class="py-3.5 px-4 min-w-[150px] sticky left-0 bg-gray-50 z-10 border-r">PESAWAT</th>
                 </tr>
               </thead>
               <tbody id="matrixTableBody" class="divide-y divide-gray-200 font-medium"></tbody>
@@ -476,7 +267,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nama PT / Perusahaan *</label>
-                <input type="text" id="campaign-nama-pt" required placeholder="Contoh: PT Bank Central Asia Tbk" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none">
+                <input type="text" id="campaign-nama-pt" required placeholder="Contoh: PT Tirta Investama" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none">
               </div>
               <div>
                 <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Tipe Kemitraan (Agency / Direct) *</label>
@@ -491,28 +282,12 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nama Brand *</label>
-                <input type="text" id="campaign-nama-brand" required placeholder="Contoh: Tahapan BCA" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none">
+                <input type="text" id="campaign-nama-brand" required placeholder="Contoh: Aqua" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none">
               </div>
               <div>
                 <label class="block text-xs font-bold text-gray-700 uppercase mb-1">PIC (Person in Charge) *</label>
                 <input type="text" id="campaign-pic" required placeholder="Contoh: Budi Santoso" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none">
               </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Email PIC *</label>
-                <input type="email" id="campaign-email-pic" required placeholder="budi@bca.co.id" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none">
-              </div>
-              <div>
-                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">No HP / WhatsApp PIC *</label>
-                <input type="tel" id="campaign-no-hp" required placeholder="081234567890" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none">
-              </div>
-            </div>
-
-            <div>
-              <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Alamat Perusahaan *</label>
-              <textarea id="campaign-alamat" rows="2" required placeholder="Jl. M.H. Thamrin No. 1, Jakarta Pusat" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none"></textarea>
             </div>
 
             <div class="pt-3 flex justify-end">
@@ -523,720 +298,91 @@
             </div>
           </form>
         </div>
-
-        <!-- Registered Campaign Table -->
-        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-          <div class="p-5 border-b border-gray-200">
-            <h3 class="text-base font-bold text-gray-800">Daftar Campaign Terregistrasi</h3>
-          </div>
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs text-gray-600">
-              <thead class="bg-gray-50 text-gray-700 uppercase font-bold border-b border-gray-200">
-                <tr>
-                  <th class="py-3 px-4">Nama PT</th>
-                  <th class="py-3 px-4">Tipe</th>
-                  <th class="py-3 px-4">Nama Brand</th>
-                  <th class="py-3 px-4">PIC</th>
-                  <th class="py-3 px-4">Email PIC</th>
-                  <th class="py-3 px-4">No HP</th>
-                  <th class="py-3 px-4">Alamat</th>
-                </tr>
-              </thead>
-              <tbody id="campaignTableBody" class="divide-y divide-gray-200 font-medium"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- SECTION 4: ADMINISTRASI TAB -->
-      <div id="tab-administrasi" class="space-y-6 hidden">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
-          <div>
-            <h3 class="text-xl font-bold text-gray-800">Pelacakan Status Administrasi</h3>
-            <p class="text-xs text-gray-500">Monitoring 8 dokumen utama & 3 tahapan proses (Draft, Versioning, Approval)</p>
-          </div>
-          <div class="flex items-center gap-3">
-            <span class="text-xs font-bold text-citilink bg-green-50 px-3 py-1.5 rounded-lg border border-green-200">
-              Draft | Versioning | Approval
-            </span>
-          </div>
-        </div>
-
-        <!-- Administration Matrix Table -->
-        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-          <div class="overflow-x-auto custom-scrollbar">
-            <table class="w-full text-left text-xs">
-              <thead class="bg-gray-50 text-gray-700 uppercase font-bold border-b border-gray-200">
-                <tr>
-                  <th class="py-3.5 px-4 min-w-[200px] sticky left-0 bg-gray-50 z-10 border-r">PERUSAHAAN & BRAND</th>
-                  <th class="py-3.5 px-3 min-w-[140px] text-center border-r">Quotation</th>
-                  <th class="py-3.5 px-3 min-w-[160px] text-center border-r">Media Order (MO)</th>
-                  <th class="py-3.5 px-3 min-w-[160px] text-center border-r">Agreement (PKS)</th>
-                  <th class="py-3.5 px-3 min-w-[140px] text-center border-r">Request Invoice</th>
-                  <th class="py-3.5 px-3 min-w-[160px] text-center border-r">Kajian Bisnis</th>
-                  <th class="py-3.5 px-3 min-w-[140px] text-center border-r">Live</th>
-                  <th class="py-3.5 px-3 min-w-[140px] text-center border-r">BAP</th>
-                  <th class="py-3.5 px-3 min-w-[140px] text-center border-r">BAPS</th>
-                  <th class="py-3.5 px-4 text-center min-w-[100px]">Aksi</th>
-                </tr>
-              </thead>
-              <tbody id="adminTableBody" class="divide-y divide-gray-200 font-medium"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- SECTION 5: REVENUE STREAMS TAB -->
-      <div id="tab-revenue-streams" class="space-y-6 hidden">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
-            <p class="text-xs text-gray-500 font-bold uppercase">Inflight Print Ads</p>
-            <p class="text-2xl font-extrabold text-citilink mt-1">Rp 12.850.000.000</p>
-            <p class="text-xs text-gray-500 mt-1">Headrest, Meal Tray, Inflight Magazine</p>
-          </div>
-          <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
-            <p class="text-xs text-gray-500 font-bold uppercase">Digital & App Ads</p>
-            <p class="text-2xl font-extrabold text-citilink-dark mt-1">Rp 8.400.000.000</p>
-            <p class="text-xs text-gray-500 mt-1">Wi-Fi Portal, App Banner, E-Boarding Pass</p>
-          </div>
-          <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
-            <p class="text-xs text-gray-500 font-bold uppercase">Ambient & Livery</p>
-            <p class="text-2xl font-extrabold text-citilink-accent mt-1">Rp 16.200.000.000</p>
-            <p class="text-xs text-gray-500 mt-1">Full Aircraft Livery & Overhead Bin Wraps</p>
-          </div>
-        </div>
-        <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
-          <h3 class="text-base font-bold text-gray-800 mb-4">Breakdown Revenue Streams By Asset Category</h3>
-          <div class="h-80"><canvas id="revenueStreamChart"></canvas></div>
-        </div>
-      </div>
-
-      <!-- SECTION 6: BILLING & PAYMENT TAB -->
-      <div id="tab-billing-payment" class="space-y-6 hidden">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="bg-white p-5 rounded-xl border border-emerald-200 bg-emerald-50/50">
-            <p class="text-xs font-bold text-emerald-700 uppercase">Paid / Received</p>
-            <p class="text-2xl font-extrabold text-emerald-800 mt-1">Rp 28.500.000.000</p>
-          </div>
-          <div class="bg-white p-5 rounded-xl border border-amber-200 bg-amber-50/50">
-            <p class="text-xs font-bold text-amber-700 uppercase">Pending Payment</p>
-            <p class="text-2xl font-extrabold text-amber-800 mt-1">Rp 5.240.000.000</p>
-          </div>
-          <div class="bg-white p-5 rounded-xl border border-red-200 bg-red-50/50">
-            <p class="text-xs font-bold text-red-700 uppercase">Overdue Invoices</p>
-            <p class="text-2xl font-extrabold text-red-800 mt-1">Rp 1.150.000.000</p>
-          </div>
-        </div>
-        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-          <div class="p-5 border-b border-gray-200">
-            <h3 class="text-base font-bold text-gray-800">Status Tagihan & Penagihan (Billing)</h3>
-          </div>
-          <table class="w-full text-left text-xs text-gray-600">
-            <thead class="bg-gray-50 text-gray-700 uppercase font-bold border-b border-gray-200">
-              <tr>
-                <th class="py-3 px-4">No Invoice</th>
-                <th class="py-3 px-4">Klien / PT</th>
-                <th class="py-3 px-4">Jatuh Tempo</th>
-                <th class="py-3 px-4 text-right">Nominal (IDR)</th>
-                <th class="py-3 px-4 text-center">Status</th>
-              </tr>
-            </thead>
-            <tbody id="billingTableBody" class="divide-y divide-gray-200 font-medium"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- SECTION 7: VISUAL CHARTS TAB -->
-      <div id="tab-visual-charts" class="space-y-6 hidden">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
-            <h3 class="text-base font-bold text-gray-800 mb-2">Tren Pertumbuhan Revenue Annual</h3>
-            <div class="h-64"><canvas id="growthLineChart"></canvas></div>
-          </div>
-          <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
-            <h3 class="text-base font-bold text-gray-800 mb-2">Perbandingan Share Agen vs Direct</h3>
-            <div class="h-64 flex justify-center"><canvas id="shareRadarChart"></canvas></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SECTION 8: SUMMARY DATA TAB -->
-      <div id="tab-summary-data" class="space-y-6 hidden">
-        <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
-          <h3 class="text-base font-bold text-gray-800 mb-2">Ringkasan Eksekutif Performansi Ads</h3>
-          <p class="text-xs text-gray-500 mb-4">Data agregat kinerja komersial inflight advertising Citilink Indonesia.</p>
-          <div id="executiveSummaryContent" class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm"></div>
-        </div>
       </div>
 
     </main>
   </div>
 
-  <!-- MODAL 1: UPDATE REPORT DATA -->
-  <div id="reportDataModal" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden transition-opacity">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl overflow-hidden border border-gray-100 flex flex-col max-h-[90vh]">
-      <div class="p-5 border-b border-gray-100 flex items-center justify-between bg-gray-50">
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-lg bg-green-100 text-citilink flex items-center justify-center font-bold">
-            <i class="fa-solid fa-pen-to-square"></i>
-          </div>
-          <div>
-            <h3 class="text-base font-bold text-gray-800">Update Report Data</h3>
-            <p class="text-xs text-gray-500">Ubah atau perbarui nilai revenue (IDR) per periode:</p>
-          </div>
-        </div>
-        <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 p-1 rounded-lg"><i class="fa-solid fa-xmark text-xl"></i></button>
-      </div>
-      <div class="p-6 overflow-y-auto custom-scrollbar flex-1 space-y-4">
-        <div class="grid grid-cols-12 gap-3 text-xs font-bold text-gray-600 uppercase tracking-wider pb-1 border-b">
-          <div class="col-span-3">Nama Periode</div>
-          <div class="col-span-4">Agency Value (IDR)</div>
-          <div class="col-span-4">Direct Value (IDR)</div>
-          <div class="col-span-1 text-center">Aksi</div>
-        </div>
-        <div id="modal-period-rows" class="space-y-3"></div>
-        <button onclick="addNewPeriodInputRow()" class="w-full py-2.5 border-2 border-dashed border-green-300 rounded-xl text-citilink hover:bg-green-50 font-semibold text-xs flex items-center justify-center gap-2">
-          <i class="fa-solid fa-plus-circle"></i>
-          <span>Tambah Periode Baru</span>
-        </button>
-      </div>
-      <div class="p-4 border-t border-gray-100 bg-gray-50 flex items-center justify-end gap-3">
-        <button onclick="closeModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-gray-600 hover:bg-gray-200">Batal</button>
-        <button onclick="saveUpdatedReportData()" class="px-5 py-2 rounded-xl text-xs font-semibold bg-citilink text-white hover:bg-citilink-dark shadow-md flex items-center gap-2">
-          <i class="fa-solid fa-floppy-disk"></i>
-          <span>Simpan & Perbarui</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL 2: REGISTRASI PESAWAT -->
-  <div id="addPlaneModal" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden transition-opacity">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden border border-gray-100">
-      <div class="p-5 border-b border-gray-100 flex items-center justify-between bg-gray-50">
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-lg bg-green-100 text-citilink flex items-center justify-center font-bold">
-            <i class="fa-solid fa-plane-arrival"></i>
-          </div>
-          <div>
-            <h3 class="text-base font-bold text-gray-800">Registrasi Pesawat Baru</h3>
-            <p class="text-xs text-gray-500">Tambah armada ke daftar Media Placement Tracker</p>
-          </div>
-        </div>
-        <button onclick="closeAddPlaneModal()" class="text-gray-400 hover:text-gray-600 p-1 rounded-lg"><i class="fa-solid fa-xmark text-xl"></i></button>
-      </div>
-      <div class="p-6 space-y-4">
-        <div>
-          <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Tail Number (Kode Ekor) *</label>
-          <input type="text" id="input-tail-number" placeholder="Contoh: PK-G15" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none uppercase">
-        </div>
-        <div>
-          <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Pesawat (Model / Tipe) *</label>
-          <select id="input-plane-model" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-citilink focus:outline-none bg-white">
-            <option value="Airbus A320">Airbus A320</option>
-            <option value="ATR 72-600">ATR 72-600</option>
-          </select>
-        </div>
-      </div>
-      <div class="p-4 border-t border-gray-100 bg-gray-50 flex items-center justify-end gap-3">
-        <button onclick="closeAddPlaneModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-gray-600 hover:bg-gray-200">Batal</button>
-        <button onclick="saveNewPlane()" class="px-5 py-2 rounded-xl text-xs font-semibold bg-citilink text-white hover:bg-citilink-dark shadow-md">Simpan Pesawat</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL 3: UPDATE STATUS ADMINISTRASI -->
-  <div id="updateAdminModal" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden transition-opacity">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl overflow-hidden border border-gray-100 flex flex-col max-h-[90vh]">
-      <div class="p-5 border-b border-gray-100 flex items-center justify-between bg-gray-50">
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-lg bg-green-100 text-citilink flex items-center justify-center font-bold">
-            <i class="fa-solid fa-file-signature"></i>
-          </div>
-          <div>
-            <h3 class="text-base font-bold text-gray-800">Update Status Administrasi</h3>
-            <p id="admin-modal-subtitle" class="text-xs text-gray-500">Kelola status dokumen dan nomor referensi</p>
-          </div>
-        </div>
-        <button onclick="closeAdminModal()" class="text-gray-400 hover:text-gray-600 p-1 rounded-lg"><i class="fa-solid fa-xmark text-xl"></i></button>
-      </div>
-
-      <div class="p-6 overflow-y-auto custom-scrollbar flex-1 space-y-4">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 p-3 bg-gray-50 rounded-xl border border-gray-200">
-          <div>
-            <label class="block text-[11px] font-bold text-gray-700 uppercase mb-1">No. Media Order (MO)</label>
-            <input type="text" id="admin-no-mo" placeholder="MO/2026/09/001" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:ring-2 focus:ring-citilink focus:outline-none">
-          </div>
-          <div>
-            <label class="block text-[11px] font-bold text-gray-700 uppercase mb-1">No. PKS (Agreement)</label>
-            <input type="text" id="admin-no-pks" placeholder="PKS/QG/2026/088" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:ring-2 focus:ring-citilink focus:outline-none">
-          </div>
-          <div>
-            <label class="block text-[11px] font-bold text-gray-700 uppercase mb-1">No. Kajian Bisnis</label>
-            <input type="text" id="admin-no-kb" placeholder="KB/CITILINK/2026/01" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:ring-2 focus:ring-citilink focus:outline-none">
-          </div>
-        </div>
-
-        <p class="text-xs font-bold text-gray-700 uppercase tracking-wider pt-2 border-b pb-1">Status 8 Dokumen Administrasi:</p>
-        <div id="admin-status-grid" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
-      </div>
-
-      <div class="p-4 border-t border-gray-100 bg-gray-50 flex items-center justify-end gap-3">
-        <button onclick="closeAdminModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-gray-600 hover:bg-gray-200">Batal</button>
-        <button onclick="saveAdminStatus()" class="px-5 py-2 rounded-xl text-xs font-semibold bg-citilink text-white hover:bg-citilink-dark shadow-md">Simpan Update</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- JAVASCRIPT LOGIC -->
+  <!-- SCRIPT UTAMA & LOGIKA TABEL MATRIKS -->
   <script>
-    // 1. REPORT DATA
-    let reportData = [
-      { id: '2023', name: '2023', agency: 9789370000, direct: 9382218000 },
-      { id: '2024', name: '2024', agency: 5000000000, direct: 11110000000 },
-      { id: '2025', name: '2025', agency: 0, direct: 8800000000 },
-      { id: '2026_q3', name: '2026 (Q3)', agency: 1193844295, direct: 2415095200 }
-    ];
-
-    const quarterlyBreakdownData = {
-      '2023': [
-        { period: 'Q1 2023', agency: 2400000000, direct: 2300000000 },
-        { period: 'Q2 2023', agency: 2500000000, direct: 2350000000 },
-        { period: 'Q3 2023', agency: 2400000000, direct: 2350000000 },
-        { period: 'Q4 2023', agency: 2489370000, direct: 2382218000 }
-      ],
-      '2024': [
-        { period: 'Q1 2024', agency: 1250000000, direct: 2700000000 },
-        { period: 'Q2 2024', agency: 1250000000, direct: 2800000000 },
-        { period: 'Q3 2024', agency: 1250000000, direct: 2800000000 },
-        { period: 'Q4 2024', agency: 1250000000, direct: 2810000000 }
-      ],
-      '2025': [
-        { period: 'Q1 2025', agency: 0, direct: 2200000000 },
-        { period: 'Q2 2025', agency: 0, direct: 2200000000 },
-        { period: 'Q3 2025', agency: 0, direct: 2200000000 },
-        { period: 'Q4 2025', agency: 0, direct: 2200000000 }
-      ],
-      '2026_q3': [
-        { period: 'Q1 2026', agency: 400000000, direct: 800000000 },
-        { period: 'Q2 2026', agency: 393844295, direct: 815095200 },
-        { period: 'Q3 2026', agency: 400000000, direct: 800000000 }
-      ]
-    };
-
-    // 2. MEDIA PLACEMENT DATA
+    // -------------------------------------------------------------
+    // DATA KATEGORI MEDIA (9 JENIS MEDIA INFLIGHT CITILINK)
+    // -------------------------------------------------------------
     const placementCategories = [
       { id: 'overhead_bins', name: 'Overhead Bins' },
-    { id: 'headrest_covers', name: 'Head Cover Seat' },
-    { id: 'aircraft_livery', name: 'Aircraft Livery' },
-    { id: 'meal_trays', name: 'Meal Tray' },
-    { id: 'sampling_product', name: 'Sampling Product' },
-    { id: 'linkers', name: 'Linkers' },
-    { id: 'air_bag_tag', name: 'Air Bag Tag' },
-    { id: 'e_boarding_pass', name: 'E-Boarding Pass' },
-    { id: 'cabin_announcement', name: 'Cabin Announcement' }
-];
+      { id: 'headrest_covers', name: 'Head Cover Seat' },
+      { id: 'aircraft_livery', name: 'Aircraft Livery' },
+      { id: 'meal_trays', name: 'Meal Tray' },
+      { id: 'sampling_product', name: 'Sampling Product' },
+      { id: 'linkers', name: 'Linkers' },
+      { id: 'air_bag_tag', name: 'Air Bag Tag' },
+      { id: 'e_boarding_pass', name: 'E-Boarding Pass' },
+      { id: 'cabin_announcement', name: 'Cabin Announcement' }
+    ];
 
+    // DUMMY DATA PESAWAT & STATUS
     let planesData = [
       {
-        tail: 'PK-GQA', model: 'Airbus A320', placements: {
-          overhead_bin: { status: 'Booked', client: 'BCA' },
-          headrest_cover: { status: 'Booked', client: 'Traveloka' },
-          livery: { status: 'Available', client: '-' },
-          meal_tray: { status: 'Booked', client: 'Telkomsel' },
-          inflight_menu: { status: 'Reserved', client: 'Samsung' },
-          e_boarding: { status: 'Booked', client: 'BCA' }
+        tail: 'PK-GQA',
+        model: 'A320-200',
+        placements: {
+          overhead_bins: { status: 'Booked', brand: 'Indosat', ptName: 'PT Sinar Sentral Media', startDate: '2026-09-01', endDate: '2026-12-31' },
+          headrest_covers: { status: 'Reserved', brand: 'Aqua', ptName: 'PT Tirta Investama', startDate: '2026-10-01', endDate: '2026-10-31' },
+          meal_trays: { status: 'Available' }
         }
       },
       {
-        tail: 'PK-GQB', model: 'Airbus A320', placements: {
-          overhead_bin: { status: 'Booked', client: 'Indosat' },
-          headrest_cover: { status: 'In Maintenance', client: '-' },
-          livery: { status: 'Booked', client: 'Wonderful Indonesia' },
-          meal_tray: { status: 'Booked', client: 'Aqua' },
-          inflight_menu: { status: 'Available', client: '-' },
-          e_boarding: { status: 'Available', client: '-' }
+        tail: 'PK-GQB',
+        model: 'A320-200 Neo',
+        placements: {
+          aircraft_livery: { status: 'Booked', brand: 'Extra Joss', ptName: 'PT Bintang Toedjoe', startDate: '2026-08-01', endDate: '2026-11-30' },
+          e_boarding_pass: { status: 'Available' }
         }
       },
       {
-        tail: 'PK-GQC', model: 'Airbus A320', placements: {
-          overhead_bin: { status: 'Available', client: '-' },
-          headrest_cover: { status: 'Booked', client: 'Mandiri' },
-          livery: { status: 'Available', client: '-' },
-          meal_tray: { status: 'Available', client: '-' },
-          inflight_menu: { status: 'Booked', client: 'Gojek' },
-          e_boarding: { status: 'Reserved', client: 'Grab' }
-        }
-      },
-      {
-        tail: 'PK-GQD', model: 'Airbus A320', placements: {
-          overhead_bin: { status: 'Booked', client: 'Tiket.com' },
-          headrest_cover: { status: 'Booked', client: 'Tiket.com' },
-          livery: { status: 'Booked', client: 'Tiket.com' },
-          meal_tray: { status: 'Booked', client: 'Tiket.com' },
-          inflight_menu: { status: 'Available', client: '-' },
-          e_boarding: { status: 'Available', client: '-' }
-        }
-      },
-      {
-        tail: 'PK-WJA', model: 'ATR 72-600', placements: {
-          overhead_bin: { status: 'Available', client: '-' },
-          headrest_cover: { status: 'Booked', client: 'Pertamina' },
-          livery: { status: 'Available', client: '-' },
-          meal_tray: { status: 'Available', client: '-' },
-          inflight_menu: { status: 'Available', client: '-' },
-          e_boarding: { status: 'Available', client: '-' }
+        tail: 'PK-GQC',
+        model: 'A320-200',
+        placements: {
+          overhead_bins: { status: 'In Maintenance' }
         }
       }
     ];
 
-    // 3. CAMPAIGNS & ADMINISTRATION DATA
-    let registeredCampaigns = [
-      {
-        id: 'cmp_1',
-        namaPT: 'PT Bank Central Asia Tbk',
-        type: 'Direct',
-        brand: 'Tahapan BCA',
-        pic: 'Budi Santoso',
-        email: 'budi@bca.co.id',
-        noHp: '081234567890',
-        alamat: 'Menara BCA, Jl. M.H. Thamrin No.1, Jakarta Pusat',
-        refNumbers: { mo: 'MO/2026/01/001', pks: 'PKS/QG/2026/012', kb: 'KB/CITILINK/2026/05' },
-        docs: {
-          quotation: 'Approval',
-          mo: 'Approval',
-          pks: 'Approval',
-          request_invoice: 'Approval',
-          kb: 'Approval',
-          live: 'Approval',
-          bap: 'Approval',
-          baps: 'Approval'
-        }
-      },
-      {
-        id: 'cmp_2',
-        namaPT: 'PT Dentsu Indonesia (Agency)',
-        type: 'Agency',
-        brand: 'Samsung Galaxy S26',
-        pic: 'Siti Rahma',
-        email: 'siti.rahma@dentsu.com',
-        noHp: '081898765432',
-        alamat: 'Menara Astra Lt. 28, Jakarta Pusat',
-        refNumbers: { mo: 'MO/2026/02/014', pks: 'PKS/QG/2026/045', kb: 'KB/CITILINK/2026/09' },
-        docs: {
-          quotation: 'Approval',
-          mo: 'Approval',
-          pks: 'Versioning',
-          request_invoice: 'Draft',
-          kb: 'Approval',
-          live: 'Draft',
-          bap: 'Draft',
-          baps: 'Draft'
-        }
-      },
-      {
-        id: 'cmp_3',
-        namaPT: 'PT Global Tiket Network',
-        type: 'Direct',
-        brand: 'Tiket.com Flight Promo',
-        pic: 'Kevin Sanjaya',
-        email: 'kevin@tiket.com',
-        noHp: '081122334455',
-        alamat: 'Wisma Barito Pacific, Jakarta Barat',
-        refNumbers: { mo: 'MO/2026/03/022', pks: 'PKS/QG/2026/089', kb: 'KB/CITILINK/2026/18' },
-        docs: {
-          quotation: 'Approval',
-          mo: 'Approval',
-          pks: 'Approval',
-          request_invoice: 'Approval',
-          kb: 'Approval',
-          live: 'Versioning',
-          bap: 'Draft',
-          baps: 'Draft'
-        }
-      }
-    ];
-
-    const adminDocKeys = [
-      { id: 'quotation', label: 'Quotation' },
-      { id: 'mo', label: 'Media Order (MO)' },
-      { id: 'pks', label: 'Agreement (PKS)' },
-      { id: 'request_invoice', label: 'Request Invoice' },
-      { id: 'kb', label: 'Kajian Bisnis' },
-      { id: 'live', label: 'Status Live' },
-      { id: 'bap', label: 'BAP' },
-      { id: 'baps', label: 'BAPS' }
-    ];
-
-    // 4. BILLING DATA
-    const billingRecords = [
-      { no: 'INV/QG/2026/001', client: 'PT Bank Central Asia Tbk', dueDate: '15 Oct 2026', amount: 2400000000, status: 'Paid' },
-      { no: 'INV/QG/2026/002', client: 'PT Dentsu Indonesia', dueDate: '30 Oct 2026', amount: 1500000000, status: 'Pending' },
-      { no: 'INV/QG/2026/003', client: 'PT Global Tiket Network', dueDate: '05 Sep 2026', amount: 1150000000, status: 'Overdue' }
-    ];
-
-    // Utility Formatters
-    function formatIDR(val) {
-      return 'Rp ' + Number(val || 0).toLocaleString('id-ID');
-    }
-
-    // Chart Instances
-    let barChartInstance = null;
-    let pieChartInstance = null;
-    let streamChartInstance = null;
-    let growthChartInstance = null;
-    let radarChartInstance = null;
-
-    let expandedRows = {};
-    let activeAdminCampaignId = null;
-
-    // NAVIGATION CONTROLLER
+    // -------------------------------------------------------------
+    // LOGIKA TAB & NAVIGASI
+    // -------------------------------------------------------------
     function switchTab(tabId) {
-      const navButtons = document.querySelectorAll('nav button');
-      navButtons.forEach(btn => {
-        btn.classList.remove('bg-citilink', 'text-white', 'shadow-md');
-        btn.classList.add('text-gray-300', 'hover:bg-green-800/40', 'hover:text-white');
-      });
+      document.querySelectorAll('main > div').forEach(el => el.classList.add('hidden'));
+      document.getElementById('tab-' + tabId).classList.remove('hidden');
 
-      const activeBtn = document.getElementById(`nav-${tabId}`);
-      if (activeBtn) {
-        activeBtn.classList.add('bg-citilink', 'text-white', 'shadow-md');
-        activeBtn.classList.remove('text-gray-300', 'hover:bg-green-800/40');
+      const titles = {
+        'report-dashboard': 'Inflight Advertising Report',
+        'media-market': 'Media Placement Tracker',
+        'new-campaign': 'Registrasi New Campaign'
+      };
+      document.getElementById('page-title').innerText = titles[tabId] || 'Dashboard';
+
+      if (tabId === 'media-market') {
+        renderMediaPlacementTracker();
       }
-
-      const tabs = [
-        'report-dashboard', 'media-market', 'new-campaign', 
-        'administrasi', 'revenue-streams', 'billing-payment', 
-        'visual-charts', 'summary-data'
-      ];
-
-      tabs.forEach(t => {
-        const el = document.getElementById(`tab-${t}`);
-        if (el) el.classList.add('hidden');
-      });
-
-      const currentTab = document.getElementById(`tab-${tabId}`);
-      if (currentTab) currentTab.classList.remove('hidden');
-
-      // Title update
-      const pageTitle = document.getElementById('page-title');
-      if (pageTitle) {
-        const titles = {
-          'report-dashboard': 'Inflight Advertising Report Dashboard',
-          'media-market': 'Media Placement Tracker',
-          'new-campaign': 'New Campaign Registration',
-          'administrasi': 'Pelacakan Status Administrasi',
-          'revenue-streams': 'Revenue Streams Breakdown',
-          'billing-payment': 'Billing & Payment Tracker',
-          'visual-charts': 'Visual Analytics & Charts',
-          'summary-data': 'Executive Data Summary'
-        };
-        pageTitle.innerText = titles[tabId] || 'Dashboard';
-      }
-
-      // Lazy render triggers
-      if (tabId === 'media-market') ();
-      if (tabId === 'new-campaign') renderCampaignTable();
-      if (tabId === 'administrasi') renderAdministrasiTable();
-      if (tabId === 'revenue-streams') renderRevenueStreamChart();
-      if (tabId === 'billing-payment') renderBillingTable();
-      if (tabId === 'visual-charts') renderVisualCharts();
-      if (tabId === 'summary-data') renderExecutiveSummary();
     }
 
-    // MODULE 1: REPORT DASHBOARD LOGIC
-    function renderReportDashboard() {
-      let totalRev = 0;
-      let totalAgency = 0;
-      let totalDirect = 0;
-
-      reportData.forEach(item => {
-        totalAgency += Number(item.agency || 0);
-        totalDirect += Number(item.direct || 0);
-      });
-
-      totalRev = totalAgency + totalDirect;
-      const agencyPct = totalRev > 0 ? ((totalAgency / totalRev) * 100).toFixed(1) : '0';
-      const directPct = totalRev > 0 ? ((totalDirect / totalRev) * 100).toFixed(1) : '0';
-
-      const latest = reportData[reportData.length - 1];
-      const latestRev = Number(latest.agency || 0) + Number(latest.direct || 0);
-
-      document.getElementById('card-total-revenue').innerText = formatIDR(totalRev);
-      document.getElementById('card-agency-revenue').innerText = formatIDR(totalAgency);
-      document.getElementById('card-agency-percentage').innerText = `${agencyPct}% of total revenue`;
-      document.getElementById('card-direct-revenue').innerText = formatIDR(totalDirect);
-      document.getElementById('card-direct-percentage').innerText = `${directPct}% of total revenue`;
-      document.getElementById('card-latest-revenue').innerText = formatIDR(latestRev);
-
-      renderSummaryTable();
-      renderDashboardCharts(totalAgency, totalDirect);
-    }
-
-    function renderSummaryTable() {
-      const tbody = document.getElementById('summaryTableBody');
-      tbody.innerHTML = '';
-
-      reportData.forEach(row => {
-        const rowTotal = Number(row.agency || 0) + Number(row.direct || 0);
-        const rowAgencyPct = rowTotal > 0 ? ((row.agency / rowTotal) * 100).toFixed(1) : '0';
-        const isExpanded = !!expandedRows[row.id];
-
-        const tr = document.createElement('tr');
-        tr.className = 'hover:bg-gray-50 transition-colors font-medium border-b border-gray-100';
-        tr.innerHTML = `
-          <td class="py-3 px-4 text-center">
-            <button onclick="toggleRowExpand('${row.id}')" class="p-1 rounded hover:bg-gray-200 text-gray-500">
-              <i class="fa-solid fa-chevron-${isExpanded ? 'down' : 'right'} text-xs"></i>
-            </button>
-          </td>
-          <td class="py-3 px-4 font-bold text-gray-800">${row.name}</td>
-          <td class="py-3 px-4 text-right">${formatIDR(row.agency)}</td>
-          <td class="py-3 px-4 text-right">${formatIDR(row.direct)}</td>
-          <td class="py-3 px-4 text-right font-bold text-citilink">${formatIDR(rowTotal)}</td>
-          <td class="py-3 px-4 text-center">
-            <span class="inline-block px-2 py-0.5 rounded-full text-xs font-bold bg-green-100 text-citilink">
-              ${rowAgencyPct}%
-            </span>
-          </td>
-        `;
-        tbody.appendChild(tr);
-
-        // Expanded Breakdown Rows
-        if (isExpanded && quarterlyBreakdownData[row.id]) {
-          quarterlyBreakdownData[row.id].forEach(q => {
-            const qTotal = q.agency + q.direct;
-            const qPct = qTotal > 0 ? ((q.agency / qTotal) * 100).toFixed(1) : '0';
-            const qTr = document.createElement('tr');
-            qTr.className = 'bg-emerald-50/40 text-xs text-gray-600 border-b border-gray-100';
-            qTr.innerHTML = `
-              <td></td>
-              <td class="py-2.5 px-4 pl-8 font-semibold text-gray-700"><i class="fa-solid fa-angle-right mr-1.5 text-citilink"></i>${q.period}</td>
-              <td class="py-2.5 px-4 text-right">${formatIDR(q.agency)}</td>
-              <td class="py-2.5 px-4 text-right">${formatIDR(q.direct)}</td>
-              <td class="py-2.5 px-4 text-right font-semibold text-gray-800">${formatIDR(qTotal)}</td>
-              <td class="py-2.5 px-4 text-center text-gray-500">${qPct}%</td>
-            `;
-            tbody.appendChild(qTr);
-          });
-        }
-      });
-    }
-
-    function toggleRowExpand(id) {
-      expandedRows[id] = !expandedRows[id];
-      renderSummaryTable();
-    }
-
-    function renderDashboardCharts(totalAgency, totalDirect) {
-      // Bar Chart
-      const barCtx = document.getElementById('revenueBarChart').getContext('2d');
-      if (barChartInstance) barChartInstance.destroy();
-
-      barChartInstance = new Chart(barCtx, {
-        type: 'bar',
-        data: {
-          labels: reportData.map(d => d.name),
-          datasets: [
-            {
-              label: 'Agency Value (IDR)',
-              data: reportData.map(d => d.agency),
-              backgroundColor: '#008752',
-              borderRadius: 6
-            },
-            {
-              label: 'Direct Value (IDR)',
-              data: reportData.map(d => d.direct),
-              backgroundColor: '#82c341',
-              borderRadius: 6
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { position: 'bottom' }
-          },
-          scales: {
-            y: {
-              beginAtZero: true,
-              ticks: {
-                callback: function(val) { return 'Rp ' + (val / 1e9) + 'B'; }
-              }
-            }
-          }
-        }
-      });
-
-      // Pie Chart
-      const pieCtx = document.getElementById('revenuePieChart').getContext('2d');
-      if (pieChartInstance) pieChartInstance.destroy();
-
-      pieChartInstance = new Chart(pieCtx, {
-        type: 'doughnut',
-        data: {
-          labels: ['Agency', 'Direct'],
-          datasets: [{
-            data: [totalAgency, totalDirect],
-            backgroundColor: ['#008752', '#82c341'],
-            borderWidth: 2,
-            borderColor: '#ffffff'
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { position: 'bottom' }
-          }
-        }
-      });
-    }
-
-    // MODULE 2: MEDIA PLACEMENT TRACKER LOGIC
-    function () {
-      // Armada Count Badge
-      document.getElementById('armada-count-badge').innerText = `Armada: ${planesData.length} Pesawat`;
-
-      // Render Placement Category Summary Cards
-      const categoryContainer = document.getElementById('placement-category-cards');
-      categoryContainer.innerHTML = '';
-
-      placementCategories.forEach(cat => {
-        let bookedCount = 0;
-        planesData.forEach(p => {
-          if (p.placements[cat.id] && p.placements[cat.id].status === 'Booked') {
-            bookedCount++;
-          }
-        });
-
-        const card = document.createElement('div');
-        card.className = 'bg-white p-3 rounded-xl border border-gray-200 shadow-sm flex items-center gap-3';
-        card.innerHTML = `
-          <div class="w-8 h-8 rounded-lg bg-green-50 text-citilink flex items-center justify-center font-bold text-sm shrink-0">
-            <i class="fa-solid ${cat.icon}"></i>
-          </div>
-          <div class="overflow-hidden">
-            <p class="text-[11px] font-bold text-gray-500 truncate">${cat.name}</p>
-            <p class="text-xs font-extrabold text-gray-800">${bookedCount} / ${planesData.length} Booked</p>
-          </div>
-        `;
-        categoryContainer.appendChild(card);
-      });
-
-      // Matrix Table Header
+    // -------------------------------------------------------------
+    // LOGIKA RENDER MATRIKS MEDIA PLACEMENT
+    // -------------------------------------------------------------
+    function renderMediaPlacementTracker() {
+      // 1. Header Tabel Matriks
       const headerRow = document.getElementById('matrix-header-row');
-      headerRow.innerHTML = '<th class="py-3.5 px-4 min-w-[140px] sticky left-0 bg-gray-50 z-10 border-r">PESAWAT</th>';
+      headerRow.innerHTML = '<th class="py-3.5 px-4 min-w-[150px] sticky left-0 bg-gray-50 z-10 border-r">PESAWAT</th>';
       
       placementCategories.forEach(cat => {
         const th = document.createElement('th');
-        th.className = 'py-3.5 px-3 min-w-[150px] text-center border-r';
+        th.className = 'py-3.5 px-3 min-w-[160px] text-center border-r';
         th.innerText = cat.name.toUpperCase();
         headerRow.appendChild(th);
       });
 
-      // Matrix Table Body
+      // 2. Body Tabel Matriks
       const tbody = document.getElementById('matrixTableBody');
       tbody.innerHTML = '';
 
@@ -1249,7 +395,7 @@
             <div class="flex items-center gap-2">
               <i class="fa-solid fa-plane-up text-citilink"></i>
               <div>
-                <p class="text-xs font-bold">${plane.tail}</p>
+                <p class="text-xs font-bold text-gray-800">${plane.tail}</p>
                 <p class="text-[10px] text-gray-400 font-normal">${plane.model}</p>
               </div>
             </div>
@@ -1257,482 +403,180 @@
         `;
 
         placementCategories.forEach(cat => {
-    const placement = plane.placements[cat.id] || { status: 'Available' };
-    
-    let cellContent = '';
-    
-    if (placement.status === 'Booked') {
-        cellContent = `
-            <div class="bg-emerald-50 border border-emerald-200 rounded-lg p-2 text-left shadow-xs">
+          const placement = plane.placements[cat.id] || { status: 'Available' };
+          let cellContent = '';
+
+          if (placement.status === 'Booked') {
+            cellContent = `
+              <div class="bg-emerald-50 border border-emerald-200 rounded-lg p-2 text-left shadow-xs">
                 <span class="inline-block bg-emerald-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded uppercase mb-1">Booked</span>
-                <p class="text-xs font-bold text-gray-800 truncate">${placement.brand || '-'}</p>
-                <p class="text-[10px] text-gray-500 truncate">${placement.ptName || '-'}</p>
-                <p class="text-[9px] text-emerald-700 font-medium mt-1"><i class="fa-regular fa-calendar mr-0.5"></i>${placement.startDate || ''} ~ ${placement.endDate || ''}</p>
-            </div>
-        `;
-    } else if (placement.status === 'Reserved') {
-        cellContent = `
-            <div class="bg-amber-50 border border-amber-200 rounded-lg p-2 text-left shadow-xs">
+                <p class="text-xs font-bold text-gray-800 truncate" title="${placement.brand}">${placement.brand || '-'}</p>
+                <p class="text-[10px] text-gray-500 truncate" title="${placement.ptName}">${placement.ptName || '-'}</p>
+                ${placement.startDate ? `<p class="text-[9px] text-emerald-700 font-medium mt-1"><i class="fa-regular fa-calendar mr-1"></i>${placement.startDate} ~${placement.endDate}</p>` : ''}
+              </div>
+            `;
+          } else if (placement.status === 'Reserved') {
+            cellContent = `
+              <div class="bg-amber-50 border border-amber-200 rounded-lg p-2 text-left shadow-xs">
                 <span class="inline-block bg-amber-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded uppercase mb-1">Reserved</span>
-                <p class="text-xs font-bold text-gray-800 truncate">${placement.brand || '-'}</p>
-                <p class="text-[10px] text-gray-500 truncate">${placement.ptName || '-'}</p>
-                <p class="text-[9px] text-amber-700 font-medium mt-1"><i class="fa-regular fa-calendar mr-0.5"></i>${placement.startDate || ''} ~ ${placement.endDate || ''}</p>
-            </div>
-        `;
-    } else if (placement.status === 'In Maintenance') {
-        cellContent = `
-            <div class="bg-rose-50 border border-rose-200 rounded-lg p-1.5 text-center">
+                <p class="text-xs font-bold text-gray-800 truncate" title="${placement.brand}">${placement.brand || '-'}</p>
+                <p class="text-[10px] text-gray-500 truncate" title="${placement.ptName}">${placement.ptName || '-'}</p>
+                ${placement.startDate ? `<p class="text-[9px] text-amber-700 font-medium mt-1"><i class="fa-regular fa-calendar mr-1"></i>${placement.startDate} ~${placement.endDate}</p>` : ''}
+              </div>
+            `;
+          } else if (placement.status === 'In Maintenance') {
+            cellContent = `
+              <div class="bg-rose-50 border border-rose-200 rounded-lg p-2 text-center">
                 <span class="text-rose-600 text-xs font-bold">Maintenance</span>
-            </div>
-        `;
-    } else {
-        cellContent = `
-            <div class="bg-gray-50 border border-dashed border-gray-200 rounded-lg p-1.5 text-center">
+              </div>
+            `;
+          } else {
+            cellContent = `
+              <div class="bg-gray-50 border border-dashed border-gray-200 rounded-lg p-2 text-center">
                 <span class="text-gray-400 text-xs font-medium">Available</span>
-            </div>
-        `;
-    }
+              </div>
+            `;
+          }
 
-    rowHTML += `<td class="p-2 text-center border-r">${cellContent}</td>`;
-});
-
-    function getPlacementBadgeStyle(status) {
-      switch (status) {
-        case 'Booked': return 'bg-emerald-100 text-emerald-800 border border-emerald-300';
-        case 'Available': return 'bg-gray-100 text-gray-600 border border-gray-200';
-        case 'Reserved': return 'bg-amber-100 text-amber-800 border border-amber-300';
-        case 'In Maintenance': return 'bg-rose-100 text-rose-800 border border-rose-300';
-        default: return 'bg-gray-100 text-gray-600';
-      }
-    }
-
-    function cyclePlacementStatus(planeIndex, catId) {
-    const statuses = ['Available', 'Reserved', 'Booked', 'In Maintenance'];
-    const current = planesData[planeIndex].placements[catId]?.status || 'Available';
-    const nextIdx = (statuses.indexOf(current) + 1) % statuses.length;
-    const nextStatus = statuses[nextIdx];
-
-    let client = '-';
-    let brand = '-';
-    let ptName = '-';
-    let startDate = '';
-    let endDate = '';
-
-    if (nextStatus === 'Booked') {
-        client = 'Active Client';
-        brand = prompt('Masukkan Nama Brand:', 'OBIDA') || '-';
-        ptName = prompt('Masukkan Nama PT:', 'PT Idea Imaji Persada') || '-';
-        startDate = prompt('Tanggal Mulai (YYYY-MM-DD):', '2026-09-01') || '';
-        endDate = prompt('Tanggal Selesai (YYYY-MM-DD):', '2026-12-31') || '';
-    } else if (nextStatus === 'Reserved') {
-        client = 'Holding';
-        brand = prompt('Masukkan Nama Brand (Reserved):', 'Aqua') || '-';
-        ptName = prompt('Masukkan Nama PT:', 'PT Tirta Investama') || '-';
-        startDate = prompt('Tanggal Mulai (YYYY-MM-DD):', '2026-10-01') || '';
-        endDate = prompt('Tanggal Selesai (YYYY-MM-DD):', '2026-10-15') || '';
-    }
-
-    planesData[planeIndex].placements[catId] = { 
-        status: nextStatus, 
-        client: client,
-        brand: brand,
-        ptName: ptName,
-        startDate: startDate,
-        endDate: endDate
-    };
-
-    ();
-}
-
-    // MODULE 3: NEW CAMPAIGN REGISTRATION LOGIC
-    function handleCampaignSubmit(e) {
-      e.preventDefault();
-
-      const newCmp = {
-        id: 'cmp_' + Date.now(),
-        namaPT: document.getElementById('campaign-nama-pt').value,
-        type: document.getElementById('campaign-type').value,
-        brand: document.getElementById('campaign-nama-brand').value,
-        pic: document.getElementById('campaign-pic').value,
-        email: document.getElementById('campaign-email-pic').value,
-        noHp: document.getElementById('campaign-no-hp').value,
-        alamat: document.getElementById('campaign-alamat').value,
-        refNumbers: { mo: 'MO/2026/09/AUTO', pks: 'PKS/QG/2026/AUTO', kb: 'KB/CITILINK/2026/AUTO' },
-        docs: {
-          quotation: 'Draft',
-          mo: 'Draft',
-          pks: 'Draft',
-          request_invoice: 'Draft',
-          kb: 'Draft',
-          live: 'Draft',
-          bap: 'Draft',
-          baps: 'Draft'
-        }
-      };
-
-      registeredCampaigns.unshift(newCmp);
-      document.getElementById('newCampaignForm').reset();
-      renderCampaignTable();
-      renderAdministrasiTable();
-    }
-
-    function renderCampaignTable() {
-      const tbody = document.getElementById('campaignTableBody');
-      tbody.innerHTML = '';
-
-      registeredCampaigns.forEach(c => {
-        const tr = document.createElement('tr');
-        tr.className = 'hover:bg-gray-50 transition-colors border-b border-gray-100';
-        tr.innerHTML = `
-          <td class="py-3 px-4 font-bold text-gray-800">${c.namaPT}</td>
-          <td class="py-3 px-4">
-            <span class="px-2 py-0.5 text-[10px] font-bold rounded-full ${c.type === 'Agency' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'}">
-              ${c.type}
-            </span>
-          </td>
-          <td class="py-3 px-4 text-citilink font-semibold">${c.brand}</td>
-          <td class="py-3 px-4">${c.pic}</td>
-          <td class="py-3 px-4 text-gray-500">${c.email}</td>
-          <td class="py-3 px-4 text-gray-500">${c.noHp}</td>
-          <td class="py-3 px-4 text-gray-500 truncate max-w-[150px]">${c.alamat}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    // MODULE 4: ADMINISTRASI TRACKER LOGIC
-    function renderAdministrasiTable() {
-      const tbody = document.getElementById('adminTableBody');
-      tbody.innerHTML = '';
-
-      registeredCampaigns.forEach(c => {
-        const tr = document.createElement('tr');
-        tr.className = 'hover:bg-gray-50 transition-colors border-b border-gray-100';
-
-        let rowHTML = `
-          <td class="py-3 px-4 font-bold text-gray-800 bg-white sticky left-0 z-10 border-r shadow-sm">
-            <p class="text-xs font-bold text-gray-800">${c.namaPT}</p>
-            <p class="text-[10px] text-citilink font-semibold">${c.brand}</p>
-          </td>
-        `;
-
-        adminDocKeys.forEach(doc => {
-          const status = c.docs[doc.id] || 'Draft';
-          const badgeClass = getAdminStageBadgeStyle(status);
-
-          rowHTML += `
-            <td class="py-3 px-2 text-center border-r">
-              <span class="inline-block px-2.5 py-1 rounded-md text-[10px] font-bold ${badgeClass}">
-                ${status}
-              </span>
-            </td>
-          `;
+          rowHTML += `<td class="p-2 text-center border-r cursor-pointer" onclick="cyclePlacementStatus(${pIdx}, '${cat.id}')">${cellContent}</td>`;
         });
-
-        rowHTML += `
-          <td class="py-3 px-3 text-center">
-            <button onclick="openAdminModal('${c.id}')" class="bg-citilink-light text-citilink hover:bg-green-100 text-xs px-2.5 py-1 rounded-lg font-bold border border-green-300">
-              Update
-            </button>
-          </td>
-        `;
 
         tr.innerHTML = rowHTML;
         tbody.appendChild(tr);
       });
+
+      document.getElementById('armada-count-badge').innerText = `Armada: ${planesData.length} Pesawat`;
     }
 
-    function getAdminStageBadgeStyle(stage) {
-      switch (stage) {
-        case 'Approval': return 'bg-emerald-100 text-emerald-800 border border-emerald-300';
-        case 'Versioning': return 'bg-amber-100 text-amber-800 border border-amber-300';
-        case 'Draft': return 'bg-gray-100 text-gray-600 border border-gray-200';
-        default: return 'bg-gray-100 text-gray-600';
+    // -------------------------------------------------------------
+    // FITUR INTERAKTIF: KLIK CELL UNTUK GANTI STATUS & DATA
+    // -------------------------------------------------------------
+    function cyclePlacementStatus(planeIndex, catId) {
+      const statuses = ['Available', 'Reserved', 'Booked', 'In Maintenance'];
+      const current = planesData[planeIndex].placements[catId]?.status || 'Available';
+      const nextIdx = (statuses.indexOf(current) + 1) % statuses.length;
+      const nextStatus = statuses[nextIdx];
+
+      let brand = '-';
+      let ptName = '-';
+      let startDate = '';
+      let endDate = '';
+
+      if (nextStatus === 'Booked') {
+        brand = prompt('Masukkan Nama Brand:', 'Indosat') || '-';
+        ptName = prompt('Masukkan Nama PT:', 'PT Sinar Sentral Media') || '-';
+        startDate = prompt('Tanggal Mulai (YYYY-MM-DD):', '2026-09-01') || '';
+        endDate = prompt('Tanggal Selesai (YYYY-MM-DD):', '2026-12-31') || '';
+      } else if (nextStatus === 'Reserved') {
+        brand = prompt('Masukkan Nama Brand (Reserved):', 'Aqua') || '-';
+        ptName = prompt('Masukkan Nama PT:', 'PT Tirta Investama') || '-';
+        startDate = prompt('Tanggal Mulai (YYYY-MM-DD):', '2026-10-01') || '';
+        endDate = prompt('Tanggal Selesai (YYYY-MM-DD):', '2026-10-31') || '';
+      }
+
+      planesData[planeIndex].placements[catId] = { 
+        status: nextStatus, 
+        brand: brand,
+        ptName: ptName,
+        startDate: startDate,
+        endDate: endDate
+      };
+
+      renderMediaPlacementTracker();
+    }
+
+    function addNewPlane() {
+      const tail = prompt("Masukkan Registrasi Pesawat (Contoh: PK-GQD):");
+      if (tail) {
+        planesData.push({ tail: tail, model: 'A320-200', placements: {} });
+        renderMediaPlacementTracker();
       }
     }
 
-    // MODAL HANDLERS & ACTIONS
-
-    // Modal 1: Report Data
     function openModal() {
-      const container = document.getElementById('modal-period-rows');
-      container.innerHTML = '';
-
-      reportData.forEach((row, idx) => {
-        const div = document.createElement('div');
-        div.className = 'grid grid-cols-12 gap-3 items-center';
-        div.innerHTML = `
-          <div class="col-span-3">
-            <input type="text" value="${row.name}" id="edit-name-${idx}" class="w-full px-3 py-1.5 rounded-lg border text-xs font-semibold">
-          </div>
-          <div class="col-span-4">
-            <input type="number" value="${row.agency}" id="edit-agency-${idx}" class="w-full px-3 py-1.5 rounded-lg border text-xs">
-          </div>
-          <div class="col-span-4">
-            <input type="number" value="${row.direct}" id="edit-direct-${idx}" class="w-full px-3 py-1.5 rounded-lg border text-xs">
-          </div>
-          <div class="col-span-1 text-center">
-            <button onclick="deletePeriodRow(${idx})" class="text-red-500 hover:text-red-700 text-xs"><i class="fa-solid fa-trash"></i></button>
-          </div>
-        `;
-        container.appendChild(div);
-      });
-
-      document.getElementById('reportDataModal').classList.remove('hidden');
+      alert("Modal Update Data dibuka!");
     }
 
-    function closeModal() {
-      document.getElementById('reportDataModal').classList.add('hidden');
+    function handleCampaignSubmit(e) {
+      e.preventDefault();
+      alert("Data Campaign berhasil disimpan!");
+      e.target.reset();
     }
 
-    function addNewPeriodInputRow() {
-      reportData.push({ id: 'period_' + Date.now(), name: 'New Period', agency: 0, direct: 0 });
-      openModal();
-    }
-
-    function deletePeriodRow(index) {
-      reportData.splice(index, 1);
-      openModal();
-    }
-
-    function saveUpdatedReportData() {
-      reportData.forEach((row, idx) => {
-        const nameEl = document.getElementById(`edit-name-${idx}`);
-        const agencyEl = document.getElementById(`edit-agency-${idx}`);
-        const directEl = document.getElementById(`edit-direct-${idx}`);
-
-        if (nameEl && agencyEl && directEl) {
-          row.name = nameEl.value;
-          row.agency = parseFloat(agencyEl.value) || 0;
-          row.direct = parseFloat(directEl.value) || 0;
-        }
-      });
-
-      closeModal();
-      renderReportDashboard();
-    }
-
-    // Modal 2: Add Plane
-    function openAddPlaneModal() {
-      document.getElementById('addPlaneModal').classList.remove('hidden');
-    }
-
-    function closeAddPlaneModal() {
-      document.getElementById('addPlaneModal').classList.add('hidden');
-    }
-
-    function saveNewPlane() {
-      const tail = document.getElementById('input-tail-number').value.trim().toUpperCase();
-      const model = document.getElementById('input-plane-model').value;
-
-      if (!tail) return;
-
-      const newPlane = {
-        tail: tail,
-        model: model,
-        placements: {}
-      };
-
-      placementCategories.forEach(cat => {
-        newPlane.placements[cat.id] = { status: 'Available', client: '-' };
-      });
-
-      planesData.push(newPlane);
-      document.getElementById('input-tail-number').value = '';
-      closeAddPlaneModal();
-      ();
-    }
-
-    // Modal 3: Update Admin
-    function openAdminModal(cmpId) {
-      activeAdminCampaignId = cmpId;
-      const cmp = registeredCampaigns.find(c => c.id === cmpId);
-      if (!cmp) return;
-
-      document.getElementById('admin-modal-subtitle').innerText = `${cmp.namaPT} - ${cmp.brand}`;
-      document.getElementById('admin-no-mo').value = cmp.refNumbers?.mo || '';
-      document.getElementById('admin-no-pks').value = cmp.refNumbers?.pks || '';
-      document.getElementById('admin-no-kb').value = cmp.refNumbers?.kb || '';
-
-      const grid = document.getElementById('admin-status-grid');
-      grid.innerHTML = '';
-
-      adminDocKeys.forEach(doc => {
-        const currentStage = cmp.docs[doc.id] || 'Draft';
-        const div = document.createElement('div');
-        div.className = 'p-3 rounded-xl border border-gray-200 bg-white flex items-center justify-between';
-        div.innerHTML = `
-          <span class="text-xs font-bold text-gray-700">${doc.label}</span>
-          <select id="select-doc-${doc.id}" class="px-2.5 py-1.5 rounded-lg border text-xs bg-gray-50 focus:outline-none focus:ring-1 focus:ring-citilink">
-            <option value="Draft" ${currentStage === 'Draft' ? 'selected' : ''}>Draft</option>
-            <option value="Versioning" ${currentStage === 'Versioning' ? 'selected' : ''}>Versioning</option>
-            <option value="Approval" ${currentStage === 'Approval' ? 'selected' : ''}>Approval</option>
-          </select>
-        `;
-        grid.appendChild(div);
-      });
-
-      document.getElementById('updateAdminModal').classList.remove('hidden');
-    }
-
-    function closeAdminModal() {
-      document.getElementById('updateAdminModal').classList.add('hidden');
-    }
-
-    function saveAdminStatus() {
-      const cmp = registeredCampaigns.find(c => c.id === activeAdminCampaignId);
-      if (!cmp) return;
-
-      cmp.refNumbers = {
-        mo: document.getElementById('admin-no-mo').value,
-        pks: document.getElementById('admin-no-pks').value,
-        kb: document.getElementById('admin-no-kb').value
-      };
-
-      adminDocKeys.forEach(doc => {
-        const select = document.getElementById(`select-doc-${doc.id}`);
-        if (select) {
-          cmp.docs[doc.id] = select.value;
-        }
-      });
-
-      closeAdminModal();
-      renderAdministrasiTable();
-    }
-
-    // AUXILIARY TABS LOGIC
-
-    function renderRevenueStreamChart() {
-      const ctx = document.getElementById('revenueStreamChart').getContext('2d');
-      if (streamChartInstance) streamChartInstance.destroy();
-
-      streamChartInstance = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['Headrest Covers', 'Overhead Bins', 'Livery Wrap', 'Meal Trays', 'Inflight Menu', 'Digital Wi-Fi Portal'],
-          datasets: [{
-            label: 'Total Generated Revenue (IDR)',
-            data: [6200000000, 6650000000, 16200000000, 3100000000, 2100000000, 3200000000],
-            backgroundColor: '#008752',
-            borderRadius: 6
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            y: {
-              beginAtZero: true,
-              ticks: { callback: function(v) { return 'Rp ' + (v / 1e9) + 'B'; } }
-            }
-          }
-        }
-      });
-    }
-
-    function renderBillingTable() {
-      const tbody = document.getElementById('billingTableBody');
-      tbody.innerHTML = '';
-
-      billingRecords.forEach(b => {
-        let badgeClass = 'bg-gray-100 text-gray-700';
-        if (b.status === 'Paid') badgeClass = 'bg-emerald-100 text-emerald-800';
-        if (b.status === 'Pending') badgeClass = 'bg-amber-100 text-amber-800';
-        if (b.status === 'Overdue') badgeClass = 'bg-rose-100 text-rose-800';
-
-        const tr = document.createElement('tr');
-        tr.className = 'hover:bg-gray-50 border-b border-gray-100';
-        tr.innerHTML = `
-          <td class="py-3 px-4 font-bold text-gray-800">${b.no}</td>
-          <td class="py-3 px-4">${b.client}</td>
-          <td class="py-3 px-4">${b.dueDate}</td>
-          <td class="py-3 px-4 text-right font-bold">${formatIDR(b.amount)}</td>
-          <td class="py-3 px-4 text-center">
-            <span class="px-2.5 py-1 rounded-md text-[10px] font-bold ${badgeClass}">${b.status}</span>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function renderVisualCharts() {
-      // Line Chart
-      const lineCtx = document.getElementById('growthLineChart').getContext('2d');
-      if (growthChartInstance) growthChartInstance.destroy();
-
-      growthChartInstance = new Chart(lineCtx, {
+    // -------------------------------------------------------------
+    // INIT CHARTS ON LOAD
+    // -------------------------------------------------------------
+    window.onload = function() {
+      // 1. Line Chart Tren Bulanan Multi-Tahun
+      const ctxMonthly = document.getElementById('monthlyTrendChart').getContext('2d');
+      new Chart(ctxMonthly, {
         type: 'line',
         data: {
-          labels: ['2023', '2024', '2025', '2026 (YTD)'],
-          datasets: [{
-            label: 'Annual Ad Revenue',
-            data: [19171588000, 16110000000, 8800000000, 3608939495],
-            borderColor: '#008752',
-            backgroundColor: 'rgba(0, 135, 82, 0.1)',
-            fill: true,
-            tension: 0.3
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false
-        }
-      });
-
-      // Radar Chart
-      const radarCtx = document.getElementById('shareRadarChart').getContext('2d');
-      if (radarChartInstance) radarChartInstance.destroy();
-
-      radarChartInstance = new Chart(radarCtx, {
-        type: 'radar',
-        data: {
-          labels: ['Placement Volume', 'Value Size', 'Client Retention', 'Growth Rate', 'Conversion'],
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
           datasets: [
             {
-              label: 'Agency',
-              data: [65, 59, 80, 81, 56],
-              borderColor: '#008752',
-              backgroundColor: 'rgba(0, 135, 82, 0.2)'
+              label: '2024',
+              data: [1457256302, 1128873840, 1353604484, 4000579662, 1171193100, 1046916001, 398728818, 445522549, 761976050, 550202691, 1145376236, 1277288779],
+              borderColor: '#94a3b8',
+              borderDash: [4, 4],
+              tension: 0.3,
+              fill: false
             },
             {
-              label: 'Direct',
-              data: [28, 48, 40, 19, 86],
+              label: '2025',
+              data: [1072982941, 966850869, 2234843329, 2854805291, 736956619, 513172471, 317172513, 357374125, 313704792, 371650289, 1296390364, 1867303549],
               borderColor: '#82c341',
-              backgroundColor: 'rgba(130, 195, 65, 0.2)'
+              tension: 0.3,
+              fill: false
+            },
+            {
+              label: '2026 (Aktual)',
+              data: [857813539, 1181738169, 4143687698, 1711459497, 1166705763, 1137309980, 1125587404, 1079308046, 1345153863, null, null, null],
+              borderColor: '#008752',
+              borderWidth: 3,
+              tension: 0.3,
+              fill: false
             }
           ]
         },
         options: {
           responsive: true,
-          maintainAspectRatio: false
+          maintainAspectRatio: false,
+          plugins: { legend: { position: 'top' } },
+          scales: {
+            y: {
+              ticks: {
+                callback: function(value) { return 'Rp ' + (value / 1000000000).toFixed(1) + 'M'; }
+              }
+            }
+          }
         }
       });
-    }
 
-    function renderExecutiveSummary() {
-      const container = document.getElementById('executiveSummaryContent');
-      container.innerHTML = `
-        <div class="p-4 bg-green-50 rounded-xl border border-green-200">
-          <p class="font-bold text-citilink">Total Revenue Recorded</p>
-          <p class="text-xl font-extrabold text-gray-800 mt-1">Rp 47.690.527.495</p>
-          <p class="text-xs text-gray-500 mt-1">Akumulasi pendapatan seluruh channel.</p>
-        </div>
-        <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200">
-          <p class="font-bold text-emerald-800">Dominansi Channel</p>
-          <p class="text-xl font-extrabold text-gray-800 mt-1">Direct (66.5%)</p>
-          <p class="text-xs text-gray-500 mt-1">Portofolio Kemitraan Langsung terus meningkat.</p>
-        </div>
-        <div class="p-4 bg-amber-50 rounded-xl border border-amber-200">
-          <p class="font-bold text-amber-800">Media Terpopuler</p>
-          <p class="text-xl font-extrabold text-gray-800 mt-1">Aircraft Livery</p>
-          <p class="text-xs text-gray-500 mt-1">Memberikan kontribusi terbesar per unit pesawat.</p>
-        </div>
-      `;
-    }
+      // 2. Bar Chart Per Periode
+      const ctxBar = document.getElementById('revenueBarChart').getContext('2d');
+      new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+          labels: ['2023', '2024', '2025', '2026 (Q3)'],
+          datasets: [
+            { label: 'Agency Value (IDR)', data: [9789370000, 5000000000, 1200000000, 1200000000], backgroundColor: '#008752' },
+            { label: 'Direct Value (IDR)', data: [9382218000, 11110000000, 8900000000, 2408939495], backgroundColor: '#82c341' }
+          ]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+      });
 
-    // INITIALIZATION ON LOAD
-    window.onload = function() {
-      renderReportDashboard();
+      // 3. Pie Chart Channel
+      const ctxPie = document.getElementById('revenuePieChart').getContext('2d');
+      new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+          labels: ['Agency', 'Direct'],
+          datasets: [{ data: [15983214295, 31707313200], backgroundColor: ['#008752', '#82c341'] }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+      });
     };
   </script>
 </body>
