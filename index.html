@@ -331,122 +331,137 @@
             </div>
         </div>
 
-       <!-- TAB 4: ADMINISTRASI (UPDATED TRACKING TABLE) -->
-<div id="tab-administrasi" class="p-6 space-y-6 max-w-7xl mx-auto w-full hidden">
-    <!-- Header Section -->
-    <div class="flex items-center justify-between bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex-wrap gap-4">
-        <div>
-            <h2 class="text-lg font-bold text-gray-900">Pelacakan Status Administrasi</h2>
-            <p class="text-xs text-gray-500">Monitoring 8 dokumen utama & 3 tahapan proses (Draft, Versioning, Approval)</p>
-        </div>
-        <div class="flex items-center gap-2">
-            <span class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1.5 rounded-lg font-medium">
-                Draft | Versioning | Approval
-            </span>
-            <button onclick="openAddAdminModal()" class="bg-emerald-800 hover:bg-emerald-900 text-white px-4 py-2 rounded-lg text-xs font-semibold transition flex items-center space-x-2 shadow-sm">
-                <i class="fa-solid fa-file-arrow-up"></i>
-                <span>Tambah Dokumen</span>
-            </button>
-        </div>
-    </div>
+       <!-- TAB: ADMINISTRASI (Pelacakan Status Administrasi) -->
+            <div id="tab-administrasi" class="tab-content space-y-6 max-w-full">
+                <!-- Header Card -->
+                <div class="flex items-center justify-between bg-white p-4 rounded-xl border border-gray-200 shadow-xs flex-wrap gap-4">
+                    <div>
+                        <h2 class="text-base font-bold text-gray-900">Pelacakan Status Administrasi</h2>
+                        <p class="text-xs text-gray-500">Monitoring 8 dokumen utama & tahapan proses (Draft, Revisi, Approval)[cite: 10]</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1.5 rounded-lg font-medium">
+                            Draft | Revisi | Approval
+                        </span>
+                        <button onclick="alert('Buka modal tambah dokumen')" class="bg-emerald-800 hover:bg-emerald-900 text-white px-3.5 py-2 rounded-lg text-xs font-semibold transition flex items-center space-x-2 shadow-sm">
+                            <i class="fa-solid fa-file-arrow-up"></i>
+                            <span>Tambah Dokumen</span>
+                        </button>
+                    </div>
+                </div>
 
-    <!-- Tracking Table Section -->
-    <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden mb-12">
-        <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse text-xs">
-                <thead>
-                    <tr class="bg-gray-100 text-gray-600 uppercase tracking-wider border-b border-gray-200">
-                        <th class="py-3 px-4 font-semibold">Perusahaan & Brand</th>
-                        <th class="py-3 px-4 font-semibold">Media Order (MO)</th>
-                        <th class="py-3 px-4 font-semibold">Agreement (PKS)</th>
-                        <th class="py-3 px-4 font-semibold">Request Invoice</th>
-                        <th class="py-3 px-4 font-semibold">Kajian Bisnis</th>
-                        <th class="py-3 px-4 font-semibold">Live</th>
-                        <th class="py-3 px-4 font-semibold">BAP</th>
-                        <th class="py-3 px-4 font-semibold">BAPS</th>
-                        <th class="py-3 px-4 font-semibold text-center">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200" id="admin-table-body">
-                    <!-- Baris 1: PT Bank Central Asia Tbk -->
-                    <tr class="hover:bg-gray-50">
-                        <td class="py-3 px-4">
-                            <div class="font-bold text-gray-900">PT Bank Central Asia Tbk</div>
-                            <div class="text-gray-500 text-[11px]">Bank BCA</div>
-                        </td>
-                        <td class="py-3 px-4">
-                            <span class="inline-block bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-1 rounded font-medium text-[11px]">Approval</span>
-                            <div class="text-[10px] text-gray-400 mt-0.5">MO/2026/BCA/001</div>
-                        </td>
-                        <td class="py-3 px-4">
-                            <span class="inline-block bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-1 rounded font-medium text-[11px]">Approval</span>
-                            <div class="text-[10px] text-gray-400 mt-0.5">PKS/QG/2026/012</div>
-                        </td>
-                        <td class="py-3 px-4">
-                            <span class="inline-block bg-blue-50 text-blue-700 border border-blue-200 px-2.5 py-1 rounded font-medium text-[11px]">Versioning</span>
-                        </td>
-                        <td class="py-3 px-4">
-                            <span class="inline-block bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-1 rounded font-medium text-[11px]">Approval</span>
-                            <div class="text-[10px] text-gray-400 mt-0.5">KB/CITILINK/2026/05</div>
-                        </td>
-                        <td class="py-3 px-4">
-                            <span class="inline-block bg-amber-50 text-amber-700 border border-amber-200 px-2.5 py-1 rounded font-medium text-[11px]">Draft</span>
-                        </td>
-                        <td class="py-3 px-4">
-                            <span class="inline-block bg-amber-50 text-amber-700 border border-amber-200 px-2.5 py-1 rounded font-medium text-[11px]">Draft</span>
-                        </td>
-                        <td class="py-3 px-4">
-                            <span class="inline-block bg-amber-50 text-amber-700 border border-amber-200 px-2.5 py-1 rounded font-medium text-[11px]">Draft</span>
-                        </td>
-                        <td class="py-3 px-4 text-center">
-                            <button class="bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 px-2.5 py-1 rounded text-[11px] font-medium flex items-center gap-1 mx-auto">
-                                <i class="fa-solid fa-pen-to-square"></i> Edit
-                            </button>
-                        </td>
-                    </tr>
+                <!-- Tracking Table Section -->
+                <div class="bg-white rounded-xl border border-gray-200 shadow-xs overflow-hidden mb-12">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-gray-100 text-gray-600 uppercase tracking-wider border-b border-gray-200 text-[11px]">
+                                    <th class="py-3 px-3 font-semibold">Perusahaan</th>
+                                    <th class="py-3 px-3 font-semibold">Brand</th>
+                                    <th class="py-3 px-3 font-semibold">Media Order (MO)</th>
+                                    <th class="py-3 px-3 font-semibold">Agreement (PKS)</th>
+                                    <th class="py-3 px-3 font-semibold">Request Invoice</th>
+                                    <th class="py-3 px-3 font-semibold">Kajian Bisnis</th>
+                                    <th class="py-3 px-3 font-semibold">Live (Periode)</th>
+                                    <th class="py-3 px-3 font-semibold">BAP</th>
+                                    <th class="py-3 px-3 font-semibold">BAPS</th>
+                                    <th class="py-3 px-3 font-semibold text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 text-gray-700">
+                                <!-- Baris 1: PT Bank Central Asia Tbk -->
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="py-3 px-3 font-bold text-gray-900">PT Bank Central Asia Tbk</td>
+                                    <td class="py-3 px-3 text-gray-600">Bank BCA</td>
+                                    <!-- Media Order -->
+                                    <td class="py-3 px-3">
+                                        <span class="inline-block bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded font-medium text-[11px]">Approval</span>
+                                        <div class="text-[10px] text-gray-500 font-mono mt-0.5">MO/2026/BCA/001</div>
+                                    </td>
+                                    <!-- Agreement PKS -->
+                                    <td class="py-3 px-3">
+                                        <span class="inline-block bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded font-medium text-[11px]">Approval</span>
+                                        <div class="text-[10px] text-gray-500 font-mono mt-0.5">PKS/QG/2026/012</div>
+                                    </td>
+                                    <!-- Request Invoice -->
+                                    <td class="py-3 px-3">
+                                        <span class="inline-block bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded font-medium text-[11px]">Revisi</span>
+                                    </td>
+                                    <!-- Kajian Bisnis -->
+                                    <td class="py-3 px-3">
+                                        <span class="inline-block bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded font-medium text-[11px]">Approval</span>
+                                        <div class="text-[10px] text-gray-500 font-mono mt-0.5">KB/CITILINK/2026/05</div>
+                                    </td>
+                                    <!-- Live (Periode Tanggal) -->
+                                    <td class="py-3 px-3">
+                                        <span class="inline-block bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded font-medium text-[11px]">Draft</span>
+                                        <div class="text-[10px] text-gray-500 mt-0.5">1 Jun - 31 Aug 2026</div>
+                                    </td>
+                                    <!-- BAP -->
+                                    <td class="py-3 px-3">
+                                        <span class="inline-block bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded font-medium text-[11px]">Draft</span>
+                                    </td>
+                                    <!-- BAPS -->
+                                    <td class="py-3 px-3">
+                                        <span class="inline-block bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded font-medium text-[11px]">Draft</span>
+                                    </td>
+                                    <!-- Aksi -->
+                                    <td class="py-3 px-3 text-center">
+                                        <button class="bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 px-2.5 py-1 rounded text-[11px] font-medium flex items-center gap-1 mx-auto shadow-2xs">
+                                            <i class="fa-solid fa-pen-to-square"></i> Edit
+                                        </button>
+                                    </td>
+                                </tr>
 
-                    <!-- Baris 2: PT Telekomunikasi Selular -->
-                    <tr class="hover:bg-gray-50">
-                        <td class="py-3 px-4">
-                            <div class="font-bold text-gray-900">PT Telekomunikasi Selular</div>
-                            <div class="text-gray-500 text-[11px]">Telkomsel</div>
-                        </td>
-                        <td class="py-3 px-4">
-                            <span class="inline-block bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-1 rounded font-medium text-[11px]">Approval</span>
-                            <div class="text-[10px] text-gray-400 mt-0.5">MO/2026/TSSEL/004</div>
-                        </td>
-                        <td class="py-3 px-4">
-                            <span class="inline-block bg-blue-50 text-blue-700 border border-blue-200 px-2.5 py-1 rounded font-medium text-[11px]">Versioning</span>
-                            <div class="text-[10px] text-gray-400 mt-0.5">PKS/QG/2026/045</div>
-                        </td>
-                        <td class="py-3 px-4">
-                            <span class="inline-block bg-amber-50 text-amber-700 border border-amber-200 px-2.5 py-1 rounded font-medium text-[11px]">Draft</span>
-                        </td>
-                        <td class="py-3 px-4">
-                            <span class="inline-block bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-1 rounded font-medium text-[11px]">Approval</span>
-                            <div class="text-[10px] text-gray-400 mt-0.5">KB/CITILINK/2026/08</div>
-                        </td>
-                        <td class="py-3 px-4">
-                            <span class="inline-block bg-amber-50 text-amber-700 border border-amber-200 px-2.5 py-1 rounded font-medium text-[11px]">Draft</span>
-                        </td>
-                        <td class="py-3 px-4">
-                            <span class="inline-block bg-amber-50 text-amber-700 border border-amber-200 px-2.5 py-1 rounded font-medium text-[11px]">Draft</span>
-                        </td>
-                        <td class="py-3 px-4">
-                            <span class="inline-block bg-amber-50 text-amber-700 border border-amber-200 px-2.5 py-1 rounded font-medium text-[11px]">Draft</span>
-                        </td>
-                        <td class="py-3 px-4 text-center">
-                            <button class="bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 px-2.5 py-1 rounded text-[11px] font-medium flex items-center gap-1 mx-auto">
-                                <i class="fa-solid fa-pen-to-square"></i> Edit
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
+                                <!-- Baris 2: PT Telekomunikasi Selular -->
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="py-3 px-3 font-bold text-gray-900">PT Telekomunikasi Selular</td>
+                                    <td class="py-3 px-3 text-gray-600">Telkomsel</td>
+                                    <!-- Media Order -->
+                                    <td class="py-3 px-3">
+                                        <span class="inline-block bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded font-medium text-[11px]">Approval</span>
+                                        <div class="text-[10px] text-gray-500 font-mono mt-0.5">MO/2026/TSSEL/004</div>
+                                    </td>
+                                    <!-- Agreement PKS -->
+                                    <td class="py-3 px-3">
+                                        <span class="inline-block bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded font-medium text-[11px]">Revisi</span>
+                                        <div class="text-[10px] text-gray-500 font-mono mt-0.5">PKS/QG/2026/045</div>
+                                    </td>
+                                    <!-- Request Invoice -->
+                                    <td class="py-3 px-3">
+                                        <span class="inline-block bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded font-medium text-[11px]">Draft</span>
+                                    </td>
+                                    <!-- Kajian Bisnis -->
+                                    <td class="py-3 px-3">
+                                        <span class="inline-block bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded font-medium text-[11px]">Approval</span>
+                                        <div class="text-[10px] text-gray-500 font-mono mt-0.5">KB/CITILINK/2026/08</div>
+                                    </td>
+                                    <!-- Live (Periode Tanggal) -->
+                                    <td class="py-3 px-3">
+                                        <span class="inline-block bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded font-medium text-[11px]">Draft</span>
+                                        <div class="text-[10px] text-gray-500 mt-0.5">15 Jul - 15 Oct 2026</div>
+                                    </td>
+                                    <!-- BAP -->
+                                    <td class="py-3 px-3">
+                                        <span class="inline-block bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded font-medium text-[11px]">Draft</span>
+                                    </td>
+                                    <!-- BAPS -->
+                                    <td class="py-3 px-3">
+                                        <span class="inline-block bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded font-medium text-[11px]">Draft</span>
+                                    </td>
+                                    <!-- Aksi -->
+                                    <td class="py-3 px-3 text-center">
+                                        <button class="bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 px-2.5 py-1 rounded text-[11px] font-medium flex items-center gap-1 mx-auto shadow-2xs">
+                                            <i class="fa-solid fa-pen-to-square"></i> Edit
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        
         <!-- TAB 5: REVENUE STREAMS -->
         <div id="tab-revenue" class="p-6 space-y-6 max-w-7xl mx-auto w-full hidden">
             <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-4">
