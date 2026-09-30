@@ -1303,16 +1303,18 @@
 
         // --- 6. BILLING & PAYMENT DATA & LOGIC ---
         let billingData = [
-            { invoiceNo: 'INV/QG/2026/001', client: 'PT Bank Central Asia Tbk (Tahapan BCA)', date: '02 Jan 2026', dueDate: '02 Feb 2026', amount: 1500000000, paidAmount: 1500000000, status: 'Paid' },
-            { invoiceNo: 'INV/QG/2026/002', client: 'PT Global Digital Niaga (Blibli)', date: '10 Jun 2026', dueDate: '10 Jul 2026', amount: 850000000, paidAmount: 400000000, status: 'Partial' },
-            { invoiceNo: 'INV/QG/2026/003', client: 'PT Telkomsel Indonesia', date: '15 Agu 2026', dueDate: '15 Sep 2026', amount: 1200000000, paidAmount: 0, status: 'Unpaid' }
-        ];
+    { invoiceNo: 'INV/QG/2026/001', media: 'Sampling Product', client: 'PT Idea Imaji Persada (OBIDA)', date: '02 Jan 2026', dueDate: '02 Feb 2026', amount: 1500000000, paidAmount: 1500000000, status: 'Full Payment' },
+    { invoiceNo: 'INV/QG/2026/002', media: 'Head Cover Seat', client: 'Rumah Sakit Umum Dr. Cipto Mangunkusumo (RSCM)', date: '10 Jun 2026', dueDate: '10 Jul 2026', amount: 850000000, paidAmount: 400000000, status: 'Termin I' },
+    { invoiceNo: 'INV/QG/2026/003', media: 'Livery', client: 'PT Tempo', date: '15 Agu 2026', dueDate: '15 Sep 2026', amount: 1200000000, paidAmount: 0, status: 'Termin II' }
+];
 
-        function renderBillingStatusBadge(status) {
-            if (status === 'Paid') return `<span class="bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-bold text-[10px]">Paid (Lunas)</span>`;
-            if (status === 'Partial') return `<span class="bg-blue-100 text-blue-800 px-2.5 py-1 rounded-full font-bold text-[10px]">Partial (Sebagian)</span>`;
-            return `<span class="bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full font-bold text-[10px]">Unpaid (Belum Bayar)</span>`;
-        }
+        function function renderBillingStatusBadge(status) {
+    if (status === 'Full Payment') return '<span class="bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-bold text-[10px]">Full Payment</span>';
+    if (status === 'Termin I') return '<span class="bg-blue-100 text-blue-800 px-2.5 py-1 rounded-full font-bold text-[10px]">Termin I</span>';
+    if (status === 'Termin II') return '<span class="bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded-full font-bold text-[10px]">Termin II</span>';
+    if (status === 'Termin III') return '<span class="bg-purple-100 text-purple-800 px-2.5 py-1 rounded-full font-bold text-[10px]">Termin III</span>';
+    return '<span class="bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full font-bold text-[10px]">Unpaid (Belum Bayar)</span>';
+}
 
         function updateBillingMetrics() {
             let totalInvoiced = 0, totalPaid = 0, totalOutstanding = 0;
