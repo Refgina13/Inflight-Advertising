@@ -61,7 +61,7 @@
                     <nav class="space-y-1">
                         <button onclick="switchTab('media')" id="nav-media" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-300 hover:bg-citilink/40 hover:text-white transition">
                             <i class="fa-solid fa-plane-departure w-5"></i>
-                            <span>Media Placement</span>
+                            <span>Inventory</span>
                         </button>
                         <button onclick="switchTab('campaign')" id="nav-campaign" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-300 hover:bg-citilink/40 hover:text-white transition">
                             <i class="fa-solid fa-file-circle-plus w-5"></i>
@@ -86,8 +86,8 @@
                 QG
             </div>
             <div class="overflow-hidden">
-                <p class="text-sm font-semibold text-white truncate">Hi Refgina!</p>
-                <p class="text-xs text-gray-300 truncate">refgina@citilink.co.id</p>
+                <p class="text-sm font-semibold text-white truncate">Hi Supergreeners!</p>
+                <p class="text-xs text-gray-300 truncate">xxx@citilink.co.id</p>
             </div>
         </div>
     </aside>
@@ -106,7 +106,7 @@
             <div class="flex items-center space-x-3">
                 <button onclick="openAddRevenueModal()" id="btn-header-rev" class="bg-citilink hover:bg-citilink-light text-white px-4 py-2 rounded-lg text-xs font-semibold transition flex items-center space-x-2 shadow-sm">
                     <i class="fa-solid fa-plus"></i>
-                    <span>+ Update Pendapatan Bulanan</span>
+                    <span>Input Data</span>
                 </button>
                 <button onclick="refreshData()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-xs font-semibold transition flex items-center space-x-2 border">
                     <i class="fa-solid fa-rotate"></i>
@@ -131,7 +131,7 @@
             <!-- STACKED BAR CHART: DETAIL DISTRIBUSI PENDAPATAN PER 9 MEDIA -->
             <div class="bg-white p-6 rounded-xl border shadow-sm space-y-4">
                 <div>
-                    <h3 class="text-base font-bold text-gray-900">Detail Distribusi Pendapatan per Media (Juta Rp)</h3>
+                    <h3 class="text-base font-bold text-gray-900">Distribusi Pendapatan per Media (Juta Rp)</h3>
                     <p class="text-xs text-gray-500">Breakdown kontribusi dari 9 media iklan in-flight per bulan</p>
                 </div>
                 <div class="h-80 relative">
@@ -147,8 +147,8 @@
                         <thead>
                             <tr class="bg-gray-100 text-gray-600 uppercase border-b">
                                 <th class="py-3 px-4">Bulan</th>
-                                <th class="py-3 px-3">Over Head Bins</th>
-                                <th class="py-3 px-3">Head Cover Seat</th>
+                                <th class="py-3 px-3">OverHead Bins</th>
+                                <th class="py-3 px-3">Head CoverSeat</th>
                                 <th class="py-3 px-3">Cabin Announcement</th>
                                 <th class="py-3 px-3">Meal Tray</th>
                                 <th class="py-3 px-3">Sampling Product</th>
@@ -260,18 +260,18 @@
             </div>
         </div>
 
-        <!-- TAB 2: MEDIA PLACEMENT TRACKER -->
+        <!-- TAB 2: Inventory -->
         <div id="tab-media" class="p-6 space-y-6 max-w-7xl mx-auto w-full hidden">
             <div class="flex items-center justify-between bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex-wrap gap-4">
                 <div>
-                    <h2 class="text-lg font-bold text-gray-900">Media Placement Tracker</h2>
-                    <p class="text-xs text-gray-500">Kelola 9 Media Inflight & Status Armada Pesawat</p>
+                    <h2 class="text-lg font-bold text-gray-900">Inventory</h2>
+                    <p class="text-xs text-gray-500">Kelola 9 Media Inflight & Status Aircraft</p>
                 </div>
                 <div class="flex items-center space-x-3">
                     <span class="bg-citilink/10 text-citilink text-xs font-bold px-3 py-1.5 rounded-lg border border-citilink/20" id="fleet-count-badge">Armada: 5 Pesawat</span>
                     <button onclick="openAddFleetModal()" class="bg-citilink hover:bg-citilink-light text-white px-4 py-2 rounded-lg text-xs font-semibold transition flex items-center space-x-2 shadow-sm">
                         <i class="fa-solid fa-plus"></i>
-                        <span>Tambah Pesawat</span>
+                        <span>Tambahkan Aircraft</span>
                     </button>
                 </div>
             </div>
@@ -282,7 +282,7 @@
             <!-- FLEET & MEDIA MATRIX TABLE -->
             <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden mb-12">
                 <div class="p-4 border-b border-gray-200 bg-gray-50 flex items-center justify-between">
-                    <h3 class="font-bold text-gray-800 text-sm">Matriks Penempatan Media per Registrasi Pesawat</h3>
+                    <h3 class="font-bold text-gray-800 text-sm">Matriks Penempatan Media per Registrasi Aircraft</h3>
                     <span class="text-xs text-gray-500 font-medium">*Klik "+ Isi Media" untuk assign brand atau klik status MTC/Online</span>
                 </div>
                 <div class="overflow-x-auto">
@@ -290,8 +290,8 @@
                         <thead>
                             <tr class="bg-gray-100 text-gray-600 uppercase tracking-wider border-b border-gray-200">
                                 <th class="py-3 px-4 font-semibold">Pesawat & Status</th>
-                                <th class="py-3 px-4 font-semibold"><i class="fa-solid fa-box text-citilink mr-1"></i>Over Head Bins</th>
-                                <th class="py-3 px-4 font-semibold"><i class="fa-solid fa-chair text-citilink mr-1"></i>Head Cover Seat</th>
+                                <th class="py-3 px-4 font-semibold"><i class="fa-solid fa-box text-citilink mr-1"></i>OverHead Bins</th>
+                                <th class="py-3 px-4 font-semibold"><i class="fa-solid fa-chair text-citilink mr-1"></i>Head CoverSeat</th>
                                 <th class="py-3 px-4 font-semibold"><i class="fa-solid fa-bullhorn text-citilink mr-1"></i>Cabin Announcement</th>
                                 <th class="py-3 px-4 font-semibold"><i class="fa-solid fa-utensils text-citilink mr-1"></i>Meal Tray</th>
                                 <th class="py-3 px-4 font-semibold"><i class="fa-solid fa-gift text-citilink mr-1"></i>Sampling Product</th>
