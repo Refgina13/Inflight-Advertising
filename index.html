@@ -1389,17 +1389,11 @@
 
         // --- 6. BILLING & PAYMENT DATA & LOGIC ---
         let billingData = [
-            { invoiceNo: 'INV/QG/2026/001', client: 'PT Bank Central Asia Tbk (Tahapan BCA)', date: '02 Jan 2026', receivedDate: '02 Jan 2026', dueDate: '01 Feb 2026', deadlineDays: 30, paymentTerm: 'Full Payment', amount: 1500000000, paidAmount: 1500000000, status: 'Paid' },
-            { invoiceNo: 'INV/QG/2026/002', client: 'PT Global Digital Niaga (Blibli)', date: '10 Jun 2026', receivedDate: '10 Jun 2026', dueDate: '10 Jul 2026', deadlineDays: 30, paymentTerm: 'Termin I', amount: 850000000, paidAmount: 400000000, status: 'Partial' },
-            { invoiceNo: 'INV/QG/2026/003', client: 'PT Telkomsel Indonesia', date: '15 Agu 2026', receivedDate: '15 Agu 2026', dueDate: '14 Sep 2026', deadlineDays: 30, paymentTerm: 'Termin II', amount: 1200000000, paidAmount: 0, status: 'Unpaid' }
+            { invoiceNo: 'INV/QG/2026/001', client: 'PT Bank Central Asia Tbk (Tahapan BCA)', date: '02 Jan 2026', receivedDate: '02 Jan 2026', dueDate: '01 Feb 2026', deadlineDays: 30, paymentTerm: 'Full Payment', amount: 1500000000, paidAmount: 1500000000, status:},
+            { invoiceNo: 'INV/QG/2026/002', client: 'PT Global Digital Niaga (Blibli)', date: '10 Jun 2026', receivedDate: '10 Jun 2026', dueDate: '10 Jul 2026', deadlineDays: 30, paymentTerm: 'Termin I', amount: 850000000, paidAmount: 400000000, status:},
+            { invoiceNo: 'INV/QG/2026/003', client: 'PT Telkomsel Indonesia', date: '15 Agu 2026', receivedDate: '15 Agu 2026', dueDate: '14 Sep 2026', deadlineDays: 30, paymentTerm: 'Termin II', amount: 1200000000, paidAmount: 0, status:}
         ];
-
-        function renderBillingStatusBadge(status) {
-            if (status === 'Paid') return `<span class="bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-bold text-[10px]">Paid (Lunas)</span>`;
-            if (status === 'Partial') return `<span class="bg-blue-100 text-blue-800 px-2.5 py-1 rounded-full font-bold text-[10px]">Partial (Sebagian)</span>`;
-            return `<span class="bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full font-bold text-[10px]">Unpaid (Belum Bayar)</span>`;
-        }
-
+        
         function updateBillingMetrics() {
             let totalInvoiced = 0, totalPaid = 0, totalOutstanding = 0;
             billingData.forEach(item => {
