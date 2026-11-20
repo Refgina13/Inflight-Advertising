@@ -69,7 +69,7 @@
                         </button>
                         <button onclick="switchTab('administrasi')" id="nav-administrasi" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-300 hover:bg-citilink/40 hover:text-white transition">
                             <i class="fa-solid fa-folder-open w-5"></i>
-                            <span>Administrasi</span>
+                            <span>Administration</span>
                         </button>
                         <button onclick="switchTab('billing')" id="nav-billing" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-300 hover:bg-citilink/40 hover:text-white transition">
                             <i class="fa-solid fa-file-invoice-dollar w-5"></i>
@@ -565,7 +565,7 @@
                     <input type="text" id="inputRegName" required placeholder="Contoh: PK-G06" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-citilink">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Tipe Armada</label>
+                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Tipe Aircraft</label>
                     <select id="inputFleetType" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-citilink bg-white">
                         <option value="Airbus A320">Airbus A320</option>
                         <option value="ATR 72-600">ATR 72-600</option>
@@ -604,8 +604,8 @@
                     <div class="col-span-2"><label class="block font-semibold mb-1">F&B Catalogue (IDR)</label><input type="number" id="m9" value="0" class="w-full border p-2 rounded"></div>
                 </div>
                 <div class="flex justify-end space-x-2 pt-3 border-t">
-                    <button type="button" onclick="closeAddRevenueModal()" class="px-4 py-2 border rounded">Batal</button>
-                    <button type="submit" class="bg-citilink text-white px-4 py-2 rounded font-bold">Simpan & Perbarui</button>
+                    <button type="button" onclick="closeAddRevenueModal()" class="px-4 py-2 border rounded">Cancel</button>
+                    <button type="submit" class="bg-citilink text-white px-4 py-2 rounded font-bold">Save & Update</button>
                 </div>
             </form>
         </div>
@@ -644,7 +644,7 @@
     <div id="adminModal" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto">
             <div class="flex items-center justify-between border-b pb-3">
-                <h3 class="text-lg font-bold text-gray-900" id="adminModalTitle">Tambah Data Administrasi</h3>
+                <h3 class="text-lg font-bold text-gray-900" id="adminModalTitle">Input Data Administrasi</h3>
                 <button onclick="closeAdminModal()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <form onsubmit="handleAdminSubmit(event)" class="space-y-3 text-xs">
